@@ -1,0 +1,42 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 28.03.2013 20:11:30
+
+newmtl shirt_mat
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka maps\shirt_brick_DIFFUSE_blue_4k.jpg
+	map_Kd maps\shirt_brick_DIFFUSE_blue_4k.jpg
+	map_bump maps\shirt_BUMP_4k.jpg
+	bump maps\shirt_BUMP_4k.jpg
+
+newmtl knob_mat
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.8667 0.8667 0.8667
+	Kd 0.8667 0.8667 0.8667
+	Ks 0.2610 0.2610 0.2610
+	Ke 0.0000 0.0000 0.0000
+
+newmtl cotton_mat
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.8824 0.8824 0.8824
+	Kd 0.8824 0.8824 0.8824
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000

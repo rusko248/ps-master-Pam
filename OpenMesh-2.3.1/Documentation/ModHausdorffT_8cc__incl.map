@@ -1,0 +1,13 @@
+<map id="OpenMesh/Tools/Decimater/ModHausdorffT.cc" name="OpenMesh/Tools/Decimater/ModHausdorffT.cc">
+<area shape="rect" id="node3" href="$ModHausdorffT_8hh.html" title="ModHausdorffT.hh" alt="" coords="1141,99,1269,127"/>
+<area shape="rect" id="node5" href="$ModBaseT_8hh.html" title="Base class for all decimation modules." alt="" coords="253,363,437,407"/>
+<area shape="rect" id="node15" href="$Property_8hh_source.html" title="OpenMesh/Core/Utils\l/Property.hh" alt="" coords="993,177,1140,221"/>
+<area shape="rect" id="node7" href="$Noncopyable_8hh_source.html" title="OpenMesh/Core/Utils\l/Noncopyable.hh" alt="" coords="392,457,539,501"/>
+<area shape="rect" id="node11" href="$CollapseInfoT_8hh.html" title="Provides data class CollapseInfoT for storing all information about a halfedge collapse." alt="" coords="5,457,189,501"/>
+<area shape="rect" id="node18" href="$Handles_8hh_source.html" title="OpenMesh/Core/Mesh\l/Handles.hh" alt="" coords="867,457,1019,501"/>
+<area shape="rect" id="node23" href="$BaseProperty_8hh_source.html" title="OpenMesh/Core/Utils\l/BaseProperty.hh" alt="" coords="765,270,912,314"/>
+<area shape="rect" id="node26" href="$StoreRestore_8hh_source.html" title="OpenMesh/Core/IO/StoreRestore.hh" alt="" coords="461,371,691,399"/>
+<area shape="rect" id="node41" href="$omstream_8hh.html" title="This file provides the streams omlog, omout, and omerr." alt="" coords="867,363,1029,407"/>
+<area shape="rect" id="node31" href="$SR__binary_8hh_source.html" title="OpenMesh/Core/IO/SR\l_binary.hh" alt="" coords="213,457,368,501"/>
+<area shape="rect" id="node43" href="$mostream_8hh_source.html" title="OpenMesh/Core/System\l/mostream.hh" alt="" coords="1043,457,1205,501"/>
+</map>

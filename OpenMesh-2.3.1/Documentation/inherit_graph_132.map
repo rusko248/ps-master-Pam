@@ -1,0 +1,10 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classQGLViewerWidget.html" title="QGLViewerWidget" alt="" coords="5,71,136,99"/>
+<area shape="rect" id="node3" href="$classMeshViewerWidgetT.html" title="MeshViewerWidgetT\&lt; M \&gt;" alt="" coords="185,13,359,41"/>
+<area shape="rect" id="node7" href="$classMeshViewerWidgetT.html" title="MeshViewerWidgetT\&lt;\l Mesh \&gt;" alt="" coords="197,63,347,107"/>
+<area shape="rect" id="node15" href="$classMeshViewerWidgetT.html" title="MeshViewerWidgetT\&lt;\l MyMesh \&gt;" alt="" coords="197,130,347,174"/>
+<area shape="rect" id="node5" href="$classOpenMesh_1_1VDPMSynthesizerViewerWidget.html" title="OpenMesh::VDPMSynthesizer\lViewerWidget" alt="" coords="409,5,604,49"/>
+<area shape="rect" id="node9" href="$classMeshViewerWidget.html" title="MeshViewerWidget" alt="" coords="440,105,573,133"/>
+<area shape="rect" id="node11" href="$classDecimaterViewerWidget.html" title="DecimaterViewerWidget" alt="" coords="655,79,815,107"/>
+<area shape="rect" id="node13" href="$classProgViewerWidget.html" title="ProgViewerWidget" alt="" coords="671,130,799,158"/>
+</map>

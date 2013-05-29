@@ -1,0 +1,51 @@
+<map id="OpenMesh/Core/Mesh/Attributes.hh" name="OpenMesh/Core/Mesh/Attributes.hh">
+<area shape="rect" id="node3" href="$ImporterT_8hh_source.html" title="OpenMesh/Core/IO/importer\l/ImporterT.hh" alt="" coords="1529,99,1713,143"/>
+<area shape="rect" id="node9" href="$MeshViewerWidgetT_8hh_source.html" title="OpenMesh/Apps/QtViewer\l/MeshViewerWidgetT.hh" alt="" coords="831,286,1007,330"/>
+<area shape="rect" id="node12" href="$ProgViewerWidget_8hh_source.html" title="OpenMesh/Apps/ProgViewer\l/ProgViewerWidget.hh" alt="" coords="460,387,649,431"/>
+<area shape="rect" id="node62" href="$Core_2Mesh_2Traits_8hh.html" title="This file defines the default traits and some convenience macros." alt="" coords="2077,193,2229,237"/>
+<area shape="rect" id="node88" href="$Uniform_2Composite_2CompositeTraits_8hh.html" title="Mesh traits for uniform composite subdivision." alt="" coords="2639,286,2892,330"/>
+<area shape="rect" id="node103" href="$Core_2Mesh_2AttribKernelT_8hh_source.html" title="OpenMesh/Core/Mesh\l/AttribKernelT.hh" alt="" coords="1868,193,2020,237"/>
+<area shape="rect" id="node110" href="$BaseMesh_8hh_source.html" title="OpenMesh/Core/Mesh\l/BaseMesh.hh" alt="" coords="2541,99,2693,143"/>
+<area shape="rect" id="node112" href="$Tools_2Kernel__OSG_2AttribKernelT_8hh_source.html" title="OpenMesh/Tools/Kernel\l_OSG/AttribKernelT.hh" alt="" coords="2916,286,3079,330"/>
+<area shape="rect" id="node117" href="$PropertyT_8hh_source.html" title="OpenMesh/Tools/Kernel\l_OSG/PropertyT.hh" alt="" coords="2355,99,2517,143"/>
+<area shape="rect" id="node123" href="$MeshCheckerT_8hh_source.html" title="OpenMesh/Tools/Utils\l/MeshCheckerT.hh" alt="" coords="2717,99,2869,143"/>
+<area shape="rect" id="node5" href="$MeshIO_8hh_source.html" title="OpenMesh/Core/IO/MeshIO.hh" alt="" coords="1224,201,1424,229"/>
+<area shape="rect" id="node7" href="$DecimaterViewerWidget_8hh_source.html" title="OpenMesh/Apps/Decimating\l/DecimaterViewerWidget.hh" alt="" coords="673,387,860,431"/>
+<area shape="rect" id="node16" href="$Subdivider_2MeshViewerWidget_8hh_source.html" title="OpenMesh/Apps/Subdivider\l/MeshViewerWidget.hh" alt="" coords="1351,387,1535,431"/>
+<area shape="rect" id="node20" href="$VDPMSynthesizerViewerWidget_8hh_source.html" title="OpenMesh/Apps/VDProgMesh\l/Synthesizer/VDPMSynthesizerViewer\lWidget.hh" alt="" coords="1084,379,1327,439"/>
+<area shape="rect" id="node24" href="$RulesT_8cc.html" title="OpenMesh/Tools/Subdivider\l/Adaptive/Composite/RulesT.cc" alt="" coords="1031,286,1236,330"/>
+<area shape="rect" id="node26" href="$unittests__common_8hh_source.html" title="Unittests/unittests\l_common.hh" alt="" coords="1735,387,1863,431"/>
+<area shape="rect" id="node14" href="$QtViewer_2MeshViewerWidget_8hh_source.html" title="OpenMesh/Apps/QtViewer\l/MeshViewerWidget.hh" alt="" coords="884,387,1060,431"/>
+<area shape="rect" id="node18" href="$SubdivideWidget_8hh_source.html" title="OpenMesh/Apps/Subdivider\l/SubdivideWidget.hh" alt="" coords="5,489,189,533"/>
+<area shape="rect" id="node28" href="$unittests__property_8hh_source.html" title="Unittests/unittests\l_property.hh" alt="" coords="1443,489,1571,533"/>
+<area shape="rect" id="node30" href="$unittests__loading_8hh_source.html" title="Unittests/unittests\l_loading.hh" alt="" coords="1595,489,1723,533"/>
+<area shape="rect" id="node32" href="$unittests__trimesh__iterators_8hh_source.html" title="Unittests/unittests\l_trimesh_iterators.hh" alt="" coords="1747,489,1888,533"/>
+<area shape="rect" id="node34" href="$unittests__trimesh__collapse_8hh_source.html" title="Unittests/unittests\l_trimesh_collapse.hh" alt="" coords="1912,489,2056,533"/>
+<area shape="rect" id="node36" href="$unittests__trimesh__circulators_8hh_source.html" title="Unittests/unittests\l_trimesh_circulators.hh" alt="" coords="2080,489,2235,533"/>
+<area shape="rect" id="node38" href="$unittests__decimater_8hh_source.html" title="Unittests/unittests\l_decimater.hh" alt="" coords="2259,489,2387,533"/>
+<area shape="rect" id="node40" href="$unittests__mc__decimater_8hh_source.html" title="Unittests/unittests\l_mc_decimater.hh" alt="" coords="2411,489,2539,533"/>
+<area shape="rect" id="node42" href="$unittests__mixed__decimater_8hh_source.html" title="Unittests/unittests\l_mixed_decimater.hh" alt="" coords="2563,489,2707,533"/>
+<area shape="rect" id="node44" href="$unittests__subdivider__uniform_8hh_source.html" title="Unittests/unittests\l_subdivider_uniform.hh" alt="" coords="2731,489,2885,533"/>
+<area shape="rect" id="node46" href="$unittests__subdivider__adaptive_8hh_source.html" title="Unittests/unittests\l_subdivider_adaptive.hh" alt="" coords="2909,489,3069,533"/>
+<area shape="rect" id="node48" href="$unittests__trimesh__normal__calculations_8hh_source.html" title="Unittests/unittests\l_trimesh_normal_calculations.hh" alt="" coords="213,489,424,533"/>
+<area shape="rect" id="node50" href="$unittests__trimesh__others_8hh_source.html" title="Unittests/unittests\l_trimesh_others.hh" alt="" coords="448,489,579,533"/>
+<area shape="rect" id="node52" href="$unittests__add__face_8hh_source.html" title="Unittests/unittests\l_add_face.hh" alt="" coords="603,489,731,533"/>
+<area shape="rect" id="node54" href="$unittests__faceless__mesh_8hh_source.html" title="Unittests/unittests\l_faceless_mesh.hh" alt="" coords="755,489,888,533"/>
+<area shape="rect" id="node56" href="$unittests__trimesh__garbage__collection_8hh_source.html" title="Unittests/unittests\l_trimesh_garbage_collection.hh" alt="" coords="912,489,1115,533"/>
+<area shape="rect" id="node58" href="$unittests__split__copy_8hh_source.html" title="Unittests/unittests\l_split_copy.hh" alt="" coords="1139,489,1267,533"/>
+<area shape="rect" id="node60" href="$unittests__vector__type_8hh_source.html" title="Unittests/unittests\l_vector_type.hh" alt="" coords="1291,489,1419,533"/>
+<area shape="rect" id="node64" href="$PolyMesh__ArrayKernelT_8hh_source.html" title="OpenMesh/Core/Mesh\l/PolyMesh_ArrayKernelT.hh" alt="" coords="1853,286,2035,330"/>
+<area shape="rect" id="node71" href="$TriMesh__ArrayKernelT_8hh_source.html" title="OpenMesh/Core/Mesh\l/TriMesh_ArrayKernelT.hh" alt="" coords="1412,286,1583,330"/>
+<area shape="rect" id="node81" href="$Adaptive_2Composite_2CompositeTraits_8hh.html" title="Mesh traits for adaptive composite subdivider." alt="" coords="2076,286,2335,330"/>
+<area shape="rect" id="node95" href="$MeshTraits_8hh_source.html" title="OpenMesh/Tools/VDPM\l/MeshTraits.hh" alt="" coords="1607,286,1769,330"/>
+<area shape="rect" id="node98" href="$Tools_2Kernel__OSG_2Traits_8hh.html" title="This file defines the default traits and some convenienve macros." alt="" coords="2452,286,2615,330"/>
+<area shape="rect" id="node100" href="$TriMesh__OSGArrayKernelT_8hh_source.html" title="OpenMesh/Tools/Kernel\l_OSG/TriMesh_OSGArrayKernelT.hh" alt="" coords="3093,489,3331,533"/>
+<area shape="rect" id="node66" href="$meshDualT_8hh_source.html" title="OpenMesh/Tools/Dualizer\l/meshDualT.hh" alt="" coords="1887,387,2057,431"/>
+<area shape="rect" id="node68" href="$Casts_8hh_source.html" title="OpenMesh/Core/Mesh\l/Casts.hh" alt="" coords="1559,387,1711,431"/>
+<area shape="rect" id="node83" href="$Adaptive_2Composite_2CompositeT_8hh.html" title="OpenMesh/Tools/Subdivider\l/Adaptive/Composite/CompositeT.hh" alt="" coords="2353,387,2588,431"/>
+<area shape="rect" id="node86" href="$RuleInterfaceT_8hh_source.html" title="OpenMesh/Tools/Subdivider\l/Adaptive/Composite/RuleInterfaceT.hh" alt="" coords="2081,387,2329,431"/>
+<area shape="rect" id="node91" href="$CompositeSqrt3T_8hh.html" title="OpenMesh/Tools/Subdivider\l/Uniform/CompositeSqrt3T.hh" alt="" coords="2929,387,3124,431"/>
+<area shape="rect" id="node93" href="$CompositeLoopT_8hh.html" title="OpenMesh/Tools/Subdivider\l/Uniform/CompositeLoopT.hh" alt="" coords="2713,387,2905,431"/>
+<area shape="rect" id="node114" href="$ArrayKernelT_8hh_source.html" title="OpenMesh/Tools/Kernel\l_OSG/ArrayKernelT.hh" alt="" coords="3148,387,3311,431"/>
+<area shape="rect" id="node120" href="$PropertyKernel_8hh_source.html" title="OpenMesh/Tools/Kernel\l_OSG/PropertyKernel.hh" alt="" coords="2563,193,2725,237"/>
+</map>

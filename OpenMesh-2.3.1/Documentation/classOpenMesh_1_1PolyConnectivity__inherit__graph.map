@@ -1,0 +1,5 @@
+<map id="OpenMesh::PolyConnectivity" name="OpenMesh::PolyConnectivity">
+<area shape="rect" id="node7" href="$classOpenMesh_1_1TriConnectivity.html" title="Connectivity Class for Triangle Meshes." alt="" coords="11,238,187,266"/>
+<area shape="rect" id="node2" href="$classOpenMesh_1_1ArrayKernel.html" title="Mesh kernel using arrays for mesh item storage." alt="" coords="20,83,177,111"/>
+<area shape="rect" id="node4" href="$classOpenMesh_1_1BaseKernel.html" title="This class provides the basic property management like adding/removing properties and access to prope..." alt="" coords="20,6,177,34"/>
+</map>

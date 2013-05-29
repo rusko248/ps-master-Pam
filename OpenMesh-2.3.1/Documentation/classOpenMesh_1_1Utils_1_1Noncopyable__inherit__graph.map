@@ -1,0 +1,21 @@
+<map id="OpenMesh::Utils::Noncopyable" name="OpenMesh::Utils::Noncopyable">
+<area shape="rect" id="node3" href="$classOpenMesh_1_1Decimater_1_1BaseDecimaterT.html" title="OpenMesh::Decimater\l::BaseDecimaterT\&lt; MeshT \&gt;" alt="" coords="253,71,440,115"/>
+<area shape="rect" id="node12" href="$classOpenMesh_1_1Decimater_1_1ModHandleT.html" title="Handle for mesh decimation modules." alt="" coords="264,195,429,239"/>
+<area shape="rect" id="node14" href="$classOpenMesh_1_1Smoother_1_1SmootherT.html" title="Base class for smoothing algorithms." alt="" coords="273,262,420,306"/>
+<area shape="rect" id="node20" href="$classOpenMesh_1_1Subdivider_1_1Uniform_1_1SubdividerT.html" title="Abstract base class for uniform subdivision algorithms." alt="" coords="264,386,429,446"/>
+<area shape="rect" id="node40" href="$classOpenMesh_1_1Utils_1_1TestingFramework.html" title="Helper class for test programms." alt="" coords="264,469,429,513"/>
+<area shape="rect" id="node5" href="$classOpenMesh_1_1Decimater_1_1DecimaterT.html" title="Decimater framework." alt="" coords="507,5,664,49"/>
+<area shape="rect" id="node9" href="$classOpenMesh_1_1Decimater_1_1McDecimaterT.html" title="Multiple choice decimater framework." alt="" coords="499,71,672,115"/>
+<area shape="rect" id="node7" href="$classOpenMesh_1_1Decimater_1_1MixedDecimaterT.html" title="Mixed decimater framework." alt="" coords="732,38,921,82"/>
+<area shape="rect" id="node16" href="$classOpenMesh_1_1Smoother_1_1LaplaceSmootherT.html" title="Laplacian Smoothing." alt="" coords="512,138,659,198"/>
+<area shape="rect" id="node18" href="$classOpenMesh_1_1Smoother_1_1JacobiLaplaceSmootherT.html" title="Laplacian Smoothing." alt="" coords="739,138,915,198"/>
+<area shape="rect" id="node22" href="$classOpenMesh_1_1Subdivider_1_1Uniform_1_1CatmullClarkT.html" title="Based on code from Leon Kos, CAD lab, Mech.Eng., University of Ljubljana, Slovenia (http://www..." alt="" coords="503,221,668,281"/>
+<area shape="rect" id="node24" href="$classOpenMesh_1_1Subdivider_1_1Uniform_1_1CompositeT.html" title="This class provides the composite subdivision rules for the uniform case." alt="" coords="503,303,668,363"/>
+<area shape="rect" id="node30" href="$classOpenMesh_1_1Subdivider_1_1Uniform_1_1InterpolatingSqrt3LGT.html" title="Uniform Interpolating Sqrt3 subdivision algorithm" alt="" coords="491,386,680,446"/>
+<area shape="rect" id="node32" href="$classOpenMesh_1_1Subdivider_1_1Uniform_1_1LongestEdgeT.html" title="Uniform LongestEdgeT subdivision algorithm" alt="" coords="503,469,668,529"/>
+<area shape="rect" id="node34" href="$classOpenMesh_1_1Subdivider_1_1Uniform_1_1LoopT.html" title="Uniform Loop subdivision algorithm." alt="" coords="489,551,681,611"/>
+<area shape="rect" id="node36" href="$classOpenMesh_1_1Subdivider_1_1Uniform_1_1ModifiedButterflyT.html" title="Modified Butterfly subdivision algorithm." alt="" coords="499,634,672,694"/>
+<area shape="rect" id="node38" href="$classOpenMesh_1_1Subdivider_1_1Uniform_1_1Sqrt3T.html" title="Uniform Sqrt3 subdivision algorithm" alt="" coords="488,717,683,777"/>
+<area shape="rect" id="node26" href="$classOpenMesh_1_1Subdivider_1_1Uniform_1_1CompositeLoopT.html" title="Uniform composite Loop subdivision algorithm." alt="" coords="737,262,916,322"/>
+<area shape="rect" id="node28" href="$classOpenMesh_1_1Subdivider_1_1Uniform_1_1CompositeSqrt3T.html" title="Uniform composite sqrt(3) subdivision algorithm." alt="" coords="736,345,917,405"/>
+</map>

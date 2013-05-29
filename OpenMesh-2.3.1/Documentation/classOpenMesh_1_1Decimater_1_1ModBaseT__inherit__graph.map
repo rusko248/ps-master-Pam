@@ -1,0 +1,13 @@
+<map id="OpenMesh::Decimater::ModBaseT&lt; MeshT &gt;" name="OpenMesh::Decimater::ModBaseT&lt; MeshT &gt;">
+<area shape="rect" id="node3" href="$classOpenMesh_1_1Decimater_1_1ModQuadricT.html" title="ModQuadricT\&lt; D \&gt;" alt="" coords="240,5,371,33"/>
+<area shape="rect" id="node5" href="$classOpenMesh_1_1Decimater_1_1ModAspectRatioT.html" title="Use aspect ratio to control decimation." alt="" coords="208,55,403,99"/>
+<area shape="rect" id="node7" href="$classOpenMesh_1_1Decimater_1_1ModEdgeLengthT.html" title="Use edge length to control decimation." alt="" coords="209,122,401,166"/>
+<area shape="rect" id="node9" href="$classOpenMesh_1_1Decimater_1_1ModHausdorffT.html" title="Use Hausdorff distance to control decimation." alt="" coords="216,189,395,233"/>
+<area shape="rect" id="node11" href="$classOpenMesh_1_1Decimater_1_1ModIndependentSetsT.html" title="Lock one&#45;ring around remaining vertex after a collapse to prevent further collapses of halfedges inci..." alt="" coords="227,255,384,315"/>
+<area shape="rect" id="node13" href="$classOpenMesh_1_1Decimater_1_1ModNormalDeviationT.html" title="Use Normal deviation to control decimation." alt="" coords="227,338,384,398"/>
+<area shape="rect" id="node15" href="$classOpenMesh_1_1Decimater_1_1ModNormalFlippingT.html" title="Decimating module to avoid flipping of faces." alt="" coords="231,421,380,481"/>
+<area shape="rect" id="node17" href="$classOpenMesh_1_1Decimater_1_1ModProgMeshT.html" title="Collect progressive mesh information while decimating." alt="" coords="215,503,396,547"/>
+<area shape="rect" id="node19" href="$classOpenMesh_1_1Decimater_1_1ModQuadricT.html" title="Mesh decimation module computing collapse priority based on error quadrics." alt="" coords="221,570,389,614"/>
+<area shape="rect" id="node23" href="$classOpenMesh_1_1Decimater_1_1ModRoundnessT.html" title="Use Roundness of triangles to control decimation." alt="" coords="212,637,399,681"/>
+<area shape="rect" id="node21" href="$classModBalancerT.html" title="ModBalancerT\&lt; D \&gt;" alt="" coords="452,578,588,606"/>
+</map>

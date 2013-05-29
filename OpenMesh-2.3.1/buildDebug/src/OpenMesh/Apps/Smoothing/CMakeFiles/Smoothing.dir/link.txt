@@ -1,0 +1,1 @@
+/usr/bin/c++   -g -DINCLUDE_TEMPLATES  -ftemplate-depth-100  -DDEBUG  -W  -Wall  -Wno-unused  -Wextra  -Wno-non-virtual-dtor  -Wno-unused-parameter  -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/Smoothing.dir/smooth.cc.o  -o Smoothing  ../../Core/libOpenMeshCored.2.3.dylib ../../Tools/libOpenMeshToolsd.2.3.dylib ../../Core/libOpenMeshCored.2.3.dylib 

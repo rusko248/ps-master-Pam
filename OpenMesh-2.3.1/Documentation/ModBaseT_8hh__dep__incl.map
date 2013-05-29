@@ -1,0 +1,27 @@
+<map id="OpenMesh/Tools/Decimater/ModBaseT.hh" name="OpenMesh/Tools/Decimater/ModBaseT.hh">
+<area shape="rect" id="node3" href="$BaseDecimaterT_8hh.html" title="OpenMesh/Tools/Decimater\l/BaseDecimaterT.hh" alt="" coords="213,99,397,143"/>
+<area shape="rect" id="node26" href="$ModAspectRatioT_8hh.html" title="OpenMesh/Tools/Decimater\l/ModAspectRatioT.hh" alt="" coords="421,99,605,143"/>
+<area shape="rect" id="node30" href="$ModEdgeLengthT_8hh.html" title="OpenMesh/Tools/Decimater\l/ModEdgeLengthT.hh" alt="" coords="629,99,813,143"/>
+<area shape="rect" id="node34" href="$ModHausdorffT_8hh.html" title="OpenMesh/Tools/Decimater\l/ModHausdorffT.hh" alt="" coords="837,99,1021,143"/>
+<area shape="rect" id="node38" href="$ModNormalDeviationT_8hh.html" title="OpenMesh/Tools/Decimater\l/ModNormalDeviationT.hh" alt="" coords="1045,99,1229,143"/>
+<area shape="rect" id="node40" href="$ModNormalFlippingT_8hh.html" title="OpenMesh/Tools/Decimater\l/ModNormalFlippingT.hh" alt="" coords="1045,193,1229,237"/>
+<area shape="rect" id="node46" href="$ModQuadricT_8hh.html" title="OpenMesh/Tools/Decimater\l/ModQuadricT.hh" alt="" coords="1253,193,1437,237"/>
+<area shape="rect" id="node54" href="$ModProgMeshT_8hh.html" title="OpenMesh/Tools/Decimater\l/ModProgMeshT.hh" alt="" coords="1355,99,1539,143"/>
+<area shape="rect" id="node58" href="$ModIndependentSetsT_8hh_source.html" title="OpenMesh/Tools/Decimater\l/ModIndependentSetsT.hh" alt="" coords="1563,99,1747,143"/>
+<area shape="rect" id="node60" href="$ModRoundnessT_8hh.html" title="OpenMesh/Tools/Decimater\l/ModRoundnessT.hh" alt="" coords="1771,99,1955,143"/>
+<area shape="rect" id="node5" href="$DecimaterT_8hh.html" title="OpenMesh/Tools/Decimater\l/DecimaterT.hh" alt="" coords="5,193,189,237"/>
+<area shape="rect" id="node19" href="$McDecimaterT_8hh.html" title="OpenMesh/Tools/Decimater\l/McDecimaterT.hh" alt="" coords="213,193,397,237"/>
+<area shape="rect" id="node7" href="$DecimaterViewerWidget_8hh_source.html" title="OpenMesh/Apps/Decimating\l/DecimaterViewerWidget.hh" alt="" coords="688,286,875,330"/>
+<area shape="rect" id="node9" href="$DecimaterT_8cc.html" title="OpenMesh/Tools/Decimater\l/DecimaterT.cc" alt="" coords="5,286,189,330"/>
+<area shape="rect" id="node11" href="$MixedDecimaterT_8hh_source.html" title="OpenMesh/Tools/Decimater\l/MixedDecimaterT.hh" alt="" coords="213,286,397,330"/>
+<area shape="rect" id="node17" href="$unittests__decimater_8hh_source.html" title="Unittests/unittests\l_decimater.hh" alt="" coords="949,286,1077,330"/>
+<area shape="rect" id="node13" href="$MixedDecimaterT_8cc.html" title="OpenMesh/Tools/Decimater\l/MixedDecimaterT.cc" alt="" coords="213,379,397,423"/>
+<area shape="rect" id="node15" href="$unittests__mixed__decimater_8hh_source.html" title="Unittests/unittests\l_mixed_decimater.hh" alt="" coords="840,379,984,423"/>
+<area shape="rect" id="node21" href="$McDecimaterT_8cc.html" title="OpenMesh/Tools/Decimater\l/McDecimaterT.cc" alt="" coords="421,286,605,330"/>
+<area shape="rect" id="node24" href="$unittests__mc__decimater_8hh_source.html" title="Unittests/unittests\l_mc_decimater.hh" alt="" coords="1101,286,1229,330"/>
+<area shape="rect" id="node28" href="$ModAspectRatioT_8cc.html" title="OpenMesh/Tools/Decimater\l/ModAspectRatioT.cc" alt="" coords="421,193,605,237"/>
+<area shape="rect" id="node32" href="$ModEdgeLengthT_8cc.html" title="OpenMesh/Tools/Decimater\l/ModEdgeLengthT.cc" alt="" coords="629,193,813,237"/>
+<area shape="rect" id="node36" href="$ModHausdorffT_8cc.html" title="OpenMesh/Tools/Decimater\l/ModHausdorffT.cc" alt="" coords="837,193,1021,237"/>
+<area shape="rect" id="node49" href="$ModQuadricT_8cc.html" title="Bodies of template member function." alt="" coords="1253,286,1437,330"/>
+<area shape="rect" id="node56" href="$ModProgMeshT_8cc.html" title="OpenMesh/Tools/Decimater\l/ModProgMeshT.cc" alt="" coords="1461,193,1645,237"/>
+</map>

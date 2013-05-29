@@ -1,0 +1,8 @@
+<map id="OpenMesh::BasePropHandleT&lt; T &gt;" name="OpenMesh::BasePropHandleT&lt; T &gt;">
+<area shape="rect" id="node5" href="$structOpenMesh_1_1EPropHandleT.html" title="Handle representing an edge property." alt="" coords="455,5,660,33"/>
+<area shape="rect" id="node7" href="$structOpenMesh_1_1FPropHandleT.html" title="Handle representing a face property." alt="" coords="455,55,660,83"/>
+<area shape="rect" id="node9" href="$structOpenMesh_1_1HPropHandleT.html" title="Handle representing a halfedge property." alt="" coords="455,106,660,134"/>
+<area shape="rect" id="node11" href="$structOpenMesh_1_1MPropHandleT.html" title="Handle representing a mesh property." alt="" coords="453,157,661,185"/>
+<area shape="rect" id="node13" href="$structOpenMesh_1_1VPropHandleT.html" title="Handle representing a vertex property." alt="" coords="455,207,660,235"/>
+<area shape="rect" id="node2" href="$classOpenMesh_1_1BaseHandle.html" title="Base class for all handle types." alt="" coords="5,106,168,134"/>
+</map>

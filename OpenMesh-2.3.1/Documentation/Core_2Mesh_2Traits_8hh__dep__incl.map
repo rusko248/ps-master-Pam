@@ -1,0 +1,43 @@
+<map id="OpenMesh/Core/Mesh/Traits.hh" name="OpenMesh/Core/Mesh/Traits.hh">
+<area shape="rect" id="node3" href="$PolyMesh__ArrayKernelT_8hh_source.html" title="OpenMesh/Core/Mesh\l/PolyMesh_ArrayKernelT.hh" alt="" coords="1821,99,2003,143"/>
+<area shape="rect" id="node47" href="$TriMesh__ArrayKernelT_8hh_source.html" title="OpenMesh/Core/Mesh\l/TriMesh_ArrayKernelT.hh" alt="" coords="2359,99,2529,143"/>
+<area shape="rect" id="node49" href="$DecimaterViewerWidget_8hh_source.html" title="OpenMesh/Apps/Decimating\l/DecimaterViewerWidget.hh" alt="" coords="2081,201,2268,245"/>
+<area shape="rect" id="node64" href="$Adaptive_2Composite_2CompositeTraits_8hh.html" title="Mesh traits for adaptive composite subdivider." alt="" coords="377,99,636,143"/>
+<area shape="rect" id="node79" href="$Uniform_2Composite_2CompositeTraits_8hh.html" title="Mesh traits for uniform composite subdivision." alt="" coords="2985,99,3239,143"/>
+<area shape="rect" id="node86" href="$MeshTraits_8hh_source.html" title="OpenMesh/Tools/VDPM\l/MeshTraits.hh" alt="" coords="2681,99,2844,143"/>
+<area shape="rect" id="node89" href="$Tools_2Kernel__OSG_2Traits_8hh.html" title="This file defines the default traits and some convenienve macros." alt="" coords="3603,99,3765,143"/>
+<area shape="rect" id="node91" href="$TriMesh__OSGArrayKernelT_8hh_source.html" title="OpenMesh/Tools/Kernel\l_OSG/TriMesh_OSGArrayKernelT.hh" alt="" coords="3615,201,3852,245"/>
+<area shape="rect" id="node5" href="$meshDualT_8hh_source.html" title="OpenMesh/Tools/Dualizer\l/meshDualT.hh" alt="" coords="1559,201,1729,245"/>
+<area shape="rect" id="node7" href="$Casts_8hh_source.html" title="OpenMesh/Core/Mesh\l/Casts.hh" alt="" coords="1753,201,1905,245"/>
+<area shape="rect" id="node9" href="$unittests__common_8hh_source.html" title="Unittests/unittests\l_common.hh" alt="" coords="1929,201,2057,245"/>
+<area shape="rect" id="node11" href="$unittests__property_8hh_source.html" title="Unittests/unittests\l_property.hh" alt="" coords="1536,302,1664,346"/>
+<area shape="rect" id="node13" href="$unittests__loading_8hh_source.html" title="Unittests/unittests\l_loading.hh" alt="" coords="1688,302,1816,346"/>
+<area shape="rect" id="node15" href="$unittests__trimesh__iterators_8hh_source.html" title="Unittests/unittests\l_trimesh_iterators.hh" alt="" coords="1840,302,1981,346"/>
+<area shape="rect" id="node17" href="$unittests__trimesh__collapse_8hh_source.html" title="Unittests/unittests\l_trimesh_collapse.hh" alt="" coords="2005,302,2149,346"/>
+<area shape="rect" id="node19" href="$unittests__trimesh__circulators_8hh_source.html" title="Unittests/unittests\l_trimesh_circulators.hh" alt="" coords="2173,302,2328,346"/>
+<area shape="rect" id="node21" href="$unittests__decimater_8hh_source.html" title="Unittests/unittests\l_decimater.hh" alt="" coords="2352,302,2480,346"/>
+<area shape="rect" id="node23" href="$unittests__mc__decimater_8hh_source.html" title="Unittests/unittests\l_mc_decimater.hh" alt="" coords="2504,302,2632,346"/>
+<area shape="rect" id="node25" href="$unittests__mixed__decimater_8hh_source.html" title="Unittests/unittests\l_mixed_decimater.hh" alt="" coords="2656,302,2800,346"/>
+<area shape="rect" id="node27" href="$unittests__subdivider__uniform_8hh_source.html" title="Unittests/unittests\l_subdivider_uniform.hh" alt="" coords="2824,302,2979,346"/>
+<area shape="rect" id="node29" href="$unittests__subdivider__adaptive_8hh_source.html" title="Unittests/unittests\l_subdivider_adaptive.hh" alt="" coords="427,395,587,439"/>
+<area shape="rect" id="node31" href="$unittests__trimesh__normal__calculations_8hh_source.html" title="Unittests/unittests\l_trimesh_normal_calculations.hh" alt="" coords="3053,302,3264,346"/>
+<area shape="rect" id="node33" href="$unittests__trimesh__others_8hh_source.html" title="Unittests/unittests\l_trimesh_others.hh" alt="" coords="3288,302,3419,346"/>
+<area shape="rect" id="node35" href="$unittests__add__face_8hh_source.html" title="Unittests/unittests\l_add_face.hh" alt="" coords="544,302,672,346"/>
+<area shape="rect" id="node37" href="$unittests__faceless__mesh_8hh_source.html" title="Unittests/unittests\l_faceless_mesh.hh" alt="" coords="696,302,829,346"/>
+<area shape="rect" id="node39" href="$unittests__trimesh__garbage__collection_8hh_source.html" title="Unittests/unittests\l_trimesh_garbage_collection.hh" alt="" coords="853,302,1056,346"/>
+<area shape="rect" id="node41" href="$unittests__split__copy_8hh_source.html" title="Unittests/unittests\l_split_copy.hh" alt="" coords="1080,302,1208,346"/>
+<area shape="rect" id="node43" href="$unittests__vector__type_8hh_source.html" title="Unittests/unittests\l_vector_type.hh" alt="" coords="1232,302,1360,346"/>
+<area shape="rect" id="node45" href="$unittests__boundary_8hh_source.html" title="Unittests/unittests\l_boundary.hh" alt="" coords="1384,302,1512,346"/>
+<area shape="rect" id="node51" href="$ProgViewerWidget_8hh_source.html" title="OpenMesh/Apps/ProgViewer\l/ProgViewerWidget.hh" alt="" coords="2492,201,2681,245"/>
+<area shape="rect" id="node53" href="$QtViewer_2MeshViewerWidget_8hh_source.html" title="OpenMesh/Apps/QtViewer\l/MeshViewerWidget.hh" alt="" coords="2292,201,2468,245"/>
+<area shape="rect" id="node55" href="$Subdivider_2MeshViewerWidget_8hh_source.html" title="OpenMesh/Apps/Subdivider\l/MeshViewerWidget.hh" alt="" coords="2972,201,3156,245"/>
+<area shape="rect" id="node59" href="$VDPMSynthesizerViewerWidget_8hh_source.html" title="OpenMesh/Apps/VDProgMesh\l/Synthesizer/VDPMSynthesizerViewer\lWidget.hh" alt="" coords="2705,193,2948,253"/>
+<area shape="rect" id="node57" href="$SubdivideWidget_8hh_source.html" title="OpenMesh/Apps/Subdivider\l/SubdivideWidget.hh" alt="" coords="3443,302,3627,346"/>
+<area shape="rect" id="node66" href="$Adaptive_2Composite_2CompositeT_8hh.html" title="OpenMesh/Tools/Subdivider\l/Adaptive/Composite/CompositeT.hh" alt="" coords="389,201,624,245"/>
+<area shape="rect" id="node71" href="$RuleInterfaceT_8hh_source.html" title="OpenMesh/Tools/Subdivider\l/Adaptive/Composite/RuleInterfaceT.hh" alt="" coords="117,201,365,245"/>
+<area shape="rect" id="node68" href="$Adaptive_2Composite_2CompositeT_8cc.html" title="OpenMesh/Tools/Subdivider\l/Adaptive/Composite/CompositeT.cc" alt="" coords="235,302,469,346"/>
+<area shape="rect" id="node73" href="$RulesT_8hh.html" title="OpenMesh/Tools/Subdivider\l/Adaptive/Composite/RulesT.hh" alt="" coords="5,302,211,346"/>
+<area shape="rect" id="node75" href="$RulesT_8cc.html" title="OpenMesh/Tools/Subdivider\l/Adaptive/Composite/RulesT.cc" alt="" coords="5,395,211,439"/>
+<area shape="rect" id="node82" href="$CompositeSqrt3T_8hh.html" title="OpenMesh/Tools/Subdivider\l/Uniform/CompositeSqrt3T.hh" alt="" coords="3396,201,3591,245"/>
+<area shape="rect" id="node84" href="$CompositeLoopT_8hh.html" title="OpenMesh/Tools/Subdivider\l/Uniform/CompositeLoopT.hh" alt="" coords="3180,201,3372,245"/>
+</map>

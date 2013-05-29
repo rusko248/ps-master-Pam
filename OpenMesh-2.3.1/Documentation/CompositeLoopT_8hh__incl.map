@@ -1,0 +1,12 @@
+<map id="OpenMesh/Tools/Subdivider/Uniform/CompositeLoopT.hh" name="OpenMesh/Tools/Subdivider/Uniform/CompositeLoopT.hh">
+<area shape="rect" id="node3" href="$Uniform_2Composite_2CompositeT_8hh.html" title="Composite/CompositeT.hh" alt="" coords="128,185,301,213"/>
+<area shape="rect" id="node18" href="$Uniform_2Composite_2CompositeTraits_8hh.html" title="Mesh traits for uniform composite subdivision." alt="" coords="352,99,552,127"/>
+<area shape="rect" id="node9" href="$SubdividerT_8hh.html" title="OpenMesh/Tools/Subdivider\l/Uniform/SubdividerT.hh" alt="" coords="88,270,275,314"/>
+<area shape="rect" id="node11" href="$config_8hh_source.html" title="OpenMesh/Core/System\l/config.hh" alt="" coords="265,363,428,407"/>
+<area shape="rect" id="node15" href="$Noncopyable_8hh_source.html" title="OpenMesh/Core/Utils\l/Noncopyable.hh" alt="" coords="95,363,241,407"/>
+<area shape="rect" id="node20" href="$Core_2Mesh_2Traits_8hh.html" title="This file defines the default traits and some convenience macros." alt="" coords="564,177,716,221"/>
+<area shape="rect" id="node25" href="$Attributes_8hh.html" title="This file provides some macros containing attribute usage." alt="" coords="376,270,528,314"/>
+<area shape="rect" id="node23" href="$VectorT_8hh_source.html" title="OpenMesh/Core/Geometry\l/VectorT.hh" alt="" coords="552,270,728,314"/>
+<area shape="rect" id="node31" href="$Handles_8hh_source.html" title="OpenMesh/Core/Mesh\l/Handles.hh" alt="" coords="752,270,904,314"/>
+<area shape="rect" id="node28" href="$Status_8hh_source.html" title="OpenMesh/Core/Mesh\l/Status.hh" alt="" coords="503,363,655,407"/>
+</map>

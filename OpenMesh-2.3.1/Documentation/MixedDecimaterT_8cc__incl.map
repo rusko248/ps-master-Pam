@@ -1,0 +1,18 @@
+<map id="OpenMesh/Tools/Decimater/MixedDecimaterT.cc" name="OpenMesh/Tools/Decimater/MixedDecimaterT.cc">
+<area shape="rect" id="node3" href="$MixedDecimaterT_8hh_source.html" title="OpenMesh/Tools/Decimater\l/MixedDecimaterT.hh" alt="" coords="436,99,620,143"/>
+<area shape="rect" id="node7" href="$McDecimaterT_8hh.html" title="OpenMesh/Tools/Decimater\l/McDecimaterT.hh" alt="" coords="332,193,516,237"/>
+<area shape="rect" id="node68" href="$DecimaterT_8hh.html" title="OpenMesh/Tools/Decimater\l/DecimaterT.hh" alt="" coords="540,193,724,237"/>
+<area shape="rect" id="node10" href="$BaseDecimaterT_8hh.html" title="OpenMesh/Tools/Decimater\l/BaseDecimaterT.hh" alt="" coords="356,286,540,330"/>
+<area shape="rect" id="node13" href="$Property_8hh_source.html" title="OpenMesh/Core/Utils\l/Property.hh" alt="" coords="611,379,757,423"/>
+<area shape="rect" id="node59" href="$ModBaseT_8hh.html" title="Base class for all decimation modules." alt="" coords="337,379,521,423"/>
+<area shape="rect" id="node61" href="$Noncopyable_8hh_source.html" title="OpenMesh/Core/Utils\l/Noncopyable.hh" alt="" coords="28,473,175,517"/>
+<area shape="rect" id="node17" href="$Handles_8hh_source.html" title="OpenMesh/Core/Mesh\l/Handles.hh" alt="" coords="660,659,812,703"/>
+<area shape="rect" id="node22" href="$BaseProperty_8hh_source.html" title="OpenMesh/Core/Utils\l/BaseProperty.hh" alt="" coords="508,473,655,517"/>
+<area shape="rect" id="node26" href="$StoreRestore_8hh_source.html" title="OpenMesh/Core/IO/StoreRestore.hh" alt="" coords="153,574,383,602"/>
+<area shape="rect" id="node41" href="$omstream_8hh.html" title="This file provides the streams omlog, omout, and omerr." alt="" coords="788,566,951,610"/>
+<area shape="rect" id="node31" href="$SR__binary_8hh_source.html" title="OpenMesh/Core/IO/SR\l_binary.hh" alt="" coords="127,659,281,703"/>
+<area shape="rect" id="node43" href="$mostream_8hh_source.html" title="OpenMesh/Core/System\l/mostream.hh" alt="" coords="887,659,1049,703"/>
+<area shape="rect" id="node64" href="$CollapseInfoT_8hh.html" title="Provides data class CollapseInfoT for storing all information about a halfedge collapse." alt="" coords="199,473,383,517"/>
+<area shape="rect" id="node72" href="$HeapT_8hh.html" title="A generic heap class." alt="" coords="999,473,1151,517"/>
+<area shape="rect" id="node74" href="$Tools_2Utils_2Config_8hh.html" title="Config.hh" alt="" coords="1025,574,1100,602"/>
+</map>

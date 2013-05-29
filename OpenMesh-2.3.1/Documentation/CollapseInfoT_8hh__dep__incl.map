@@ -1,0 +1,28 @@
+<map id="OpenMesh/Tools/Decimater/CollapseInfoT.hh" name="OpenMesh/Tools/Decimater/CollapseInfoT.hh">
+<area shape="rect" id="node3" href="$ModBaseT_8hh.html" title="Base class for all decimation modules." alt="" coords="1109,99,1293,143"/>
+<area shape="rect" id="node5" href="$BaseDecimaterT_8hh.html" title="OpenMesh/Tools/Decimater\l/BaseDecimaterT.hh" alt="" coords="213,193,397,237"/>
+<area shape="rect" id="node28" href="$ModAspectRatioT_8hh.html" title="OpenMesh/Tools/Decimater\l/ModAspectRatioT.hh" alt="" coords="421,193,605,237"/>
+<area shape="rect" id="node32" href="$ModEdgeLengthT_8hh.html" title="OpenMesh/Tools/Decimater\l/ModEdgeLengthT.hh" alt="" coords="629,193,813,237"/>
+<area shape="rect" id="node36" href="$ModHausdorffT_8hh.html" title="OpenMesh/Tools/Decimater\l/ModHausdorffT.hh" alt="" coords="837,193,1021,237"/>
+<area shape="rect" id="node40" href="$ModNormalDeviationT_8hh.html" title="OpenMesh/Tools/Decimater\l/ModNormalDeviationT.hh" alt="" coords="1045,193,1229,237"/>
+<area shape="rect" id="node42" href="$ModNormalFlippingT_8hh.html" title="OpenMesh/Tools/Decimater\l/ModNormalFlippingT.hh" alt="" coords="1045,286,1229,330"/>
+<area shape="rect" id="node48" href="$ModQuadricT_8hh.html" title="OpenMesh/Tools/Decimater\l/ModQuadricT.hh" alt="" coords="1253,286,1437,330"/>
+<area shape="rect" id="node56" href="$ModProgMeshT_8hh.html" title="OpenMesh/Tools/Decimater\l/ModProgMeshT.hh" alt="" coords="1355,193,1539,237"/>
+<area shape="rect" id="node60" href="$ModIndependentSetsT_8hh_source.html" title="OpenMesh/Tools/Decimater\l/ModIndependentSetsT.hh" alt="" coords="1563,193,1747,237"/>
+<area shape="rect" id="node62" href="$ModRoundnessT_8hh.html" title="OpenMesh/Tools/Decimater\l/ModRoundnessT.hh" alt="" coords="1771,193,1955,237"/>
+<area shape="rect" id="node7" href="$DecimaterT_8hh.html" title="OpenMesh/Tools/Decimater\l/DecimaterT.hh" alt="" coords="5,286,189,330"/>
+<area shape="rect" id="node21" href="$McDecimaterT_8hh.html" title="OpenMesh/Tools/Decimater\l/McDecimaterT.hh" alt="" coords="213,286,397,330"/>
+<area shape="rect" id="node9" href="$DecimaterViewerWidget_8hh_source.html" title="OpenMesh/Apps/Decimating\l/DecimaterViewerWidget.hh" alt="" coords="688,379,875,423"/>
+<area shape="rect" id="node11" href="$DecimaterT_8cc.html" title="OpenMesh/Tools/Decimater\l/DecimaterT.cc" alt="" coords="5,379,189,423"/>
+<area shape="rect" id="node13" href="$MixedDecimaterT_8hh_source.html" title="OpenMesh/Tools/Decimater\l/MixedDecimaterT.hh" alt="" coords="213,379,397,423"/>
+<area shape="rect" id="node19" href="$unittests__decimater_8hh_source.html" title="Unittests/unittests\l_decimater.hh" alt="" coords="949,379,1077,423"/>
+<area shape="rect" id="node15" href="$MixedDecimaterT_8cc.html" title="OpenMesh/Tools/Decimater\l/MixedDecimaterT.cc" alt="" coords="213,473,397,517"/>
+<area shape="rect" id="node17" href="$unittests__mixed__decimater_8hh_source.html" title="Unittests/unittests\l_mixed_decimater.hh" alt="" coords="840,473,984,517"/>
+<area shape="rect" id="node23" href="$McDecimaterT_8cc.html" title="OpenMesh/Tools/Decimater\l/McDecimaterT.cc" alt="" coords="421,379,605,423"/>
+<area shape="rect" id="node26" href="$unittests__mc__decimater_8hh_source.html" title="Unittests/unittests\l_mc_decimater.hh" alt="" coords="1101,379,1229,423"/>
+<area shape="rect" id="node30" href="$ModAspectRatioT_8cc.html" title="OpenMesh/Tools/Decimater\l/ModAspectRatioT.cc" alt="" coords="421,286,605,330"/>
+<area shape="rect" id="node34" href="$ModEdgeLengthT_8cc.html" title="OpenMesh/Tools/Decimater\l/ModEdgeLengthT.cc" alt="" coords="629,286,813,330"/>
+<area shape="rect" id="node38" href="$ModHausdorffT_8cc.html" title="OpenMesh/Tools/Decimater\l/ModHausdorffT.cc" alt="" coords="837,286,1021,330"/>
+<area shape="rect" id="node51" href="$ModQuadricT_8cc.html" title="Bodies of template member function." alt="" coords="1253,379,1437,423"/>
+<area shape="rect" id="node58" href="$ModProgMeshT_8cc.html" title="OpenMesh/Tools/Decimater\l/ModProgMeshT.cc" alt="" coords="1461,286,1645,330"/>
+</map>

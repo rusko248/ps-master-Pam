@@ -1,0 +1,27 @@
+<map id="OpenMesh/Tools/Kernel_OSG/bindT.hh" name="OpenMesh/Tools/Kernel_OSG/bindT.hh">
+<area shape="rect" id="node7" href="$TriMeshT_8hh_source.html" title="OpenMesh/Core/Mesh\l/TriMeshT.hh" alt="" coords="975,99,1127,143"/>
+<area shape="rect" id="node104" href="$Core_2Utils_2color__cast_8hh_source.html" title="OpenMesh/Core/Utils\l/color_cast.hh" alt="" coords="413,659,560,703"/>
+<area shape="rect" id="node121" href="$GLConstAsString_8hh_source.html" title="OpenMesh/Tools/Utils\l/GLConstAsString.hh" alt="" coords="533,99,685,143"/>
+<area shape="rect" id="node128" href="$Tools_2Kernel__OSG_2color__cast_8hh_source.html" title="color_cast.hh" alt="" coords="360,574,459,602"/>
+<area shape="rect" id="node11" href="$PolyMeshT_8hh_source.html" title="OpenMesh/Core/Mesh\l/PolyMeshT.hh" alt="" coords="1031,193,1183,237"/>
+<area shape="rect" id="node14" href="$MathDefs_8hh_source.html" title="OpenMesh/Core/Geometry\l/MathDefs.hh" alt="" coords="639,286,815,330"/>
+<area shape="rect" id="node20" href="$PolyConnectivity_8hh_source.html" title="OpenMesh/Core/Mesh\l/PolyConnectivity.hh" alt="" coords="1031,286,1183,330"/>
+<area shape="rect" id="node22" href="$ArrayKernel_8hh_source.html" title="OpenMesh/Core/Mesh\l/ArrayKernel.hh" alt="" coords="1207,379,1359,423"/>
+<area shape="rect" id="node89" href="$IteratorsT_8hh_source.html" title="OpenMesh/Core/Mesh\l/IteratorsT.hh" alt="" coords="1031,379,1183,423"/>
+<area shape="rect" id="node97" href="$CirculatorsT_8hh_source.html" title="OpenMesh/Core/Mesh\l/CirculatorsT.hh" alt="" coords="855,379,1007,423"/>
+<area shape="rect" id="node27" href="$GenProg_8hh_source.html" title="OpenMesh/Core/Utils\l/GenProg.hh" alt="" coords="712,939,859,983"/>
+<area shape="rect" id="node30" href="$ArrayItems_8hh_source.html" title="OpenMesh/Core/Mesh\l/ArrayItems.hh" alt="" coords="1237,846,1389,890"/>
+<area shape="rect" id="node39" href="$BaseKernel_8hh_source.html" title="OpenMesh/Core/Mesh\l/BaseKernel.hh" alt="" coords="1363,473,1515,517"/>
+<area shape="rect" id="node86" href="$Status_8hh_source.html" title="OpenMesh/Core/Mesh\l/Status.hh" alt="" coords="1035,473,1187,517"/>
+<area shape="rect" id="node34" href="$Handles_8hh_source.html" title="OpenMesh/Core/Mesh\l/Handles.hh" alt="" coords="1440,939,1592,983"/>
+<area shape="rect" id="node46" href="$PropertyContainer_8hh_source.html" title="OpenMesh/Core/Utils\l/PropertyContainer.hh" alt="" coords="1515,566,1661,610"/>
+<area shape="rect" id="node48" href="$Property_8hh_source.html" title="OpenMesh/Core/Utils\l/Property.hh" alt="" coords="1515,659,1661,703"/>
+<area shape="rect" id="node52" href="$BaseProperty_8hh_source.html" title="OpenMesh/Core/Utils\l/BaseProperty.hh" alt="" coords="1797,753,1944,797"/>
+<area shape="rect" id="node55" href="$StoreRestore_8hh_source.html" title="OpenMesh/Core/IO/StoreRestore.hh" alt="" coords="1867,854,2096,882"/>
+<area shape="rect" id="node70" href="$omstream_8hh.html" title="This file provides the streams omlog, omout, and omerr." alt="" coords="1680,846,1843,890"/>
+<area shape="rect" id="node60" href="$SR__binary_8hh_source.html" title="OpenMesh/Core/IO/SR\l_binary.hh" alt="" coords="1955,939,2109,983"/>
+<area shape="rect" id="node72" href="$mostream_8hh_source.html" title="OpenMesh/Core/System\l/mostream.hh" alt="" coords="1717,939,1880,983"/>
+<area shape="rect" id="node107" href="$vector__cast_8hh_source.html" title="OpenMesh/Core/Utils\l/vector_cast.hh" alt="" coords="500,753,647,797"/>
+<area shape="rect" id="node110" href="$vector__traits_8hh_source.html" title="OpenMesh/Core/Utils\l/vector_traits.hh" alt="" coords="611,846,757,890"/>
+<area shape="rect" id="node119" href="$VectorT_8hh_source.html" title="OpenMesh/Core/Geometry\l/VectorT.hh" alt="" coords="360,846,536,890"/>
+</map>

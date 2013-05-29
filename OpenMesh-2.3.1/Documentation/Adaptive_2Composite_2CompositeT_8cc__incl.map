@@ -1,0 +1,13 @@
+<map id="OpenMesh/Tools/Subdivider/Adaptive/Composite/CompositeT.cc" name="OpenMesh/Tools/Subdivider/Adaptive/Composite/CompositeT.cc">
+<area shape="rect" id="node3" href="$config_8hh_source.html" title="OpenMesh/Core/System\l/config.hh" alt="" coords="5,193,168,237"/>
+<area shape="rect" id="node7" href="$omstream_8hh.html" title="This file provides the streams omlog, omout, and omerr." alt="" coords="383,99,545,143"/>
+<area shape="rect" id="node24" href="$Adaptive_2Composite_2CompositeT_8hh.html" title="OpenMesh/Tools/Subdivider\l/Adaptive/Composite/CompositeT.hh" alt="" coords="124,99,359,143"/>
+<area shape="rect" id="node49" href="$RuleInterfaceT_8hh_source.html" title="OpenMesh/Tools/Subdivider\l/Adaptive/Composite/RuleInterfaceT.hh" alt="" coords="569,99,817,143"/>
+<area shape="rect" id="node9" href="$mostream_8hh_source.html" title="OpenMesh/Core/System\l/mostream.hh" alt="" coords="336,193,499,237"/>
+<area shape="rect" id="node27" href="$Adaptive_2Composite_2CompositeTraits_8hh.html" title="Mesh traits for adaptive composite subdivider." alt="" coords="624,193,883,237"/>
+<area shape="rect" id="node30" href="$Core_2Mesh_2Traits_8hh.html" title="This file defines the default traits and some convenience macros." alt="" coords="699,286,851,330"/>
+<area shape="rect" id="node33" href="$VectorT_8hh_source.html" title="OpenMesh/Core/Geometry\l/VectorT.hh" alt="" coords="687,379,863,423"/>
+<area shape="rect" id="node35" href="$Attributes_8hh.html" title="This file provides some macros containing attribute usage." alt="" coords="937,379,1089,423"/>
+<area shape="rect" id="node41" href="$Handles_8hh_source.html" title="OpenMesh/Core/Mesh\l/Handles.hh" alt="" coords="511,379,663,423"/>
+<area shape="rect" id="node38" href="$Status_8hh_source.html" title="OpenMesh/Core/Mesh\l/Status.hh" alt="" coords="988,473,1140,517"/>
+</map>

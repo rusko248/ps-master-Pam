@@ -1,0 +1,16 @@
+<map id="OpenMesh/Tools/Decimater/DecimaterT.cc" name="OpenMesh/Tools/Decimater/DecimaterT.cc">
+<area shape="rect" id="node3" href="$DecimaterT_8hh.html" title="OpenMesh/Tools/Decimater\l/DecimaterT.hh" alt="" coords="1153,99,1337,143"/>
+<area shape="rect" id="node7" href="$Property_8hh_source.html" title="OpenMesh/Core/Utils\l/Property.hh" alt="" coords="685,286,832,330"/>
+<area shape="rect" id="node53" href="$HeapT_8hh.html" title="A generic heap class." alt="" coords="1332,379,1484,423"/>
+<area shape="rect" id="node60" href="$BaseDecimaterT_8hh.html" title="OpenMesh/Tools/Decimater\l/BaseDecimaterT.hh" alt="" coords="1004,193,1188,237"/>
+<area shape="rect" id="node11" href="$Handles_8hh_source.html" title="OpenMesh/Core/Mesh\l/Handles.hh" alt="" coords="457,566,609,610"/>
+<area shape="rect" id="node16" href="$BaseProperty_8hh_source.html" title="OpenMesh/Core/Utils\l/BaseProperty.hh" alt="" coords="631,379,777,423"/>
+<area shape="rect" id="node20" href="$StoreRestore_8hh_source.html" title="OpenMesh/Core/IO/StoreRestore.hh" alt="" coords="153,481,383,509"/>
+<area shape="rect" id="node35" href="$omstream_8hh.html" title="This file provides the streams omlog, omout, and omerr." alt="" coords="836,473,999,517"/>
+<area shape="rect" id="node25" href="$SR__binary_8hh_source.html" title="OpenMesh/Core/IO/SR\l_binary.hh" alt="" coords="127,566,281,610"/>
+<area shape="rect" id="node37" href="$mostream_8hh_source.html" title="OpenMesh/Core/System\l/mostream.hh" alt="" coords="887,566,1049,610"/>
+<area shape="rect" id="node55" href="$Tools_2Utils_2Config_8hh.html" title="Config.hh" alt="" coords="1167,481,1241,509"/>
+<area shape="rect" id="node64" href="$ModBaseT_8hh.html" title="Base class for all decimation modules." alt="" coords="1004,286,1188,330"/>
+<area shape="rect" id="node66" href="$Noncopyable_8hh_source.html" title="OpenMesh/Core/Utils\l/Noncopyable.hh" alt="" coords="903,379,1049,423"/>
+<area shape="rect" id="node69" href="$CollapseInfoT_8hh.html" title="Provides data class CollapseInfoT for storing all information about a halfedge collapse." alt="" coords="1124,379,1308,423"/>
+</map>

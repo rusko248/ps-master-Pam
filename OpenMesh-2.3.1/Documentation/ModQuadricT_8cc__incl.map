@@ -1,0 +1,19 @@
+<map id="OpenMesh/Tools/Decimater/ModQuadricT.cc" name="OpenMesh/Tools/Decimater/ModQuadricT.cc">
+<area shape="rect" id="node3" href="$ModQuadricT_8hh.html" title="OpenMesh/Tools/Decimater\l/ModQuadricT.hh" alt="" coords="426,99,610,143"/>
+<area shape="rect" id="node7" href="$ModBaseT_8hh.html" title="Base class for all decimation modules." alt="" coords="79,379,263,423"/>
+<area shape="rect" id="node17" href="$Property_8hh_source.html" title="OpenMesh/Core/Utils\l/Property.hh" alt="" coords="444,193,591,237"/>
+<area shape="rect" id="node61" href="$vector__cast_8hh_source.html" title="OpenMesh/Core/Utils\l/vector_cast.hh" alt="" coords="1404,286,1551,330"/>
+<area shape="rect" id="node77" href="$QuadricT_8hh.html" title="OpenMesh/Core/Geometry\l/QuadricT.hh" alt="" coords="1626,286,1802,330"/>
+<area shape="rect" id="node9" href="$Noncopyable_8hh_source.html" title="OpenMesh/Core/Utils\l/Noncopyable.hh" alt="" coords="1082,473,1228,517"/>
+<area shape="rect" id="node13" href="$CollapseInfoT_8hh.html" title="Provides data class CollapseInfoT for storing all information about a halfedge collapse." alt="" coords="28,473,212,517"/>
+<area shape="rect" id="node20" href="$Handles_8hh_source.html" title="OpenMesh/Core/Mesh\l/Handles.hh" alt="" coords="676,473,828,517"/>
+<area shape="rect" id="node25" href="$BaseProperty_8hh_source.html" title="OpenMesh/Core/Utils\l/BaseProperty.hh" alt="" coords="375,286,522,330"/>
+<area shape="rect" id="node28" href="$StoreRestore_8hh_source.html" title="OpenMesh/Core/IO/StoreRestore.hh" alt="" coords="872,387,1102,415"/>
+<area shape="rect" id="node43" href="$omstream_8hh.html" title="This file provides the streams omlog, omout, and omerr." alt="" coords="338,379,500,423"/>
+<area shape="rect" id="node33" href="$SR__binary_8hh_source.html" title="OpenMesh/Core/IO/SR\l_binary.hh" alt="" coords="852,473,1007,517"/>
+<area shape="rect" id="node45" href="$mostream_8hh_source.html" title="OpenMesh/Core/System\l/mostream.hh" alt="" coords="338,473,500,517"/>
+<area shape="rect" id="node64" href="$vector__traits_8hh_source.html" title="OpenMesh/Core/Utils\l/vector_traits.hh" alt="" coords="1455,379,1602,423"/>
+<area shape="rect" id="node67" href="$GenProg_8hh_source.html" title="OpenMesh/Core/Utils\l/GenProg.hh" alt="" coords="1588,473,1735,517"/>
+<area shape="rect" id="node75" href="$VectorT_8hh_source.html" title="OpenMesh/Core/Geometry\l/VectorT.hh" alt="" coords="1676,379,1852,423"/>
+<area shape="rect" id="node79" href="$Core_2Geometry_2Config_8hh_source.html" title="Config.hh" alt="" coords="1255,387,1330,415"/>
+</map>

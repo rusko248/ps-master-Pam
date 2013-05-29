@@ -1,0 +1,19 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classOpenMesh_1_1BaseHandle.html" title="Base class for all handle types." alt="" coords="5,314,168,342"/>
+<area shape="rect" id="node3" href="$structOpenMesh_1_1BasePropHandleT.html" title="OpenMesh::BasePropHandle\lT\&lt; Geometry::QuadricT\l\&lt; double \&gt; \&gt;" alt="" coords="221,15,411,75"/>
+<area shape="rect" id="node7" href="$structOpenMesh_1_1BasePropHandleT.html" title="OpenMesh::BasePropHandle\lT\&lt; typename Mesh::Point \&gt;" alt="" coords="221,109,411,153"/>
+<area shape="rect" id="node11" href="$structOpenMesh_1_1BasePropHandleT.html" title="Base property handle." alt="" coords="221,197,411,241"/>
+<area shape="rect" id="node23" href="$structOpenMesh_1_1EdgeHandle.html" title="Handle for a edge entity." alt="" coords="236,263,396,291"/>
+<area shape="rect" id="node25" href="$structOpenMesh_1_1FaceHandle.html" title="Handle for a face entity." alt="" coords="236,314,396,342"/>
+<area shape="rect" id="node27" href="$structOpenMesh_1_1HalfedgeHandle.html" title="Handle for a halfedge entity." alt="" coords="224,365,408,393"/>
+<area shape="rect" id="node29" href="$structOpenMesh_1_1Subdivider_1_1Adaptive_1_1RuleHandleT.html" title="Handle template for adaptive composite subdividion rules." alt="" coords="221,415,411,459"/>
+<area shape="rect" id="node31" href="$structOpenMesh_1_1VDPM_1_1VHierarchyNodeHandle.html" title="Handle for vertex hierarchy nodes." alt="" coords="217,482,415,526"/>
+<area shape="rect" id="node33" href="$structOpenMesh_1_1VertexHandle.html" title="Handle for a vertex entity." alt="" coords="232,549,400,577"/>
+<area shape="rect" id="node5" href="$structOpenMesh_1_1VPropHandleT.html" title="OpenMesh::VPropHandleT\l\&lt; Geometry::QuadricT\&lt;\l double \&gt; \&gt;" alt="" coords="480,5,656,65"/>
+<area shape="rect" id="node9" href="$structOpenMesh_1_1FPropHandleT.html" title="OpenMesh::FPropHandleT\l\&lt; typename Mesh::Point \&gt;" alt="" coords="481,87,655,131"/>
+<area shape="rect" id="node13" href="$structOpenMesh_1_1EPropHandleT.html" title="Handle representing an edge property." alt="" coords="465,154,671,182"/>
+<area shape="rect" id="node15" href="$structOpenMesh_1_1FPropHandleT.html" title="Handle representing a face property." alt="" coords="465,205,671,233"/>
+<area shape="rect" id="node17" href="$structOpenMesh_1_1HPropHandleT.html" title="Handle representing a halfedge property." alt="" coords="465,255,671,283"/>
+<area shape="rect" id="node19" href="$structOpenMesh_1_1MPropHandleT.html" title="Handle representing a mesh property." alt="" coords="464,306,672,334"/>
+<area shape="rect" id="node21" href="$structOpenMesh_1_1VPropHandleT.html" title="Handle representing a vertex property." alt="" coords="465,357,671,385"/>
+</map>

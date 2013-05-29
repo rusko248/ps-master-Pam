@@ -1,0 +1,9 @@
+<map id="OpenMesh::PolyConnectivity" name="OpenMesh::PolyConnectivity">
+<area shape="rect" id="node2" href="$classOpenMesh_1_1ArrayKernel.html" title="Mesh kernel using arrays for mesh item storage." alt="" coords="232,5,389,33"/>
+<area shape="rect" id="node4" href="$classOpenMesh_1_1BaseKernel.html" title="This class provides the basic property management like adding/removing properties and access to prope..." alt="" coords="8,5,165,33"/>
+<area shape="rect" id="node6" href="$structOpenMesh_1_1EdgeHandle.html" title="Handle for a edge entity." alt="" coords="231,55,391,83"/>
+<area shape="rect" id="node8" href="$classOpenMesh_1_1BaseHandle.html" title="Base class for all handle types." alt="" coords="5,134,168,162"/>
+<area shape="rect" id="node10" href="$structOpenMesh_1_1VertexHandle.html" title="Handle for a vertex entity." alt="" coords="227,106,395,134"/>
+<area shape="rect" id="node13" href="$structOpenMesh_1_1FaceHandle.html" title="Handle for a face entity." alt="" coords="231,157,391,185"/>
+<area shape="rect" id="node16" href="$structOpenMesh_1_1HalfedgeHandle.html" title="Handle for a halfedge entity." alt="" coords="219,207,403,235"/>
+</map>

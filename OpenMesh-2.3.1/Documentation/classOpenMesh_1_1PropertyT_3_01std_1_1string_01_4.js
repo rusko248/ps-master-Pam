@@ -1,0 +1,26 @@
+var classOpenMesh_1_1PropertyT_3_01std_1_1string_01_4 =
+[
+    [ "const_reference", "classOpenMesh_1_1PropertyT_3_01std_1_1string_01_4.html#a7ffbc226be4830f4f62d8a821420db46", null ],
+    [ "reference", "classOpenMesh_1_1PropertyT_3_01std_1_1string_01_4.html#a6e97d9358ea9355f12aba395cda910d3", null ],
+    [ "Value", "classOpenMesh_1_1PropertyT_3_01std_1_1string_01_4.html#adf93cf31cb1b8d8ea3aa287555bf6749", null ],
+    [ "value_type", "classOpenMesh_1_1PropertyT_3_01std_1_1string_01_4.html#aaa95a988d3d1bfd5629e7004199f7051", null ],
+    [ "vector_type", "classOpenMesh_1_1PropertyT_3_01std_1_1string_01_4.html#a363a2490f8c28ea4e9214b693767faa1", null ],
+    [ "PropertyT", "classOpenMesh_1_1PropertyT_3_01std_1_1string_01_4.html#a2869eff124c8c07ceaae25d2d7ec77c2", null ],
+    [ "clear", "classOpenMesh_1_1PropertyT_3_01std_1_1string_01_4.html#a67fcefbb9cb4e40b8db3e656fef8ac32", null ],
+    [ "clone", "classOpenMesh_1_1PropertyT_3_01std_1_1string_01_4.html#a92bed49f6af004d2d6308b507e742eee", null ],
+    [ "copy", "classOpenMesh_1_1PropertyT_3_01std_1_1string_01_4.html#a773cae4c8ccbe304bc58dd0b8daba702", null ],
+    [ "data", "classOpenMesh_1_1PropertyT_3_01std_1_1string_01_4.html#a71c94c36d158d7a0174bfa26f192704c", null ],
+    [ "element_size", "classOpenMesh_1_1PropertyT_3_01std_1_1string_01_4.html#a1bf7e5337a3eea8d42081aae7bb7f037", null ],
+    [ "n_elements", "classOpenMesh_1_1PropertyT_3_01std_1_1string_01_4.html#aa511c0843381414d011f7bb19c27ed36", null ],
+    [ "operator[]", "classOpenMesh_1_1PropertyT_3_01std_1_1string_01_4.html#a14a2db9eb8b2517eb91584fb2ebd3716", null ],
+    [ "operator[]", "classOpenMesh_1_1PropertyT_3_01std_1_1string_01_4.html#ada50cd18788bd861c4ad62892f892b6f", null ],
+    [ "push_back", "classOpenMesh_1_1PropertyT_3_01std_1_1string_01_4.html#aac958733e0a0f618ce0a14ed2147d3c8", null ],
+    [ "reserve", "classOpenMesh_1_1PropertyT_3_01std_1_1string_01_4.html#afb478035fb9ecd4e514ca910da744a1f", null ],
+    [ "resize", "classOpenMesh_1_1PropertyT_3_01std_1_1string_01_4.html#aa15d8a4e903b35201a96e13c3ce63647", null ],
+    [ "restore", "classOpenMesh_1_1PropertyT_3_01std_1_1string_01_4.html#a619e87f5a601b4c4007a91ffc58c6bb6", null ],
+    [ "set_persistent", "classOpenMesh_1_1PropertyT_3_01std_1_1string_01_4.html#a0d9bb02308869542552eca53d041097e", null ],
+    [ "size_of", "classOpenMesh_1_1PropertyT_3_01std_1_1string_01_4.html#adf1da8fbb23f0d2cb459f63eb891324c", null ],
+    [ "size_of", "classOpenMesh_1_1PropertyT_3_01std_1_1string_01_4.html#a6cf700204b62c1d00c36eda2a00e7f9c", null ],
+    [ "store", "classOpenMesh_1_1PropertyT_3_01std_1_1string_01_4.html#a0b175f5041e78b3412a9d0985de057c4", null ],
+    [ "swap", "classOpenMesh_1_1PropertyT_3_01std_1_1string_01_4.html#a033c963f94dbefe6cb9f593ca4fcf8df", null ]
+];

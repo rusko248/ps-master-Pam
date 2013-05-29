@@ -1,0 +1,26 @@
+var classOpenMesh_1_1IO_1_1BaseExporter =
+[
+    [ "~BaseExporter", "classOpenMesh_1_1IO_1_1BaseExporter.html#acad464bc3d8c8df24af5e5be7d5728f0", null ],
+    [ "color", "classOpenMesh_1_1IO_1_1BaseExporter.html#a40cbc524326d03f571c548bc09d7c452", null ],
+    [ "color", "classOpenMesh_1_1IO_1_1BaseExporter.html#aaca3881714c7bf5c30e8a93bdb8ef8d8", null ],
+    [ "color", "classOpenMesh_1_1IO_1_1BaseExporter.html#aaebf669727b60a21215ced7c90c24089", null ],
+    [ "colorA", "classOpenMesh_1_1IO_1_1BaseExporter.html#a769d37abc39d4a2b9de5020616fccf39", null ],
+    [ "colorA", "classOpenMesh_1_1IO_1_1BaseExporter.html#a28d4a1d086603cdfc3ffd12f02ff93b5", null ],
+    [ "colorA", "classOpenMesh_1_1IO_1_1BaseExporter.html#a7cb03a51dd049e21b2a1eb419c5d66b9", null ],
+    [ "get_vhandles", "classOpenMesh_1_1IO_1_1BaseExporter.html#aeb4dd7f624759b4ee4a1ba8d9f40e171", null ],
+    [ "has_edge_colors", "classOpenMesh_1_1IO_1_1BaseExporter.html#af17eb5ff6dd9768e98311f4292895d72", null ],
+    [ "has_face_colors", "classOpenMesh_1_1IO_1_1BaseExporter.html#a70c87fa0f389409129980d0fbeb79c07", null ],
+    [ "has_face_normals", "classOpenMesh_1_1IO_1_1BaseExporter.html#ac9d4b7e71bfae0a3760cc8934266c877", null ],
+    [ "has_vertex_colors", "classOpenMesh_1_1IO_1_1BaseExporter.html#a267f71eb877843159acdd8e62ded3deb", null ],
+    [ "has_vertex_normals", "classOpenMesh_1_1IO_1_1BaseExporter.html#a70a628cd55680ee5a6de2bf3ae27cc56", null ],
+    [ "has_vertex_texcoords", "classOpenMesh_1_1IO_1_1BaseExporter.html#aa693ad639ddbbec9ae15f2db3fe4140b", null ],
+    [ "is_triangle_mesh", "classOpenMesh_1_1IO_1_1BaseExporter.html#a34a9e1674295dc45550cfeb159ddeb1f", null ],
+    [ "kernel", "classOpenMesh_1_1IO_1_1BaseExporter.html#a825518050f8a8ad9a38bdfe3c5e516d3", null ],
+    [ "n_edges", "classOpenMesh_1_1IO_1_1BaseExporter.html#a8c0d30b05c265b1ddce2478d0f4f6d61", null ],
+    [ "n_faces", "classOpenMesh_1_1IO_1_1BaseExporter.html#aad7f1feb4eed13871ae9c202627e1e57", null ],
+    [ "n_vertices", "classOpenMesh_1_1IO_1_1BaseExporter.html#afe41eb0d62b597f6108b101010a402ef", null ],
+    [ "normal", "classOpenMesh_1_1IO_1_1BaseExporter.html#ac241638383efedc47481798d8213af8e", null ],
+    [ "normal", "classOpenMesh_1_1IO_1_1BaseExporter.html#a7464678a057ecac74842770dd3cade82", null ],
+    [ "point", "classOpenMesh_1_1IO_1_1BaseExporter.html#a1fb0857fffdde7849c26797949af6189", null ],
+    [ "texcoord", "classOpenMesh_1_1IO_1_1BaseExporter.html#a01af1846d693491fbcd3efcc59f8b110", null ]
+];

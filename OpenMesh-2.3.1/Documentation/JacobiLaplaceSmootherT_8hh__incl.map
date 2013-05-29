@@ -1,0 +1,13 @@
+<map id="OpenMesh/Tools/Smoother/JacobiLaplaceSmootherT.hh" name="OpenMesh/Tools/Smoother/JacobiLaplaceSmootherT.hh">
+<area shape="rect" id="node3" href="$LaplaceSmootherT_8hh.html" title="OpenMesh/Tools/Smoother\l/LaplaceSmootherT.hh" alt="" coords="359,99,540,143"/>
+<area shape="rect" id="node5" href="$SmootherT_8hh.html" title="OpenMesh/Tools/Smoother\l/SmootherT.hh" alt="" coords="359,193,540,237"/>
+<area shape="rect" id="node7" href="$config_8hh_source.html" title="OpenMesh/Core/System\l/config.hh" alt="" coords="249,379,412,423"/>
+<area shape="rect" id="node11" href="$Property_8hh_source.html" title="OpenMesh/Core/Utils\l/Property.hh" alt="" coords="591,286,737,330"/>
+<area shape="rect" id="node56" href="$Noncopyable_8hh_source.html" title="OpenMesh/Core/Utils\l/Noncopyable.hh" alt="" coords="376,286,523,330"/>
+<area shape="rect" id="node14" href="$Handles_8hh_source.html" title="OpenMesh/Core/Mesh\l/Handles.hh" alt="" coords="588,566,740,610"/>
+<area shape="rect" id="node19" href="$BaseProperty_8hh_source.html" title="OpenMesh/Core/Utils\l/BaseProperty.hh" alt="" coords="819,379,965,423"/>
+<area shape="rect" id="node23" href="$StoreRestore_8hh_source.html" title="OpenMesh/Core/IO/StoreRestore.hh" alt="" coords="125,481,355,509"/>
+<area shape="rect" id="node38" href="$omstream_8hh.html" title="This file provides the streams omlog, omout, and omerr." alt="" coords="815,473,977,517"/>
+<area shape="rect" id="node28" href="$SR__binary_8hh_source.html" title="OpenMesh/Core/IO/SR\l_binary.hh" alt="" coords="156,566,311,610"/>
+<area shape="rect" id="node40" href="$mostream_8hh_source.html" title="OpenMesh/Core/System\l/mostream.hh" alt="" coords="815,566,977,610"/>
+</map>
