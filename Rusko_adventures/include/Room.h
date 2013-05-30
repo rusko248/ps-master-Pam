@@ -46,7 +46,8 @@ public:
 
 private:
 	void renderLayout();
-	void renderObstacles();
+	void renderObjects();
+	void generateTorches();
 	void generateObstacles();
 	void initRoom();
 
