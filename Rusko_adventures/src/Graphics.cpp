@@ -234,8 +234,6 @@ void DisplayCallback()
     renderWorld(); //transforms and draws the world as Rusko moves around
     drawRusko();  //transforms and draws Rusko
     
-
-    
     
     particles->resetPos(0, vector3(xpos, ypos, zpos));
     particles->display();
@@ -316,7 +314,7 @@ static void TimerJump(int value){
         glutPostRedisplay();
     }
     
-    glutTimerFunc(10, TimerJump, 0); // 10 milliseconds
+    glutTimerFunc(1000/fps, TimerJump, 0); // 10 milliseconds
 }
 
 
@@ -392,7 +390,7 @@ void GraphicsMainLoop()
 	glutReshapeFunc(ReshapeCallback);
     
     glutTimerFunc(100, Timer, 0); //timer for moving up/down/turning
-    glutTimerFunc(10, TimerJump, 0); //timer for jumping
+    glutTimerFunc(1000/fps, TimerJump, 0); //timer for jumping
     glutTimerFunc(1000/fps,timer,window_id);
     
     glutKeyboardFunc(KeyboardCallback);
