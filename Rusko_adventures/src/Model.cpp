@@ -23,7 +23,7 @@ Model::Model(const std::string &path) {
 	mesh.request_vertex_texcoords2D();
 	
 	if ( !IO::read_mesh(mesh, path, opt )) {
-		printf("Cannot load mesh from %s\n", path);
+		printf("Cannot load mesh from %s\n", path.c_str());
 		exit(1);
 	}
 	

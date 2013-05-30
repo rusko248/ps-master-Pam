@@ -67,10 +67,10 @@ void setup(){
 	glShadeModel(GL_SMOOTH);
     
     //Initial world position
-    worldPos.x = -3;
-    worldPos.y = 4;//this should always be half of room size - 1
-    worldPos.z = 8;
-    worldAngle = 45;
+    worldPos.x = 0;
+    worldPos.y = 0; //how is the room positioned?
+    worldPos.z = 0;
+    worldAngle = -135;
     
     //Rusko position
     camPos.x = 0;
