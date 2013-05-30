@@ -9,6 +9,12 @@
 #define SPIKES 3
 #define PIT 4
 
+float boxScale = 0.2f;
+
+Torch torch = Torch();
+Box box = Box(boxScale);
+Spikes spikes = Spikes();
+
 Room::Room() {
 	dim[0] = dim[1] = dim[2] = 10;
 	scale = 0.2f;
@@ -42,7 +48,7 @@ void Room::initRoom() {
 			walls[i]->objPos += '0';
 	}
 
-	pos = STPoint3(-(float)dim[0]/2.f,-(float)dim[1]/2.f,0.f);
+	pos = STPoint3(0,0,0);
 
 	level = 1;
 }
@@ -54,7 +60,7 @@ void Room::setLevel(int lv) {
 
 void Room::render() {
 	renderLayout();
-	renderObstacles();
+	renderObjects();
 }
 
 void Room::renderLayout() {
@@ -63,57 +69,59 @@ void Room::renderLayout() {
 		glNormal3f(0,1,0);
 		glVertex3f(pos.x,pos.y,pos.z);
 		glNormal3f(0,1,0);
-		glVertex3f(pos.x+floor->width,pos.y,pos.z);
+		glVertex3f(pos.x+scale*floor->width,pos.y,pos.z);
 		glNormal3f(0,1,0);
-		glVertex3f(pos.x+floor->width,pos.y,pos.z-floor->length);
+		glVertex3f(pos.x+scale*floor->width,pos.y,pos.z-scale*floor->length);
 		glNormal3f(0,1,0);
-		glVertex3f(pos.x,pos.y,pos.z-floor->length);
+		glVertex3f(pos.x,pos.y,pos.z-scale*floor->length);
 
 		// near wall
 		glNormal3f(0,1,0);
 		glVertex3f(pos.x,pos.y,pos.z);
 		glNormal3f(0,1,0);
-		glVertex3f(pos.x+walls[0]->base,pos.y,pos.z);
+		glVertex3f(pos.x+scale*walls[0]->base,pos.y,pos.z);
 		glNormal3f(0,1,0);
-		glVertex3f(pos.x+walls[0]->base,pos.y+walls[0]->height,pos.z);
+		glVertex3f(pos.x+scale*walls[0]->base,pos.y+scale*walls[0]->height,pos.z);
 		glNormal3f(0,1,0);
-		glVertex3f(pos.x,pos.y+walls[0]->height,pos.z);
+		glVertex3f(pos.x,pos.y+scale*walls[0]->height,pos.z);
 
 		// left wall
 		glNormal3f(0,1,0);
 		glVertex3f(pos.x,pos.y,pos.z);
 		glNormal3f(0,1,0);
-		glVertex3f(pos.x,pos.y,pos.z-walls[1]->base);
+		glVertex3f(pos.x,pos.y,pos.z-scale*walls[1]->base);
 		glNormal3f(0,1,0);
-		glVertex3f(pos.x,pos.y+walls[1]->height,pos.z-walls[1]->base);
+		glVertex3f(pos.x,pos.y+scale*walls[1]->height,pos.z-scale*walls[1]->base);
 		glNormal3f(0,1,0);
-		glVertex3f(pos.x,pos.y+walls[1]->height,pos.z);
+		glVertex3f(pos.x,pos.y+scale*walls[1]->height,pos.z);
 
 		// far wall
 		glNormal3f(0,1,0);
-		glVertex3f(pos.x,pos.y,pos.z-floor->length);
+		glVertex3f(pos.x,pos.y,pos.z-scale*floor->length);
 		glNormal3f(0,1,0);
-		glVertex3f(pos.x+walls[2]->base,pos.y,pos.z-floor->length);
+		glVertex3f(pos.x+scale*walls[2]->base,pos.y,pos.z-scale*floor->length);
 		glNormal3f(0,1,0);
-		glVertex3f(pos.x+walls[2]->base,pos.y+walls[2]->height,pos.z-floor->length);
+		glVertex3f(pos.x+scale*walls[2]->base,pos.y+scale*walls[2]->height,pos.z-scale*floor->length);
 		glNormal3f(0,1,0);
-		glVertex3f(pos.x,pos.y+walls[2]->height,pos.z-floor->length);
+		glVertex3f(pos.x,pos.y+scale*walls[2]->height,pos.z-scale*floor->length);
 
 		// right wall
 		glNormal3f(0,1,0);
-		glVertex3f(pos.x+floor->width,pos.y,pos.z);
+		glVertex3f(pos.x+scale*floor->width,pos.y,pos.z);
 		glNormal3f(0,1,0);
-		glVertex3f(pos.x+floor->width,pos.y,pos.z-walls[3]->base);
+		glVertex3f(pos.x+scale*floor->width,pos.y,pos.z-scale*walls[3]->base);
 		glNormal3f(0,1,0);
-		glVertex3f(pos.x+floor->width,pos.y+walls[3]->height,pos.z-walls[3]->base);
+		glVertex3f(pos.x+scale*floor->width,pos.y+scale*walls[3]->height,pos.z-scale*walls[3]->base);
 		glNormal3f(0,1,0);
-		glVertex3f(pos.x+floor->width,pos.y+walls[3]->height,pos.z);
+		glVertex3f(pos.x+scale*floor->width,pos.y+scale*walls[3]->height,pos.z);
 	glEnd();
 }
 
-void Room::renderObstacles() {
+void Room::renderObjects() {
 	// floor
 	for (unsigned int i = 0; i < floor->objPos.size(); ++i) {
+		if (floor->objPos[i] == FREE) continue;
+
 		glPushMatrix();
 
 		int v = i / floor->width;
@@ -122,26 +130,18 @@ void Room::renderObstacles() {
 		glTranslatef(pos.x+scale*((float)u+.5f), pos.y, pos.z-scale*((float)v+.5f));
 
 		switch (floor->objPos[i]) {
-		case FREE:
-			break;
 		case TORCH:
-				{
-					Torch torch = Torch();
-					torch.render();
-					break;
-				}
+			glTranslatef(0, -torch.bbox.miny, 0);
+			torch.render();
+			break;
 		case BOX:
-			{
-				Box box = Box();
-				box.render();
-				break;
-			}
+			glTranslatef(0, -box.bbox.miny, 0);
+			box.render();
+			break;
 		case SPIKES:
-			{
-				Spikes spikes = Spikes();
-				spikes.render();
-				break;
-			}
+			glTranslatef(0, -spikes.bbox.miny, 0);
+			spikes.render();
+			break;
 		case PIT:
 			break;
 		}
@@ -152,6 +152,8 @@ void Room::renderObstacles() {
 	// walls
 	for (int j = 0; j < 4; ++j) {
 		for (unsigned int i = 0; i < walls[j]->objPos.size(); ++i) {
+			if (walls[j]->objPos[i] == FREE) continue;
+
 			glPushMatrix();
 
 			int v = i / walls[j]->base;
@@ -163,26 +165,15 @@ void Room::renderObstacles() {
 			else glTranslatef(pos.x+scale*(float)floor->width, pos.y+scale*((float)v+.5f), pos.z-scale*(float)floor->length+scale*((float)u+.5f));
 
 			switch (walls[j]->objPos[i]) {
-			case FREE:
-				break;
 			case TORCH:
-				{
-					Torch torch = Torch();
-					torch.render();
-					break;
-				}
+				torch.render();
+				break;
 			case BOX:
-				{
-					Box box = Box();
-					box.render();
-					break;
-				}
+				box.render();
+				break;
 			case SPIKES:
-				{
-					Spikes spikes = Spikes();
-					spikes.render();
-					break;
-				}
+				spikes.render();
+				break;
 			case PIT:
 				break;
 			}
