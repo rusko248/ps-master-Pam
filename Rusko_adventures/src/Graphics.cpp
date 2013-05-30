@@ -36,9 +36,9 @@ CatmullRom* cr;
 float light0Position[4];
 
 // Game states
-#define GAME_STATE 0
+#define GAME_LOADING 0
 #define GAME_RUNNING 1
-int gameState = GAME_RUNNING;
+int gameState = GAME_LOADING;
 
 // List of objects to render
 std::vector<Renderable *> renderList;
@@ -67,10 +67,10 @@ void setup(){
 	glShadeModel(GL_SMOOTH);
     
     //Initial world position
-    worldPos.x = -3;
-    worldPos.y = 4;//this should always be half of room size - 1
-    worldPos.z = 8;
-    worldAngle = 45;
+    worldPos.x = 0;
+    worldPos.y = 0; //how is the room positioned?
+    worldPos.z = 0;
+    worldAngle = -135;
     
     //Rusko position
     camPos.x = 0;
@@ -161,9 +161,11 @@ void GraphicsInit(int argc, char** argv)
 }
 
 void gameLogic() {
-	if (gameState == GAME_RUNNING) {
+	if (gameState == GAME_LOADING) {
 		room = Room();
 		room.setLevel(1);
+        gameState = GAME_RUNNING;
+    } else if (gameState == GAME_RUNNING){
 		renderList.push_back((Renderable *)&room);
     }
 }
@@ -177,6 +179,7 @@ void renderWorld(){
     glRotated(worldAngle, 0, 1, 0);  //rotates world with given angle
     glTranslatef(worldPos.x, worldPos.y, worldPos.z);  //translates to new position
     
+
  	// Draw
 	for(unsigned i = 0; i<renderList.size(); i++)
 		renderList[i]->render();
@@ -231,9 +234,6 @@ void DisplayCallback()
     renderWorld(); //transforms and draws the world as Rusko moves around
     drawRusko();  //transforms and draws Rusko
     
-
-    
-    ReshapeCallback(windowWidth, windowHeight);
     
     particles->resetPos(0, vector3(xpos, ypos, zpos));
     particles->display();
@@ -241,6 +241,10 @@ void DisplayCallback()
     static int frame = 0;
     frame++;
     glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION,2 + sinf(frame));
+    
+    
+    ReshapeCallback(windowWidth, windowHeight);
+
     
     glFlush();
     
@@ -310,7 +314,7 @@ static void TimerJump(int value){
         glutPostRedisplay();
     }
     
-    glutTimerFunc(10, TimerJump, 0); // 10 milliseconds
+    glutTimerFunc(1000/fps, TimerJump, 0); // 10 milliseconds
 }
 
 
@@ -386,7 +390,7 @@ void GraphicsMainLoop()
 	glutReshapeFunc(ReshapeCallback);
     
     glutTimerFunc(100, Timer, 0); //timer for moving up/down/turning
-    glutTimerFunc(10, TimerJump, 0); //timer for jumping
+    glutTimerFunc(1000/fps, TimerJump, 0); //timer for jumping
     glutTimerFunc(1000/fps,timer,window_id);
     
     glutKeyboardFunc(KeyboardCallback);

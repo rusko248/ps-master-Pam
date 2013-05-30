@@ -4,8 +4,7 @@
 #include "Rusko.h"
 
 Rusko::Rusko() {
-	//model = new Model("models/obj/sphere.obj");
-    model = new Model("models/rusko/Rusko_v5_try2.obj");
+    model = new Model("models/rusko/Rusko_full_03.obj");
 }
 
 Rusko::~Rusko() {
