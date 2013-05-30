@@ -109,7 +109,6 @@ void display() {
 	renderList.clear();
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 /**
  * Display callback function
  */
@@ -138,9 +137,6 @@ void DisplayCallback()
 =======
 	glutSwapBuffers();
 >>>>>>> 52a040ef7155012af3c931b4b40e2a03d7a27999
-=======
-	glutSwapBuffers();
->>>>>>> 52a040ef7155012af3c931b4b40e2a03d7a27999
 }
 
 void mouse(int button, int state, int x, int y) {
@@ -152,7 +148,6 @@ void mouse(int button, int state, int x, int y) {
 	lastPos.y = y;
 }
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 /**
  * Timer function for moving forward/back, and turning
@@ -192,8 +187,6 @@ static void TimerJump(int value){
     
     glutTimerFunc(1000/fps, TimerJump, 0); // 10 milliseconds
 =======
-=======
->>>>>>> 52a040ef7155012af3c931b4b40e2a03d7a27999
 void mouseMoved(int x, int y) {
 	int dx = x - lastPos.x;
 	int dy = y - lastPos.y;
@@ -222,9 +215,6 @@ void mouseMoved(int x, int y) {
 	lastPos.y = y;
 	
 	glutPostRedisplay();
-<<<<<<< HEAD
->>>>>>> 52a040ef7155012af3c931b4b40e2a03d7a27999
-=======
 >>>>>>> 52a040ef7155012af3c931b4b40e2a03d7a27999
 }
 
@@ -252,7 +242,6 @@ void reshape(int width, int height) {
 void GraphicsMainLoop()
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
     glutDisplayFunc(DisplayCallback);
 	glutReshapeFunc(ReshapeCallback);
     
@@ -265,17 +254,12 @@ void GraphicsMainLoop()
     glutSpecialUpFunc(KeySpecialUp);
     
 =======
-=======
->>>>>>> 52a040ef7155012af3c931b4b40e2a03d7a27999
 	glutDisplayFunc(display);
 	glutMotionFunc(mouseMoved);
 	glutMouseFunc(mouse);
 	glutReshapeFunc(reshape);
 	glutKeyboardFunc(keyboard);
 
-<<<<<<< HEAD
->>>>>>> 52a040ef7155012af3c931b4b40e2a03d7a27999
-=======
 >>>>>>> 52a040ef7155012af3c931b4b40e2a03d7a27999
 	glutMainLoop();
 }
