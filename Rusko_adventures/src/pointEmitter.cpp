@@ -13,6 +13,7 @@ pointEmitter::pointEmitter(particle **pool, int emitter_id, vector3 pos, vector3
 }
 
 void pointEmitter::display(){
+    if(!displaying) return;
     std::cout << "Adding " << e->particleCount << std::endl;
     for(int newP = 0; newP < (e->emitsPerFrame + e->emitVar*randDist()); newP++){
         addParticle();
@@ -33,7 +34,7 @@ bool pointEmitter::addParticle(){
     GLfloat end[4];
     float speed;
     //Particle pool exists and max num particles not exceeded
-    if(e != NULL && *managerParticleList != NULL && e->particleCount < e->totalParticles){
+    if(e != NULL && *managerParticleList != NULL && e->particleCount < e->totalParticles && emitting){
         newParticle = *managerParticleList;
         *managerParticleList = (*managerParticleList)->next;
         if(e->particleList != NULL){

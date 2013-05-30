@@ -25,6 +25,8 @@ struct particle {
     vector3 dir;
     int life;
     float side;
+    float radius;
+    float rand;
 };
 
 //generation shapes

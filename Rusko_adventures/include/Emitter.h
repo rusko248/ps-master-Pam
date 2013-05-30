@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <cmath>
+#include "math.h"
 #include "stglew.h"
 #ifdef __APPLE__
 #define GLEW_VERSION_2_0 1
@@ -29,6 +30,8 @@ public:
     void update();
     virtual void display();
     void resetPos(vector3 newPos);
+    void setEmitting(bool emit);
+    void setDisplaying(bool display);
 protected:
     particle **managerParticleList;
     emitter *e;
@@ -36,6 +39,8 @@ protected:
     virtual bool addParticle();
     virtual bool updateParticle(particle *p);
     inline float randDist();
+    bool emitting;
+    bool displaying;
 };
 
 

@@ -8,11 +8,12 @@
 
 #include "fireCircleEmitter.h"
 
-fireCircleEmitter::fireCircleEmitter(float pixelSize, float r, particle **pool, int emitter_id, vector3 pos, vector3 dir, vector3 dirVar, float speed, float speedVar, int totalParticles, int emitsPerFrame, int emitVar, int life, int lifeVar, vector3 force) : circleEmitter(r, pool, emitter_id, pos, dir, dirVar, speed, speedVar, totalParticles, emitsPerFrame, emitVar, life, lifeVar, force){
-    pix = pixelSize;
+fireCircleEmitter::fireCircleEmitter(float r, particle **pool, int emitter_id, vector3 pos, vector3 dir, vector3 dirVar, float speed, float speedVar, int totalParticles, int emitsPerFrame, int emitVar, int life, int lifeVar, vector3 force) : circleEmitter(r, pool, emitter_id, pos, dir, dirVar, speed, speedVar, totalParticles, emitsPerFrame, emitVar, life, lifeVar, force){
+
 }
 
 void fireCircleEmitter::display(){
+    if(!displaying) return;
     for(int newP = 0; newP < (e->emitsPerFrame + e->emitVar*randDist()); newP++){
         addParticle();
     }
@@ -59,8 +60,8 @@ void fireCircleEmitter::display(){
     // Invoke the shader.  Now OpenGL will call our
     // shader programs on anything we draw.
     shader->Bind();
-    shader->SetUniform("pointRadius", pix);
-    shader->SetUniform("point_size", pix);
+    shader->SetUniform("pointRadius", 6.0f);
+    shader->SetUniform("point_size", 4.0f);
     
 
     

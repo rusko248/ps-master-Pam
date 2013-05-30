@@ -13,6 +13,7 @@ windCircleEmitter::windCircleEmitter(float r, particle **pool, int emitter_id, v
 }
 
 void windCircleEmitter::display(){
+    if(!displaying) return;
     for(int newP = 0; newP < (e->emitsPerFrame + e->emitVar*randDist()); newP++){
         addParticle();
     }

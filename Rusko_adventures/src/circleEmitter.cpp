@@ -14,7 +14,7 @@ circleEmitter::circleEmitter(float r, particle **pool, int emitter_id, vector3 p
 }
 
 void circleEmitter::display(){
-    std::cout << "Adding " << e->particleCount << std::endl;
+    if(!displaying) return;
     for(int newP = 0; newP < (e->emitsPerFrame + e->emitVar*randDist()); newP++){
         addParticle();
     }
@@ -22,6 +22,7 @@ void circleEmitter::display(){
     glBegin(GL_POINTS);
     particle *curr = e->particleList;
     while(curr){
+        if(displaying == false) std::cout << "Here" << std::endl;
         glVertex3f(curr->pos.x, curr->pos.y, curr->pos.z);
         curr = curr->next;
     }
@@ -37,7 +38,7 @@ bool circleEmitter::addParticle(){
     particle *newParticle;
     float speed;
     //Particle pool exists and max num particles not exceeded
-    if(e != NULL && *managerParticleList != NULL && e->particleCount < e->totalParticles){
+    if(e != NULL && *managerParticleList != NULL && e->particleCount < e->totalParticles && emitting){
         newParticle = *managerParticleList;
         *managerParticleList = (*managerParticleList)->next;
         if(e->particleList != NULL){
@@ -49,6 +50,8 @@ bool circleEmitter::addParticle(){
         
         float angle = randomAngle();
         float radScalar = randDist();
+        newParticle->rand = radScalar;
+        newParticle->radius = radius * radScalar;
         STVector3 point = STVector3(e->pos.x + radius*radScalar*cosf(angle), e->pos.y, e->pos.z + radius*radScalar*sinf(angle));
         STVector3 straightUp = STVector3(0,1,0);
         STVector3 circleDir = STVector3(e->dir.x, e->dir.y, e->dir.z);
@@ -122,5 +125,24 @@ bool circleEmitter::updateParticle(particle *p){
         e->particleCount--;
     }
     
+    return false;
+}
+
+bool circleEmitter::simpleDetectCollision(vector3 pos, float epsilon){
+    if(fabsf(pos.x - e->pos.x) - this->radius > epsilon) return false;
+    if(fabsf(pos.y - e->pos.y) - this->radius > epsilon) return false;
+    if(fabsf(pos.z - e->pos.z) - this->radius > epsilon) return false;
+    return true;
+}
+
+bool circleEmitter::particleDetectCollision(vector3 pos, float epsilon){
+    if(fabsf(pos.x - e->pos.x) - this->radius > epsilon) return false;
+    if(fabsf(pos.y - e->pos.y) - this->radius > epsilon) return false;
+    if(fabsf(pos.z - e->pos.z) - this->radius > epsilon) return false;
+    particle *curr = e->particleList;
+    while(curr){
+        if(sqrt(pow(pos.x - curr->pos.x, 2) + pow(pos.y - curr->pos.y, 2) + pow(pos.z - curr->pos.z, 2)) < epsilon) return true;
+        curr = curr->next;
+    }
     return false;
 }

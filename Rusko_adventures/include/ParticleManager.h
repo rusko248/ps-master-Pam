@@ -17,6 +17,7 @@
 #include "circleEmitter.h"
 #include "fireCircleEmitter.h"
 #include "windCircleEmitter.h"
+#include "turbulentCircleEmitter.h"
 
 class ParticleManager
 {
