@@ -17,17 +17,16 @@ public:
 	Model(const std::string &path);
 	virtual ~Model();
 
-	void render();
-	void scale(float s);
-
-	BBox bbox;
+	void addMesh(const std::string &path);
+	virtual void render();
+	void renderModel();
 
 private:
-	void fitSphere();
-	BBox findBBox();
-
-	Mesh mesh;
+	void fitSphereAll();
+	void fitSphere(unsigned int i);
+	std::vector<Mesh> meshes;
 
 };
+
 
 #endif

@@ -10,7 +10,6 @@ class Box : public Obstacle
 {
 public:
 	Box();
-	Box(float scale);
 	~Box();
 	
 	void render();
