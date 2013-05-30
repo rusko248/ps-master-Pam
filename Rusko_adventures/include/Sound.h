@@ -9,7 +9,11 @@
 #ifndef __Rusko_adventures__Sound__
 #define __Rusko_adventures__Sound__
 
+
 #include <iostream>
+#include "fmod.hpp"
+#include "common.h"
+/*
 // For this example, we need some function to sleep for some seconds,
 // so we include the platform specific sleep functions here. This is
 // only need for demo purposes and has nothing to do with sound output.
@@ -51,5 +55,5 @@ protected:
     float posOnCircle = 0;
     const float radius = 5;
 };
-
+*/
 #endif /* defined(__Rusko_adventures__Sound__) */
