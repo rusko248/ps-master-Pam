@@ -242,7 +242,6 @@ void DisplayCallback()
     particles->update();
     static int frame = 0;
     frame++;
-    cout << frame << endl;
     glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION,2 + sinf(frame));
     
     
