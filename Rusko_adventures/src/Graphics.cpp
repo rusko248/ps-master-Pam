@@ -36,9 +36,9 @@ CatmullRom* cr;
 float light0Position[4];
 
 // Game states
-#define GAME_STATE 0
+#define GAME_LOADING 0
 #define GAME_RUNNING 1
-int gameState = GAME_RUNNING;
+int gameState = GAME_LOADING;
 
 // List of objects to render
 std::vector<Renderable *> renderList;
@@ -161,9 +161,11 @@ void GraphicsInit(int argc, char** argv)
 }
 
 void gameLogic() {
-	if (gameState == GAME_RUNNING) {
+	if (gameState == GAME_LOADING) {
 		room = Room();
 		room.setLevel(1);
+        gameState = GAME_RUNNING;
+    } else if (gameState == GAME_RUNNING){
 		renderList.push_back((Renderable *)&room);
     }
 }
@@ -177,6 +179,7 @@ void renderWorld(){
     glRotated(worldAngle, 0, 1, 0);  //rotates world with given angle
     glTranslatef(worldPos.x, worldPos.y, worldPos.z);  //translates to new position
     
+
  	// Draw
 	for(unsigned i = 0; i<renderList.size(); i++)
 		renderList[i]->render();
@@ -233,7 +236,6 @@ void DisplayCallback()
     
 
     
-    ReshapeCallback(windowWidth, windowHeight);
     
     particles->resetPos(0, vector3(xpos, ypos, zpos));
     particles->display();
@@ -242,6 +244,10 @@ void DisplayCallback()
     frame++;
     cout << frame << endl;
     glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION,2 + sinf(frame));
+    
+    
+    ReshapeCallback(windowWidth, windowHeight);
+
     
     glFlush();
     
