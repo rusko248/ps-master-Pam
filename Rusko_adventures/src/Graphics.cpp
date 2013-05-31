@@ -68,9 +68,9 @@ void setup(){
     
     //Initial world position
     worldPos.x = 0;
-    worldPos.y = 0; //how is the room positioned?
+    worldPos.y = -.7; //how is the room positioned?
     worldPos.z = 0;
-    worldAngle = -135;
+    worldAngle = -90;
     
     //Rusko position
     camPos.x = 0;
@@ -193,7 +193,7 @@ void renderWorld(){
 void drawRusko(){
     //transform Rusko, right now only renders (rusko remains static)
     //can add the particle system of the fire here
-    rusko->render();
+    rusko->render(0);
 }
 
 
