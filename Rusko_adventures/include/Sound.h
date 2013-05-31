@@ -23,17 +23,22 @@ public:
     void update();
     void startWalking();
     void stopWalking();
+
+    void ruskoTorch(bool off);
+    
     void lightTorch();
-    void ruskoTorch(bool on);
+    void jump();
+    void die();
     ~Sound();
     bool walking;
+    bool jumping;
 
 protected:
     const int   INTERFACE_UPDATETIME = 50;      // 50ms update for interface
     const float DISTANCEFACTOR = 1.0f;          // Units per meter.  I.e feet would = 3.28.  centimeters would = 100.
     FMOD::System    *system;
-    FMOD::Sound     *sound1, *sound2, *sound3;
-    FMOD::Channel   *channel1 = 0, *channel2 = 0, *channel3 = 0;
+    FMOD::Sound     *sound1, *sound2, *sound3, *sound4, *sound5, *sound6;
+    FMOD::Channel   *channel1 = 0, *channel2 = 0, *channel3 = 0, *channel4 = 0, *channel5 = 0, *channel6 = 0;
     FMOD_RESULT      result;
     bool             listenerflag = true;
     FMOD_VECTOR      listenerpos  = { 0.0f, 0.0f, 0.0f};

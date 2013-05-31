@@ -57,6 +57,21 @@ Sound::Sound(){
     result = sound3->setMode(FMOD_LOOP_NORMAL);
     ERRCHECK(result);
     
+    result = system->createSound("sounds/lightFire.mp3", FMOD_SOFTWARE | FMOD_2D, 0, &sound4);
+    ERRCHECK(result);
+    result = sound3->setMode(FMOD_LOOP_NORMAL);
+    ERRCHECK(result);
+    
+    result = system->createSound("sounds/jump.mp3", FMOD_SOFTWARE | FMOD_2D, 0, &sound5);
+    ERRCHECK(result);
+    result = sound3->setMode(FMOD_LOOP_OFF);
+    ERRCHECK(result);
+    
+    result = system->createSound("sounds/die.mp3", FMOD_SOFTWARE | FMOD_2D, 0, &sound6);
+    ERRCHECK(result);
+    result = sound3->setMode(FMOD_LOOP_NORMAL);
+    ERRCHECK(result);
+    
 
 //     Start playing constant sounds
 
@@ -89,7 +104,19 @@ Sound::Sound(){
     ERRCHECK(result);
     result = channel2->setPaused(true);
     ERRCHECK(result);
+    
     walking = false;
+    
+    //Channel 4 - light fire
+    
+    
+    //Channel 5 - jump
+    
+    jumping = false;
+    
+    //Channel 6 - die
+    
+
 
 }
 
@@ -133,23 +160,26 @@ void Sound::stopWalking(){
 }
 
 void Sound::lightTorch(){
-    FMOD_VECTOR pos = { 15.0f * DISTANCEFACTOR, 0.0f, 0.0f };
-    FMOD_VECTOR vel = { 0.0f, 0.0f, 0.0f };
-    
-    result = system->playSound(sound2, 0, true, &channel2);
-    ERRCHECK(result);
-    
-    //result = system->playSound(sound1, 0, false, &channel);
-    //ERRCHECK(result);
-    
-    result = channel2->set3DAttributes(&pos, &vel);
-    ERRCHECK(result);
-    result = channel2->setPaused(false);
+    result = system->playSound(sound4, 0, false, &channel4);
     ERRCHECK(result);
 }
 
-void Sound::ruskoTorch(bool on){
+void Sound::jump(){
+    result = system->playSound(sound5, 0, false, &channel5);
+    ERRCHECK(result);
+    jumping = true;
+}
+
+void Sound::die(){
+    result = system->playSound(sound6, 0, false, &channel6);
+    ERRCHECK(result);
+}
+
+void Sound::ruskoTorch(bool off){
+    /*
     bool paused;
     channel2->getPaused(&paused);
     channel2->setPaused(!paused);
+     */
+    channel2->setPaused(off);
 }

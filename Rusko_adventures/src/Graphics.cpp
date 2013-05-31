@@ -303,7 +303,10 @@ static void Timer(int value)
     if (upKeyPressed) {
         worldPos.x += 1*sin(PI/180*worldAngle);
         worldPos.z -= 1*cos(PI/180*worldAngle);
-        if(systemSound->walking == false) systemSound->startWalking();
+        if(systemSound->walking == false && systemSound->jumping != true){
+            systemSound->startWalking();
+        }
+        if(systemSound->jumping == true) systemSound->stopWalking();
     }else{
         systemSound->stopWalking();
     }
@@ -331,7 +334,10 @@ static void Timer(int value)
 static void TimerJump(int value){
     if (jumpOn) {
         jump();
+        if(systemSound->jumping == false) systemSound->jump();
         glutPostRedisplay();
+    }else{
+        systemSound->jumping = false;
     }
     
     glutTimerFunc(200/fps, TimerJump, 0); // 10 milliseconds
