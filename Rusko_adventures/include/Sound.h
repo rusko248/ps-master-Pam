@@ -13,29 +13,6 @@
 #include <iostream>
 #include "fmod.hpp"
 #include "common.h"
-/*
-// For this example, we need some function to sleep for some seconds,
-// so we include the platform specific sleep functions here. This is
-// only need for demo purposes and has nothing to do with sound output.
-// include console I/O methods (conio.h for windows, our wrapper in linux)
-#if defined(WIN32)
-#include <windows.h>
-#include <conio.h>
-inline void sleepSomeTime() { Sleep(100); }
-#else
-#include "common/conio.h"
-#endif
-
-// Lets start: include the irrKlang headers and other input/output stuff
-// needed to print and get user input from the console. And as exlained
-// in the first tutorial, we use the namespace irr and audio and
-// link to the irrKlang.dll file.
-#include <stdio.h>
-#include "./include/irrKlang.h"
-using namespace irrklang;
-
-#pragma comment(lib, "irrKlang.lib") // link with irrKlang.dll
-
 
 using namespace std;
 
@@ -44,16 +21,24 @@ class Sound
 public:
 	Sound();
     void update();
-    void step();
+    void startWalking();
+    void stopWalking();
     void lightTorch();
+    void ruskoTorch(bool on);
     ~Sound();
+    bool walking;
 
 protected:
-    ISoundEngine* engine;
-    ISound* music;
-    ISound* torch;
-    float posOnCircle = 0;
-    const float radius = 5;
+    const int   INTERFACE_UPDATETIME = 50;      // 50ms update for interface
+    const float DISTANCEFACTOR = 1.0f;          // Units per meter.  I.e feet would = 3.28.  centimeters would = 100.
+    FMOD::System    *system;
+    FMOD::Sound     *sound1, *sound2, *sound3;
+    FMOD::Channel   *channel1 = 0, *channel2 = 0, *channel3 = 0;
+    FMOD_RESULT      result;
+    bool             listenerflag = true;
+    FMOD_VECTOR      listenerpos  = { 0.0f, 0.0f, 0.0f};
+    unsigned int     version;
+    void            *extradriverdata = 0;
 };
-*/
+
 #endif /* defined(__Rusko_adventures__Sound__) */

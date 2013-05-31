@@ -174,7 +174,7 @@ void Common_UnloadFileMemory(void *buff)
 {
     OSAtomicOr32(1 << [sender tag], &gButtons);
 }
-
+/*
 int FMOD_Main();
 - (void)threadMain:(id)arg
 {
@@ -183,9 +183,9 @@ int FMOD_Main();
     [NSApp terminate:nil];
     [pool drain];
 }
-
+*/
 @end
-
+/*
 int main(int argc, char *argv[])
 {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
@@ -199,3 +199,4 @@ int main(int argc, char *argv[])
     
     return EXIT_SUCCESS;
 }
+ */

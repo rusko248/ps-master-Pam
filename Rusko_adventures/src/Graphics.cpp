@@ -10,6 +10,7 @@
 #include "CatmullRom.h"
 #include "Rusko.h"
 #include "ParticleManager.h"
+#include "Sound.h"
 
 
 // PI def
@@ -21,6 +22,9 @@ int windowHeight = 640;
 
 // Interaction bools
 bool upKeyPressed, downKeyPressed, rightKeyPressed, leftKeyPressed;
+
+//System sound
+Sound *systemSound;
 
 // Camera/world positions, initialized at setup
 STVector3 camPos, worldPos, lastJump;
@@ -74,6 +78,9 @@ void setup(){
     worldPos.y = -.7; //how is the room positioned?
     worldPos.z = 0;
     worldAngle = -90;
+    
+    //Sound
+    systemSound = new Sound();
     
     //Rusko position
     camPos.x = 0;
@@ -255,7 +262,6 @@ void DisplayCallback()
     
     
     ReshapeCallback(windowWidth, windowHeight);
-
     
     glFlush();
     
@@ -297,6 +303,9 @@ static void Timer(int value)
     if (upKeyPressed) {
         worldPos.x += 1*sin(PI/180*worldAngle);
         worldPos.z -= 1*cos(PI/180*worldAngle);
+        if(systemSound->walking == false) systemSound->startWalking();
+    }else{
+        systemSound->stopWalking();
     }
     if (downKeyPressed) {
         worldPos.x -= 1*sin(PI/180*worldAngle);
@@ -311,7 +320,7 @@ static void Timer(int value)
     if (upKeyPressed || downKeyPressed || rightKeyPressed || leftKeyPressed ){
       glutPostRedisplay();  
     }
-
+    systemSound->update();
     glutTimerFunc(2000/fps, Timer, 0); // 10 milliseconds
 }
 

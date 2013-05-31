@@ -24,6 +24,8 @@
 		0911EFD0175733DC0072D538 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0911EFCF175733DC0072D538 /* Cocoa.framework */; };
 		0911EFDB175835200072D538 /* libfmod.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0911EFC9175730980072D538 /* libfmod.dylib */; };
 		0911EFDC175835200072D538 /* libfmodL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0911EFCA175730990072D538 /* libfmodL.dylib */; };
+		0911EFE81758556F0072D538 /* common_platform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0911EFDE1758556E0072D538 /* common_platform.mm */; };
+		0911EFEC175855BC0072D538 /* common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0911EFEB175855BC0072D538 /* common.cpp */; };
 		3F124A0F1753164A00EB6E07 /* Box.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F124A061753164A00EB6E07 /* Box.cpp */; };
 		3F124A101753164A00EB6E07 /* CatmullRom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F124A071753164A00EB6E07 /* CatmullRom.cpp */; };
 		3F124A111753164A00EB6E07 /* Graphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F124A081753164A00EB6E07 /* Graphics.cpp */; };
@@ -93,6 +95,22 @@
 		0911EFC9175730980072D538 /* libfmod.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfmod.dylib; path = ../FMOD/lib/libfmod.dylib; sourceTree = "<group>"; };
 		0911EFCA175730990072D538 /* libfmodL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfmodL.dylib; path = ../FMOD/lib/libfmodL.dylib; sourceTree = "<group>"; };
 		0911EFCF175733DC0072D538 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		0911EFDD1758556E0072D538 /* common_platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = common_platform.h; path = ../../FMOD/inc/common_platform.h; sourceTree = "<group>"; };
+		0911EFDE1758556E0072D538 /* common_platform.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = common_platform.mm; path = ../../FMOD/inc/common_platform.mm; sourceTree = "<group>"; };
+		0911EFDF1758556E0072D538 /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = common.h; path = ../../FMOD/inc/common.h; sourceTree = "<group>"; };
+		0911EFE01758556E0072D538 /* fmod_codec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fmod_codec.h; path = ../../FMOD/inc/fmod_codec.h; sourceTree = "<group>"; };
+		0911EFE11758556F0072D538 /* fmod_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fmod_common.h; path = ../../FMOD/inc/fmod_common.h; sourceTree = "<group>"; };
+		0911EFE21758556F0072D538 /* fmod_dsp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fmod_dsp.h; path = ../../FMOD/inc/fmod_dsp.h; sourceTree = "<group>"; };
+		0911EFE31758556F0072D538 /* fmod_errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fmod_errors.h; path = ../../FMOD/inc/fmod_errors.h; sourceTree = "<group>"; };
+		0911EFE41758556F0072D538 /* fmod_memoryinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fmod_memoryinfo.h; path = ../../FMOD/inc/fmod_memoryinfo.h; sourceTree = "<group>"; };
+		0911EFE51758556F0072D538 /* fmod_output.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fmod_output.h; path = ../../FMOD/inc/fmod_output.h; sourceTree = "<group>"; };
+		0911EFE61758556F0072D538 /* fmod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fmod.h; path = ../../FMOD/inc/fmod.h; sourceTree = "<group>"; };
+		0911EFE71758556F0072D538 /* fmod.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = fmod.hpp; path = ../../FMOD/inc/fmod.hpp; sourceTree = "<group>"; };
+		0911EFEB175855BC0072D538 /* common.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = common.cpp; path = ../../FMOD/inc/common.cpp; sourceTree = "<group>"; };
+		0911EFF317585F940072D538 /* Cave4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Cave4.mp3; path = sounds/Cave4.mp3; sourceTree = "<group>"; };
+		0911EFF417585F940072D538 /* constantFire.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = constantFire.mp3; path = sounds/constantFire.mp3; sourceTree = "<group>"; };
+		0911EFF517585F940072D538 /* Fire1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Fire1.mp3; path = sounds/Fire1.mp3; sourceTree = "<group>"; };
+		0911EFF617585F940072D538 /* Step1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Step1.mp3; path = sounds/Step1.mp3; sourceTree = "<group>"; };
 		3F124A061753164A00EB6E07 /* Box.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Box.cpp; sourceTree = "<group>"; };
 		3F124A071753164A00EB6E07 /* CatmullRom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CatmullRom.cpp; sourceTree = "<group>"; };
 		3F124A081753164A00EB6E07 /* Graphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Graphics.cpp; sourceTree = "<group>"; };
@@ -4180,6 +4198,7 @@
 		08FB7794FE84155DC02AAC07 /* MicroUI */ = {
 			isa = PBXGroup;
 			children = (
+				0911EFF717585FA60072D538 /* Media */,
 				0911EFCF175733DC0072D538 /* Cocoa.framework */,
 				0911EFC9175730980072D538 /* libfmod.dylib */,
 				0911EFCA175730990072D538 /* libfmodL.dylib */,
@@ -4207,6 +4226,71 @@
 			path = kernels;
 			sourceTree = "<group>";
 		};
+		0911EFE91758557E0072D538 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				0911EFEB175855BC0072D538 /* common.cpp */,
+				0911EFDD1758556E0072D538 /* common_platform.h */,
+				0911EFDE1758556E0072D538 /* common_platform.mm */,
+				0911EFDF1758556E0072D538 /* common.h */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		0911EFEA175855910072D538 /* fmod */ = {
+			isa = PBXGroup;
+			children = (
+				0911EFE01758556E0072D538 /* fmod_codec.h */,
+				0911EFE11758556F0072D538 /* fmod_common.h */,
+				0911EFE21758556F0072D538 /* fmod_dsp.h */,
+				0911EFE31758556F0072D538 /* fmod_errors.h */,
+				0911EFE41758556F0072D538 /* fmod_memoryinfo.h */,
+				0911EFE51758556F0072D538 /* fmod_output.h */,
+				0911EFE61758556F0072D538 /* fmod.h */,
+				0911EFE71758556F0072D538 /* fmod.hpp */,
+			);
+			name = fmod;
+			sourceTree = "<group>";
+		};
+		0911EFED175855E30072D538 /* Particles */ = {
+			isa = PBXGroup;
+			children = (
+				090C287A1754740A00F06D15 /* Basic.h */,
+				090C287C1754740A00F06D15 /* circleEmitter.h */,
+				090C287E1754740A00F06D15 /* Emitter.h */,
+				090C28801754740A00F06D15 /* fireCircleEmitter.h */,
+				090C28871754740A00F06D15 /* ParticleManager.h */,
+				090C28881754740A00F06D15 /* ParticleStructs.h */,
+				090C288A1754740A00F06D15 /* pointEmitter.h */,
+				090C288E1754740A00F06D15 /* windCircleEmitter.h */,
+			);
+			name = Particles;
+			sourceTree = "<group>";
+		};
+		0911EFEE175855FF0072D538 /* Particles */ = {
+			isa = PBXGroup;
+			children = (
+				09085416175582D500A7D82E /* circleEmitter.cpp */,
+				09085417175582D500A7D82E /* Emitter.cpp */,
+				09085418175582D500A7D82E /* fireCircleEmitter.cpp */,
+				09085419175582D500A7D82E /* ParticleManager.cpp */,
+				0908541A175582D500A7D82E /* pointEmitter.cpp */,
+				0908541D175582D500A7D82E /* windCircleEmitter.cpp */,
+			);
+			name = Particles;
+			sourceTree = "<group>";
+		};
+		0911EFF717585FA60072D538 /* Media */ = {
+			isa = PBXGroup;
+			children = (
+				0911EFF317585F940072D538 /* Cave4.mp3 */,
+				0911EFF417585F940072D538 /* constantFire.mp3 */,
+				0911EFF517585F940072D538 /* Fire1.mp3 */,
+				0911EFF617585F940072D538 /* Step1.mp3 */,
+			);
+			name = Media;
+			sourceTree = "<group>";
+		};
 		1AB674ADFE9D54B511CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -4218,14 +4302,9 @@
 		3F124A051753164A00EB6E07 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				09085416175582D500A7D82E /* circleEmitter.cpp */,
-				09085417175582D500A7D82E /* Emitter.cpp */,
-				09085418175582D500A7D82E /* fireCircleEmitter.cpp */,
-				09085419175582D500A7D82E /* ParticleManager.cpp */,
-				0908541A175582D500A7D82E /* pointEmitter.cpp */,
+				0911EFEE175855FF0072D538 /* Particles */,
 				0908541B175582D500A7D82E /* Quaternion.cpp */,
 				0908541C175582D500A7D82E /* Sound.cpp */,
-				0908541D175582D500A7D82E /* windCircleEmitter.cpp */,
 				3F124A2817532AAF00EB6E07 /* Rusko.cpp */,
 				3F124A061753164A00EB6E07 /* Box.cpp */,
 				3F124A071753164A00EB6E07 /* CatmullRom.cpp */,
@@ -4243,17 +4322,12 @@
 		3F124A181753165D00EB6E07 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				0911EFE91758557E0072D538 /* Common */,
+				0911EFEA175855910072D538 /* fmod */,
 				090C28B11754848B00F06D15 /* Sound.h */,
-				090C287A1754740A00F06D15 /* Basic.h */,
-				090C287C1754740A00F06D15 /* circleEmitter.h */,
-				090C287E1754740A00F06D15 /* Emitter.h */,
-				090C28801754740A00F06D15 /* fireCircleEmitter.h */,
+				0911EFED175855E30072D538 /* Particles */,
 				090C28811754740A00F06D15 /* kernels */,
-				090C28871754740A00F06D15 /* ParticleManager.h */,
-				090C28881754740A00F06D15 /* ParticleStructs.h */,
-				090C288A1754740A00F06D15 /* pointEmitter.h */,
 				090C288C1754740A00F06D15 /* Quaternion.h */,
-				090C288E1754740A00F06D15 /* windCircleEmitter.h */,
 				3F124A261753272C00EB6E07 /* Rusko.h */,
 				3F124A191753165D00EB6E07 /* Box.h */,
 				3F124A1A1753165D00EB6E07 /* CatmullRom.h */,
@@ -9163,6 +9237,8 @@
 				09085423175582D500A7D82E /* Quaternion.cpp in Sources */,
 				09085424175582D500A7D82E /* Sound.cpp in Sources */,
 				09085425175582D500A7D82E /* windCircleEmitter.cpp in Sources */,
+				0911EFE81758556F0072D538 /* common_platform.mm in Sources */,
+				0911EFEC175855BC0072D538 /* common.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
