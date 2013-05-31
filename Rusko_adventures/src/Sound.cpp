@@ -7,76 +7,179 @@
 //
 
 #include "Sound.h"
-/*
+
 Sound::Sound(){
-    engine = createIrrKlangDevice();
+    Common_Init(&extradriverdata);
     
-    if (!engine)
-		return; // error starting up the engine
+    /*
+     Create a System object and initialize.
+     */
+    result = FMOD::System_Create(&system);
+    ERRCHECK(result);
     
-	// Now play some sound stream as music in 3d space, looped.
-	// We are setting the last parameter named 'track' to 'true' to
-	// make irrKlang return a pointer to the played sound. (This is also returned
-	// if the parameter 'startPaused' is set to true, by the way). Note that you
-	// MUST call ->drop to the returned pointer if you don't need it any longer and
-	// don't want to waste any memory. This is done in the end of the program.
+    result = system->getVersion(&version);
+    ERRCHECK(result);
     
-	music = engine->play3D("/Users/aarondamashek/Documents/Stanford Work/Spring 2013/CS 248/3DSound copy/media/Cave4.mp3", vec3df(0,0,0), true, false, true);
-    
-    torch = engine->play3D("/Users/aarondamashek/Documents/Stanford Work/Spring 2013/CS 248/3DSound copy/media/constantFire.mp3",vec3df(0,0,0), true, false, true);
-    
-	// the following step isn't necessary, but to adjust the distance where
-	// the 3D sound can be heard, we set some nicer minimum distance
-	// (the default min distance is 1, for a small object). The minimum
-	// distance simply is the distance in which the sound gets played
-	// at maximum volume.
-    
-	if (music){
-        music->setVolume(3.0f);
-		music->setMinDistance(5.0f);
+    if (version < FMOD_VERSION)
+    {
+        Common_Fatal("FMOD lib version %08x doesn't match header version %08x", version, FMOD_VERSION);
     }
-    if (torch){
-        torch->setVolume(1.0f);
-		torch->setMinDistance(5.0f);
-    }
+    
+    result = system->init(100, FMOD_INIT_NORMAL | FMOD_INIT_PROFILE_ENABLE, extradriverdata);
+    ERRCHECK(result);
+    
+    /*
+     Set the distance units. (meters/feet etc).
+     */
+    result = system->set3DSettings(1.0, DISTANCEFACTOR, 1.0f);
+    ERRCHECK(result);
+    
+    /*
+     Load some sounds
+     */
+
+    result = system->createSound("sounds/Cave4.mp3", FMOD_3D, 0, &sound1);
+    ERRCHECK(result);
+    result = sound1->set3DMinMaxDistance(0.5f * DISTANCEFACTOR, 5000.0f * DISTANCEFACTOR);
+    ERRCHECK(result);
+    result = sound1->setMode(FMOD_LOOP_NORMAL);
+    ERRCHECK(result);
+    
+    result = system->createSound("sounds/constantFire.mp3", FMOD_3D, 0, &sound2);
+    ERRCHECK(result);
+    result = sound2->set3DMinMaxDistance(0.5f * DISTANCEFACTOR, 5000.0f * DISTANCEFACTOR);
+    ERRCHECK(result);
+    result = sound2->setMode(FMOD_LOOP_NORMAL);
+    ERRCHECK(result);
+    
+    result = system->createSound("sounds/Step1.mp3", FMOD_SOFTWARE | FMOD_2D, 0, &sound3);
+    ERRCHECK(result);
+    result = sound3->setMode(FMOD_LOOP_NORMAL);
+    ERRCHECK(result);
+    
+    result = system->createSound("sounds/lightFire.mp3", FMOD_SOFTWARE | FMOD_2D, 0, &sound4);
+    ERRCHECK(result);
+    result = sound3->setMode(FMOD_LOOP_NORMAL);
+    ERRCHECK(result);
+    
+    result = system->createSound("sounds/jump.mp3", FMOD_SOFTWARE | FMOD_2D, 0, &sound5);
+    ERRCHECK(result);
+    result = sound3->setMode(FMOD_LOOP_OFF);
+    ERRCHECK(result);
+    
+    result = system->createSound("sounds/die.mp3", FMOD_SOFTWARE | FMOD_2D, 0, &sound6);
+    ERRCHECK(result);
+    result = sound3->setMode(FMOD_LOOP_NORMAL);
+    ERRCHECK(result);
+    
+
+//     Start playing constant sounds
+
+    FMOD_VECTOR pos = { 0.0f, 0.0f, 0.0f };
+    FMOD_VECTOR vel = { 0.0f, 0.0f, 0.0f };
+    
+    //Channel 1 - music
+    
+    result = system->playSound(sound1, 0, false, &channel1);
+    ERRCHECK(result);
+    result = channel1->set3DAttributes(&pos, &vel);
+    ERRCHECK(result);
+    result = channel1->setPaused(false);
+    ERRCHECK(result);
+    
+    //Channel 2 - rusko torch
+    
+    result = system->playSound(sound2, 0, false, &channel2);
+    ERRCHECK(result);
+    result = channel2->set3DAttributes(&pos, &vel);
+    ERRCHECK(result);
+    result = channel2->setPaused(false);
+    ERRCHECK(result);
+    
+    //Channel 3 - walking
+    
+    result = system->playSound(sound3, 0, true, &channel3);
+    ERRCHECK(result);
+    result = channel2->set3DAttributes(&pos, &vel);
+    ERRCHECK(result);
+    result = channel2->setPaused(true);
+    ERRCHECK(result);
+    
+    walking = false;
+    
+    //Channel 4 - light fire
+    
+    
+    //Channel 5 - jump
+    
+    jumping = false;
+    
+    //Channel 6 - die
+    
+
 
 }
 
 Sound::~Sound(){
-    if (music)
-		music->drop(); // release music stream.
-    if (torch)
-		torch->drop(); // release music stream.
+    result = sound1->release();
+    ERRCHECK(result);
+    result = sound2->release();
+    ERRCHECK(result);
+    result = sound3->release();
+    ERRCHECK(result);
     
-	engine->drop(); // delete engine
+    result = system->close();
+    ERRCHECK(result);
+    result = system->release();
+    ERRCHECK(result);
+    
+    Common_Close();
 }
 
 
 
 void Sound::update(){
-    posOnCircle += 0.04f;
-    vec3df pos3d(radius * cosf(posOnCircle), 0,
-                 radius * sinf(posOnCircle * 0.5f));
+    Common_Update();
     
-    // After we know the positions, we need to let irrKlang know about the
-    // listener position (always position (0,0,0), facing forward in this example)
-    // and let irrKlang know about our calculated 3D music position
+    result = system->update();
+    ERRCHECK(result);
     
-    engine->setListenerPosition(vec3df(0,0,0), vec3df(0,0,1));
-    
-    if (music)
-        music->setPosition(pos3d);
-	
-    sleepSomeTime();
+    Common_Sleep(INTERFACE_UPDATETIME - 1);
 }
 
-void Sound::step(){
-    vec3df pos(fmodf((float)rand(),radius*2)-radius, 0, 0);
-    engine->play3D("/Users/aarondamashek/Documents/Stanford Work/Spring 2013/CS 248/3DSound copy/media/bell.wav", pos);
+void Sound::startWalking(){
+    result = channel3->setPaused(false);
+    ERRCHECK(result);
+    walking = true;
+}
+
+void Sound::stopWalking(){
+    result = channel3->setPaused(true);
+    ERRCHECK(result);
+    walking = false;
 }
 
 void Sound::lightTorch(){
-    vec3df pos(fmodf((float)rand(),radius*2)-radius, 0, 0);
-    engine->play3D("/Users/aarondamashek/Documents/Stanford Work/Spring 2013/CS 248/3DSound copy/media/bell.wav", pos);
+    result = system->playSound(sound4, 0, false, &channel4);
+    ERRCHECK(result);
 }
-*/
+
+void Sound::jump(){
+    result = system->playSound(sound5, 0, false, &channel5);
+    ERRCHECK(result);
+    jumping = true;
+}
+
+void Sound::die(){
+    result = system->playSound(sound6, 0, false, &channel6);
+    ERRCHECK(result);
+}
+
+void Sound::ruskoTorch(bool off){
+    /*
+    bool paused;
+    channel2->getPaused(&paused);
+    channel2->setPaused(!paused);
+     */
+    channel2->setPaused(off);
+}
