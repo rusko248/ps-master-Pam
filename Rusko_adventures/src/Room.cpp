@@ -16,7 +16,7 @@ Box box = Box(boxScale);
 Spikes spikes = Spikes();
 
 Room::Room() {
-	dim[0] = dim[1] = dim[2] = 10;
+	dim[0] = dim[1] = dim[2] = 200;
 	scale = 0.2f;
 	
 	initRoom();

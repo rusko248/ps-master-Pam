@@ -32,6 +32,9 @@ int jumpTimer;
 int numControlPoints;
 CatmullRom* cr;
 
+//Walk/Jump frame counters
+int frame_walk = 0;
+
 // Lights
 float light0Position[4];
 
@@ -68,9 +71,9 @@ void setup(){
     
     //Initial world position
     worldPos.x = 0;
-    worldPos.y = 0; //how is the room positioned?
+    worldPos.y = -.7; //how is the room positioned?
     worldPos.z = 0;
-    worldAngle = -135;
+    worldAngle = -90;
     
     //Rusko position
     camPos.x = 0;
@@ -193,7 +196,15 @@ void renderWorld(){
 void drawRusko(){
     //transform Rusko, right now only renders (rusko remains static)
     //can add the particle system of the fire here
-    rusko->render();
+    
+    if (upKeyPressed) {
+        frame_walk++;
+    }
+    if (downKeyPressed) {
+        frame_walk--;
+    }
+    
+    rusko->render(frame_walk);
 }
 
 
@@ -292,16 +303,16 @@ static void Timer(int value)
         worldPos.z += 1*cos(PI/180*worldAngle);
     }
     if (rightKeyPressed){
-       worldAngle += 5; 
+        worldAngle += 5;
     }
     if (leftKeyPressed){
-       worldAngle -= 5; 
+        worldAngle -= 5;
     }
     if (upKeyPressed || downKeyPressed || rightKeyPressed || leftKeyPressed ){
       glutPostRedisplay();  
     }
 
-    glutTimerFunc(100, Timer, 0); // 10 milliseconds
+    glutTimerFunc(2000/fps, Timer, 0); // 10 milliseconds
 }
 
 
@@ -314,7 +325,7 @@ static void TimerJump(int value){
         glutPostRedisplay();
     }
     
-    glutTimerFunc(1000/fps, TimerJump, 0); // 10 milliseconds
+    glutTimerFunc(200/fps, TimerJump, 0); // 10 milliseconds
 }
 
 
@@ -389,8 +400,8 @@ void GraphicsMainLoop()
     glutDisplayFunc(DisplayCallback);
 	glutReshapeFunc(ReshapeCallback);
     
-    glutTimerFunc(100, Timer, 0); //timer for moving up/down/turning
-    glutTimerFunc(1000/fps, TimerJump, 0); //timer for jumping
+    glutTimerFunc(2000/fps, Timer, 0); //timer for moving up/down/turning
+    glutTimerFunc(200/fps, TimerJump, 0); //timer for jumping
     glutTimerFunc(1000/fps,timer,window_id);
     
     glutKeyboardFunc(KeyboardCallback);

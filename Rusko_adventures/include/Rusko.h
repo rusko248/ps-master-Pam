@@ -15,11 +15,18 @@ public:
 	Rusko();
 	~Rusko();
 	
-	void render();
+	void render(int frame);
     
 private:
 	Model *model;
 	Texture texture;
+    
+    //number of frames for animation
+    int lastFrame_run = 40;
+    int currentFrame = 0;
+    
+    // List of objects to render
+    std::vector<Model *> renderList;
     
 };
 
