@@ -35,5 +35,7 @@ void Rusko::render(int frame) {
 }
 
 STPoint3 Rusko::getTorchPos(int frame){
+    STPoint3 torchPos;
     
+    return torchPos;
 }
