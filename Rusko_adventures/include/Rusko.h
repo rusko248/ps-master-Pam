@@ -22,7 +22,7 @@ private:
 	Texture texture;
     
     //number of frames for animation
-    int lastFrame_run = 46;
+    int lastFrame_run = 40;
     int currentFrame = 0;
     
     // List of objects to render
