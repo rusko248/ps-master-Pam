@@ -19,11 +19,11 @@
 		090C28931754740A00F06D15 /* displacement.vert in Sources */ = {isa = PBXBuildFile; fileRef = 090C28831754740A00F06D15 /* displacement.vert */; };
 		090C28941754740A00F06D15 /* fire.frag in Sources */ = {isa = PBXBuildFile; fileRef = 090C28841754740A00F06D15 /* fire.frag */; };
 		090C28951754740A00F06D15 /* wind.frag in Sources */ = {isa = PBXBuildFile; fileRef = 090C28851754740A00F06D15 /* wind.frag */; };
-		0911EFCB175730990072D538 /* libfmod.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0911EFC9175730980072D538 /* libfmod.dylib */; };
-		0911EFCC175730990072D538 /* libfmodL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0911EFCA175730990072D538 /* libfmodL.dylib */; };
 		0911EFCD175730C90072D538 /* libfmod.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0911EFC9175730980072D538 /* libfmod.dylib */; };
 		0911EFCE175730C90072D538 /* libfmodL.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0911EFCA175730990072D538 /* libfmodL.dylib */; };
 		0911EFD0175733DC0072D538 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0911EFCF175733DC0072D538 /* Cocoa.framework */; };
+		0911EFDB175835200072D538 /* libfmod.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0911EFC9175730980072D538 /* libfmod.dylib */; };
+		0911EFDC175835200072D538 /* libfmodL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0911EFCA175730990072D538 /* libfmodL.dylib */; };
 		3F124A0F1753164A00EB6E07 /* Box.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F124A061753164A00EB6E07 /* Box.cpp */; };
 		3F124A101753164A00EB6E07 /* CatmullRom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F124A071753164A00EB6E07 /* CatmullRom.cpp */; };
 		3F124A111753164A00EB6E07 /* Graphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F124A081753164A00EB6E07 /* Graphics.cpp */; };
@@ -57,7 +57,7 @@
 		8DD76FAF0486AB0100D96B5E /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 8;
-			dstPath = usr/share/man/man1;
+			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
 				0911EFCD175730C90072D538 /* libfmod.dylib in CopyFiles */,
@@ -4161,6 +4161,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0911EFDB175835200072D538 /* libfmod.dylib in Frameworks */,
+				0911EFDC175835200072D538 /* libfmodL.dylib in Frameworks */,
 				0911EFD0175733DC0072D538 /* Cocoa.framework in Frameworks */,
 				3F4E4D4317499BE3001260C7 /* libOpenMeshCored.2.3.dylib in Frameworks */,
 				3F4E4D4417499BE3001260C7 /* libOpenMeshCored.a in Frameworks */,
@@ -4169,8 +4171,6 @@
 				C36025FA162E100F00AC8850 /* OpenGL.framework in Frameworks */,
 				C36025F8162E100B00AC8850 /* GLUT.framework in Frameworks */,
 				E0CAAA33125AEE4F00D60E3F /* libst.a in Frameworks */,
-				0911EFCB175730990072D538 /* libfmod.dylib in Frameworks */,
-				0911EFCC175730990072D538 /* libfmodL.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9186,6 +9186,7 @@
 					../FMOD/inc,
 				);
 				INSTALL_PATH = /usr/local/bin;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/usr/local/lib/OpenMesh,
@@ -9195,6 +9196,7 @@
 					"../Sound/bin/macosx-gcc",
 					"\"$(SRCROOT)/../Sound/bin/macosx-gcc\"",
 					../FMOD/lib,
+					"\"$(SRCROOT)/../FMOD/lib\"",
 				);
 				"OTHER_LDFLAGS[arch=*]" = (
 					"-lpng",
@@ -9223,6 +9225,7 @@
 					../FMOD/inc,
 				);
 				INSTALL_PATH = /usr/local/bin;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/usr/local/lib/OpenMesh,
@@ -9232,6 +9235,7 @@
 					"../Sound/bin/macosx-gcc",
 					"\"$(SRCROOT)/../Sound/bin/macosx-gcc\"",
 					../FMOD/lib,
+					"\"$(SRCROOT)/../FMOD/lib\"",
 				);
 				OTHER_LDFLAGS = (
 					"-lpng",
