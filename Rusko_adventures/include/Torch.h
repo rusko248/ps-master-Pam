@@ -9,13 +9,13 @@ class Torch : public Model
 {
 public:
 	Torch();
+	Torch(float scale);
 	~Torch();
 	
 	void render();
 
 private:
-	Model *model;
-	Texture texture;
+
 
 };
 

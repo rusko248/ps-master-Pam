@@ -12,7 +12,7 @@ public:
 	virtual void setPhase(float,float) = 0;
 	virtual void collide() = 0;*/
 	virtual void render() {};
-	BBox bbox;
+	BBox bboxObs;
 
 private:
 

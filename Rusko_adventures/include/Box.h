@@ -6,7 +6,7 @@
 #include "Obstacle.h"
 #include "Model.h"
 
-class Box : public Obstacle
+class Box : public Obstacle, public Model
 {
 public:
 	Box();
@@ -16,8 +16,7 @@ public:
 	void render();
 
 private:
-	Model *model;
-	Texture texture;
+
 
 };
 

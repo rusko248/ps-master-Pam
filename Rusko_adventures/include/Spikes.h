@@ -6,17 +6,17 @@
 #include "Obstacle.h"
 #include "Model.h"
 
-class Spikes : public Obstacle
+class Spikes : public Obstacle, public Model
 {
 public:
 	Spikes();
+	Spikes(float scale);
 	~Spikes();
 	
 	void render();
 
 private:
-	Model *model;
-	Texture texture;
+	
 
 };
 

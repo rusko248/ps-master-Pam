@@ -23,13 +23,38 @@ Model::Model(const std::string &path) {
 	mesh.request_vertex_texcoords2D();
 	
 	if ( !IO::read_mesh(mesh, path, opt )) {
-		printf("Cannot load mesh from %s\n", path.c_str());
+		printf("Cannot load mesh from %s\n", path);
 		exit(1);
 	}
 	
 	mesh.update_normals();
 
-	fitSphere();
+	fitSphere(1.f);
+
+	bbox = findBBox();
+}
+
+Model::Model(const std::string &path, float scale) {
+	IO::Options opt;
+	opt += IO::Options::VertexNormal;
+	opt += IO::Options::FaceNormal;
+	opt += IO::Options::VertexColor;
+	opt += IO::Options::FaceColor;
+	
+	mesh.request_face_normals();
+	mesh.request_vertex_normals();
+	mesh.request_face_colors();
+	mesh.request_vertex_colors();
+	mesh.request_vertex_texcoords2D();
+	
+	if ( !IO::read_mesh(mesh, path, opt )) {
+		printf("Cannot load mesh from %s\n", path);
+		exit(1);
+	}
+	
+	mesh.update_normals();
+
+	fitSphere(scale);
 
 	bbox = findBBox();
 }
@@ -79,11 +104,7 @@ void Model::render() {
 	glDepthRange(0,1);
 }
 
-void Model::scale(float s) {
-	for (Mesh::ConstVertexIter vIt = mesh.vertices_begin(); vIt != mesh.vertices_end(); ++vIt) mesh.point(vIt) *= s;
-}
-
-void Model::fitSphere() {
+void Model::fitSphere(float scale) {
 	// Move center of mass to origin
 	Vec3f cm(0,0,0);
 	for (Mesh::ConstVertexIter vIt = mesh.vertices_begin(); vIt != mesh.vertices_end(); ++vIt) cm += mesh.point(vIt);
@@ -93,7 +114,7 @@ void Model::fitSphere() {
 	// Fit in the unit sphere
 	float maxLength = 0;
 	for (Mesh::ConstVertexIter vIt = mesh.vertices_begin(); vIt != mesh.vertices_end(); ++vIt) maxLength = max(maxLength, mesh.point(vIt).length());
-	for (Mesh::VertexIter vIt = mesh.vertices_begin(); vIt != mesh.vertices_end(); ++vIt) mesh.point(vIt) /= maxLength;
+	for (Mesh::VertexIter vIt = mesh.vertices_begin(); vIt != mesh.vertices_end(); ++vIt) mesh.point(vIt) *= (scale / maxLength);
 }
 
 BBox Model::findBBox() {
