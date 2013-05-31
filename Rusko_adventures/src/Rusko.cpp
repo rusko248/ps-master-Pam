@@ -9,12 +9,19 @@ Rusko::Rusko() {
     model = new Model("models/rusko/Rusko_full_03.obj");
     //to load animation
     for (int i = 2; i <= lastFrame_run; i++){
-        string mod_name = "models/rusko_run/Rusko_ani_03_0000";
+        string mod_name = "models/rusko_run/Rusko_ani_04_0000";
         mod_name += (i/10 + '0');
         mod_name += ((i % 10) +'0');
         mod_name += ".obj";
         Model* mod = new Model(mod_name);
-        renderList.push_back(mod);
+        runAnimation.push_back(mod);
+        
+        string torch_name = "models/torch_pos/Rusko_ani_04_0000";
+        torch_name += (i/10 + '0');
+        torch_name += ((i % 10) +'0');
+        torch_name += ".obj";
+        Model* torch_mod = new Model(mod_name);
+        torchPosition.push_back(torch_mod);
     }
 }
 
@@ -23,6 +30,10 @@ Rusko::~Rusko() {
 }
 
 void Rusko::render(int frame) {
-    frame = frame % renderList.size();
-    renderList.at(frame)->render();
+    frame = frame % runAnimation.size();
+    runAnimation.at(frame)->render();
+}
+
+STPoint3 Rusko::getTorchPos(int frame){
+    
 }
