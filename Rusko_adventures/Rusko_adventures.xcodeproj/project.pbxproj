@@ -26,6 +26,7 @@
 		0911EFDC175835200072D538 /* libfmodL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0911EFCA175730990072D538 /* libfmodL.dylib */; };
 		0911EFE81758556F0072D538 /* common_platform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0911EFDE1758556E0072D538 /* common_platform.mm */; };
 		0911EFEC175855BC0072D538 /* common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0911EFEB175855BC0072D538 /* common.cpp */; };
+		095BCED417597D7E00264620 /* turbulentCircleEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 095BCED317597D7E00264620 /* turbulentCircleEmitter.cpp */; };
 		3F124A0F1753164A00EB6E07 /* Box.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F124A061753164A00EB6E07 /* Box.cpp */; };
 		3F124A101753164A00EB6E07 /* CatmullRom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F124A071753164A00EB6E07 /* CatmullRom.cpp */; };
 		3F124A111753164A00EB6E07 /* Graphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F124A081753164A00EB6E07 /* Graphics.cpp */; };
@@ -111,6 +112,8 @@
 		0911EFF417585F940072D538 /* constantFire.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = constantFire.mp3; path = sounds/constantFire.mp3; sourceTree = "<group>"; };
 		0911EFF517585F940072D538 /* Fire1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Fire1.mp3; path = sounds/Fire1.mp3; sourceTree = "<group>"; };
 		0911EFF617585F940072D538 /* Step1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Step1.mp3; path = sounds/Step1.mp3; sourceTree = "<group>"; };
+		095BCED217597D6E00264620 /* turbulentCircleEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = turbulentCircleEmitter.h; sourceTree = "<group>"; };
+		095BCED317597D7E00264620 /* turbulentCircleEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = turbulentCircleEmitter.cpp; sourceTree = "<group>"; };
 		3F124A061753164A00EB6E07 /* Box.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Box.cpp; sourceTree = "<group>"; };
 		3F124A071753164A00EB6E07 /* CatmullRom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CatmullRom.cpp; sourceTree = "<group>"; };
 		3F124A081753164A00EB6E07 /* Graphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Graphics.cpp; sourceTree = "<group>"; };
@@ -4255,6 +4258,7 @@
 		0911EFED175855E30072D538 /* Particles */ = {
 			isa = PBXGroup;
 			children = (
+				095BCED217597D6E00264620 /* turbulentCircleEmitter.h */,
 				090C287A1754740A00F06D15 /* Basic.h */,
 				090C287C1754740A00F06D15 /* circleEmitter.h */,
 				090C287E1754740A00F06D15 /* Emitter.h */,
@@ -4270,6 +4274,7 @@
 		0911EFEE175855FF0072D538 /* Particles */ = {
 			isa = PBXGroup;
 			children = (
+				095BCED317597D7E00264620 /* turbulentCircleEmitter.cpp */,
 				09085416175582D500A7D82E /* circleEmitter.cpp */,
 				09085417175582D500A7D82E /* Emitter.cpp */,
 				09085418175582D500A7D82E /* fireCircleEmitter.cpp */,
@@ -9239,6 +9244,7 @@
 				09085425175582D500A7D82E /* windCircleEmitter.cpp in Sources */,
 				0911EFE81758556F0072D538 /* common_platform.mm in Sources */,
 				0911EFEC175855BC0072D538 /* common.cpp in Sources */,
+				095BCED417597D7E00264620 /* turbulentCircleEmitter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
