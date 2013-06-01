@@ -17,6 +17,7 @@ class turbulentCircleEmitter : public circleEmitter
 {
 public:
     turbulentCircleEmitter(float r, particle **pool, int emitter_id, vector3 pos, vector3 dir, vector3 dirVar, float speed, float speedVar, int totalParticles, int emitsPerFrame, int emitVar, int life, int lifeVar, vector3 force);
+    turbulentCircleEmitter(particle **pool, int emitter_id, string filepath);
     void display();
     
 private:

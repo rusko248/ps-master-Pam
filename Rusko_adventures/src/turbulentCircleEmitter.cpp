@@ -12,10 +12,16 @@ turbulentCircleEmitter::turbulentCircleEmitter(float r, particle **pool, int emi
     
 }
 
+turbulentCircleEmitter::turbulentCircleEmitter(particle **pool, int emitter_id, string filepath) : circleEmitter (pool, emitter_id, filepath){
+    
+}
+
 void turbulentCircleEmitter::display(){
     if(!displaying) return;
-    for(int newP = 0; newP < (e->emitsPerFrame + e->emitVar*randDist()); newP++){
-        addParticle();
+    if(!playFromFile){
+        for(int newP = 0; newP < (e->emitsPerFrame + e->emitVar*randDist()); newP++){
+            addParticle();
+        }
     }
     glEnable(GL_POINT_SMOOTH);
     glEnable( GL_TEXTURE_2D );
@@ -35,8 +41,8 @@ void turbulentCircleEmitter::display(){
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
     // File locations
     std::string vertexShader = "/Users/aarondamashek/Documents/Stanford Work/Spring 2013/CS 248/ParticleSystem3/Particles/kernels/default.vert";
-    std::string fragmentShader = "/Users/aarondamashek/Documents/Stanford Work/Spring 2013/CS 248/ParticleSystem3/Particles/kernels/wind.frag";
-    //std::string fragmentShader = "/Users/aarondamashek/Documents/Stanford Work/Spring 2013/CS 248/ParticleSystem3/ProgrammableShading/kernels/wind.frag";
+    //std::string fragmentShader = "/Users/aarondamashek/Documents/Stanford Work/Spring 2013/CS 248/ParticleSystem3/Particles/kernels/wind.frag";
+    std::string fragmentShader = "/Users/aarondamashek/Documents/Stanford Work/Spring 2013/CS 248/ParticleSystem3/Particles/kernels/fire.frag";
     std::string windPic = "/Users/aarondamashek/Documents/Stanford Work/Spring 2013/CS 248/ParticleSystem3/Particles/wind.png";
     
     STImage   *windImg;
@@ -63,8 +69,8 @@ void turbulentCircleEmitter::display(){
     // Invoke the shader.  Now OpenGL will call our
     // shader programs on anything we draw.
     shader->Bind();
-    shader->SetUniform("pointRadius", 7.0f);
-    shader->SetUniform("point_size", 7.0f);
+    shader->SetUniform("pointRadius", 10.0f);
+    shader->SetUniform("point_size", 10.0f);
     
     glPointSize(5);
     glBegin(GL_POINTS);
@@ -124,6 +130,7 @@ bool turbulentCircleEmitter::addParticle(){
         newParticle->pos.y = rotatedPoint.y;
         newParticle->pos.z = rotatedPoint.z;
         
+        
         /*
          newParticle->pos.x = e->pos.x + radius*sinf(angle);
          newParticle->pos.y = e->pos.y;
@@ -176,12 +183,22 @@ bool turbulentCircleEmitter::updateParticle(particle *p){
         //p->pos.y = cosf((p->pos.x)*e->life/e->lifeVar)*this->radius*p->rand;
         //p->pos.z = p->radius * sinf((p->pos.x)*e->life/e->lifeVar)*this->radius*p->rand;
         
-        p->pos.y = cosf((p->pos.x)*e->life/e->lifeVar)*p->radius*p->rand;
-        p->pos.z = p->radius * sinf((p->pos.x)*e->life/e->lifeVar)*p->radius*p->rand;
+        if(p->side < 0){
+            p->pos.y = e->pos.y + cosf((p->pos.x)*e->life/e->lifeVar)*p->radius;
+            p->pos.z = e->pos.z + p->radius * sinf((p->pos.x)*e->life/e->lifeVar)*p->radius;
+        }else{
+            p->pos.y = e->pos.y + sinf((p->pos.x)*e->life/e->lifeVar)*p->radius;
+            p->pos.z = e->pos.z + p->radius * cosf((p->pos.x)*e->life/e->lifeVar)*p->radius;
+        }
         
         p->pos.x += p->dir.x;
-        //p->pos.y += e->dirVar.y;
-        //p->pos.z += e->dirVar.z;
+        
+        p->dir.y += p->pos.z * p->pos.x * randDist();
+        p->dir.z += p->pos.y * p->pos.x * randDist();
+        
+        p->pos.y += e->dirVar.y * randDist();
+        p->pos.z += e->dirVar.z * randDist();
+        p->pos.x += e->dirVar.x * (float)rand()/RAND_MAX;
         
         p->life--;
         return true;

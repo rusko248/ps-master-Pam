@@ -7,6 +7,7 @@ using namespace std;
 
 Rusko::Rusko() {
     model = new Model("models/rusko/Rusko_full_03.obj");
+    
     //to load animation
     for (int i = 2; i <= lastFrame_run; i++){
         string mod_name = "models/rusko_run/Rusko_ani_04_0000";
@@ -16,11 +17,14 @@ Rusko::Rusko() {
         Model* mod = new Model(mod_name);
         runAnimation.push_back(mod);
         
-        string torch_name = "models/torch_pos/Rusko_ani_04_0000";
+        float scaleLength = mod->getMaxLength();
+        STPoint3 centerMass = mod->getCenterMass();
+        
+        string torch_name = "models/torch_pos/Rusko_torchPos_0000";
         torch_name += (i/10 + '0');
         torch_name += ((i % 10) +'0');
         torch_name += ".obj";
-        Model* torch_mod = new Model(mod_name);
+        Model* torch_mod = new Model(torch_name, centerMass, scaleLength);
         torchPosition.push_back(torch_mod);
     }
 }
@@ -36,6 +40,9 @@ void Rusko::render(int frame) {
 
 STPoint3 Rusko::getTorchPos(int frame){
     STPoint3 torchPos;
+    
+    frame = frame % torchPosition.size();
+    torchPos = torchPosition.at(frame)->getCenterPoint();
     
     return torchPos;
 }

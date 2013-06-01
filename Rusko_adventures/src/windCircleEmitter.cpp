@@ -12,10 +12,16 @@ windCircleEmitter::windCircleEmitter(float r, particle **pool, int emitter_id, v
     
 }
 
+windCircleEmitter::windCircleEmitter(particle **pool, int emitter_id, string filepath) : circleEmitter (pool, emitter_id, filepath){
+    
+}
+
 void windCircleEmitter::display(){
     if(!displaying) return;
-    for(int newP = 0; newP < (e->emitsPerFrame + e->emitVar*randDist()); newP++){
-        addParticle();
+    if(!playFromFile){
+        for(int newP = 0; newP < (e->emitsPerFrame + e->emitVar*randDist()); newP++){
+            addParticle();
+        }
     }
     glEnable(GL_POINT_SMOOTH);
     glEnable( GL_TEXTURE_2D );
@@ -34,10 +40,10 @@ void windCircleEmitter::display(){
     glDepthMask(GL_FALSE);
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
     // File locations
-    std::string vertexShader = "../Particles/kernels/default.vert";
-    std::string fragmentShader = "../Particles/kernels/wind.frag";
+    std::string vertexShader = "/Users/aarondamashek/Documents/Stanford Work/Spring 2013/CS 248/ParticleSystem3/Particles/kernels/default.vert";
+    std::string fragmentShader = "/Users/aarondamashek/Documents/Stanford Work/Spring 2013/CS 248/ParticleSystem3/Particles/kernels/wind.frag";
     //std::string fragmentShader = "/Users/aarondamashek/Documents/Stanford Work/Spring 2013/CS 248/ParticleSystem3/ProgrammableShading/kernels/wind.frag";
-    std::string windPic = "../Particles/wind.png";
+    std::string windPic = "/Users/aarondamashek/Documents/Stanford Work/Spring 2013/CS 248/ParticleSystem3/Particles/wind.png";
     
     STImage   *windImg;
     STTexture *windTex;

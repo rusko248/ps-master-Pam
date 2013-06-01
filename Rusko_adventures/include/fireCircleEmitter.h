@@ -17,6 +17,7 @@ class fireCircleEmitter : public circleEmitter
 {
 public:
     fireCircleEmitter(float r, particle **pool, int emitter_id, vector3 pos, vector3 dir, vector3 dirVar, float speed, float speedVar, int totalParticles, int emitsPerFrame, int emitVar, int life, int lifeVar, vector3 force);
+    fireCircleEmitter(particle **pool, int emitter_id, string filepath);
     void display();
     
 private:

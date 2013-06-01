@@ -18,9 +18,14 @@ class circleEmitter : public Emitter
 {
 public:
     circleEmitter(float r, particle **pool, int emitter_id, vector3 pos, vector3 dir, vector3 dirVar, float speed, float speedVar, int totalParticles, int emitsPerFrame, int emitVar, int life, int lifeVar, vector3 force);
+    circleEmitter(particle **pool, int emitter_id, string filepath);
     virtual void display();
     bool simpleDetectCollision(vector3 pos, float epsilon);
     bool particleDetectCollision(vector3 pos, float epsilon);
+    
+    void recordEmission(string outputFile);
+    void loadEmission(string filepath);
+
 protected:
     virtual bool addParticle();
     virtual bool updateParticle(particle *p);

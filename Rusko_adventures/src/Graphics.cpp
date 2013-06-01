@@ -241,8 +241,11 @@ void drawRusko(){
 //
     }
     
-    
     rusko->render(frame_walk);
+    STPoint3 torchPos = rusko->getTorchPos(frame_walk);
+    xpos = torchPos.x;
+    ypos = torchPos.y;
+    zpos = torchPos.z;
 }
 
 
