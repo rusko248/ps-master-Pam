@@ -3,7 +3,6 @@
 
 #include "Room.h"
 #include <cmath>
-#include <algorithm>
 
 using namespace std;
 
@@ -22,6 +21,16 @@ Torch torch;
 Box box;
 Spikes spikes;
 
+// Material
+float materialAmbient[]  = { 0.2, 0.2, 0.2, 1.0 };
+float materialDiffuse[]  = { 0.2, 0.2, 0.2, 1.0 };
+float materialSpecular[] = { 0.4, 0.4, 0.4, 1.0 };
+float shininess          = 8.0;
+
+// Room Texture
+STImage *floorBrickImage, *wallBrickImage;
+STTexture *floorTexture, *wallTexture;
+
 float minHeight = 3.0f, maxHeight = 10.0f;
 
 Room::Room() {
@@ -38,6 +47,11 @@ Room::Room(int w, int h, int l, float s) {
 	scale = s;
 
 	initRoom();
+}
+
+Room::~Room() {
+	delete floorBrickImage, wallBrickImage;
+	delete floorTexture, wallTexture;
 }
 
 void Room::initRoom() {
@@ -65,6 +79,11 @@ void Room::initRoom() {
 	torch = Torch(torchScale*scale);
 	box = Box(boxScale*scale);
 	spikes = Spikes();
+
+	floorBrickImage = new STImage("models/Room/BrickFloor.jpg");
+	wallBrickImage = new STImage("models/Room/BrickWall.jpg");
+	floorTexture = new STTexture(floorBrickImage);
+	wallTexture = new STTexture(wallBrickImage);
 }
 
 void Room::setLevel(int lv) {
@@ -79,57 +98,108 @@ void Room::render() {
 }
 
 void Room::renderLayout() {
+	glMaterialfv(GL_FRONT, GL_AMBIENT,   materialAmbient);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE,   materialDiffuse);
+	glMaterialfv(GL_FRONT, GL_SPECULAR,  materialSpecular);
+	glMaterialfv(GL_FRONT, GL_SHININESS, &shininess);
+
+	floorTexture->Bind();
 	glBegin(GL_QUADS);
 		// floor
-		glNormal3f(0,1,0);
-		glVertex3f(pos.x,pos.y,pos.z);
-		glNormal3f(0,1,0);
-		glVertex3f(pos.x+scale*floor->width,pos.y,pos.z);
-		glNormal3f(0,1,0);
-		glVertex3f(pos.x+scale*floor->width,pos.y,pos.z-scale*floor->length);
-		glNormal3f(0,1,0);
-		glVertex3f(pos.x,pos.y,pos.z-scale*floor->length);
+		for (int v = 0; v < floor->length; ++v) {
+			for (int u = 0; u < floor->width; ++u) {
+				glTexCoord2f(0,0);
+				glNormal3f(0,1,0);
+				glVertex3f(pos.x+scale*u,pos.y,pos.z-scale*v);
+				glTexCoord2f(0,1);
+				glNormal3f(0,1,0);
+				glVertex3f(pos.x+scale*(u+1),pos.y,pos.z-scale*v);
+				glTexCoord2f(1,1);
+				glNormal3f(0,1,0);
+				glVertex3f(pos.x+scale*(u+1),pos.y,pos.z-scale*(v+1));
+				glTexCoord2f(1,0);
+				glNormal3f(0,1,0);
+				glVertex3f(pos.x+scale*u,pos.y,pos.z-scale*(v+1));
+			}
+		}
+	glEnd();
+	floorTexture->UnBind();
 
+	wallTexture->Bind();
+	glBegin(GL_QUADS);
 		// near wall
-		glNormal3f(0,1,0);
-		glVertex3f(pos.x,pos.y,pos.z);
-		glNormal3f(0,1,0);
-		glVertex3f(pos.x+scale*walls[0]->base,pos.y,pos.z);
-		glNormal3f(0,1,0);
-		glVertex3f(pos.x+scale*walls[0]->base,pos.y+scale*walls[0]->height,pos.z);
-		glNormal3f(0,1,0);
-		glVertex3f(pos.x,pos.y+scale*walls[0]->height,pos.z);
+		for (int v = 0; v < walls[0]->height; ++v) {
+			for (int u = 0; u < walls[0]->base; ++u) {
+				glTexCoord2f(0,0);
+				glNormal3f(0,1,0);
+				glVertex3f(pos.x+scale*u,pos.y+scale*v,pos.z);
+				glTexCoord2f(1,0);
+				glNormal3f(0,1,0);
+				glVertex3f(pos.x+scale*(u+1),pos.y+scale*v,pos.z);
+				glTexCoord2f(1,1);
+				glNormal3f(0,1,0);
+				glVertex3f(pos.x+scale*(u+1),pos.y+scale*(v+1),pos.z);
+				glTexCoord2f(0,1);
+				glNormal3f(0,1,0);
+				glVertex3f(pos.x+scale*u,pos.y+scale*(v+1),pos.z);
+			}
+		}
 
 		// left wall
-		glNormal3f(0,1,0);
-		glVertex3f(pos.x,pos.y,pos.z);
-		glNormal3f(0,1,0);
-		glVertex3f(pos.x,pos.y,pos.z-scale*walls[1]->base);
-		glNormal3f(0,1,0);
-		glVertex3f(pos.x,pos.y+scale*walls[1]->height,pos.z-scale*walls[1]->base);
-		glNormal3f(0,1,0);
-		glVertex3f(pos.x,pos.y+scale*walls[1]->height,pos.z);
+		for (int v = 0; v < walls[1]->height; ++v) {
+			for (int u = 0; u < walls[1]->base; ++u) {
+				glTexCoord2f(0,0);
+				glNormal3f(0,1,0);
+				glVertex3f(pos.x,pos.y+scale*v,pos.z-scale*u);
+				glTexCoord2f(1,0);
+				glNormal3f(0,1,0);
+				glVertex3f(pos.x,pos.y+scale*v,pos.z-scale*(u+1));
+				glTexCoord2f(1,1);
+				glNormal3f(0,1,0);
+				glVertex3f(pos.x,pos.y+scale*(v+1),pos.z-scale*(u+1));
+				glTexCoord2f(0,1);
+				glNormal3f(0,1,0);
+				glVertex3f(pos.x,pos.y+scale*(v+1),pos.z-scale*u);
+			}
+		}
 
 		// far wall
-		glNormal3f(0,1,0);
-		glVertex3f(pos.x,pos.y,pos.z-scale*floor->length);
-		glNormal3f(0,1,0);
-		glVertex3f(pos.x+scale*walls[2]->base,pos.y,pos.z-scale*floor->length);
-		glNormal3f(0,1,0);
-		glVertex3f(pos.x+scale*walls[2]->base,pos.y+scale*walls[2]->height,pos.z-scale*floor->length);
-		glNormal3f(0,1,0);
-		glVertex3f(pos.x,pos.y+scale*walls[2]->height,pos.z-scale*floor->length);
+		for (int v = 0; v < walls[2]->height; ++v) {
+			for (int u = 0; u < walls[2]->base; ++u) {
+				glTexCoord2f(0,0);
+				glNormal3f(0,1,0);
+				glVertex3f(pos.x+scale*u,pos.y+scale*v,pos.z-scale*floor->length);
+				glTexCoord2f(1,0);
+				glNormal3f(0,1,0);
+				glVertex3f(pos.x+scale*(u+1),pos.y+scale*v,pos.z-scale*floor->length);
+				glTexCoord2f(1,1);
+				glNormal3f(0,1,0);
+				glVertex3f(pos.x+scale*(u+1),pos.y+scale*(v+1),pos.z-scale*floor->length);
+				glTexCoord2f(0,1);
+				glNormal3f(0,1,0);
+				glVertex3f(pos.x+scale*u,pos.y+scale*(v+1),pos.z-scale*floor->length);
+			}
+		}
 
 		// right wall
-		glNormal3f(0,1,0);
-		glVertex3f(pos.x+scale*floor->width,pos.y,pos.z);
-		glNormal3f(0,1,0);
-		glVertex3f(pos.x+scale*floor->width,pos.y,pos.z-scale*walls[3]->base);
-		glNormal3f(0,1,0);
-		glVertex3f(pos.x+scale*floor->width,pos.y+scale*walls[3]->height,pos.z-scale*walls[3]->base);
-		glNormal3f(0,1,0);
-		glVertex3f(pos.x+scale*floor->width,pos.y+scale*walls[3]->height,pos.z);
+		for (int v = 0; v < walls[3]->height; ++v) {
+			for (int u = 0; u < walls[3]->base; ++u) {
+				glTexCoord2f(0,0);
+				glNormal3f(0,1,0);
+				glVertex3f(pos.x+scale*floor->width,pos.y+scale*v,pos.z-scale*u);
+				glTexCoord2f(1,0);
+				glNormal3f(0,1,0);
+				glVertex3f(pos.x+scale*floor->width,pos.y+scale*v,pos.z-scale*(u+1));
+				glTexCoord2f(1,1);
+				glNormal3f(0,1,0);
+				glVertex3f(pos.x+scale*floor->width,pos.y+scale*(v+1),pos.z-scale*(u+1));
+				glTexCoord2f(0,1);
+				glNormal3f(0,1,0);
+				glVertex3f(pos.x+scale*floor->width,pos.y+scale*(v+1),pos.z-scale*u);
+			}
+		}
 	glEnd();
+	wallTexture->UnBind();
 }
 
 void Room::renderObjects() {
