@@ -3,17 +3,18 @@
 
 #include "Torch.h"
 
-Torch::Torch() {
-	model = new Model("models/WoodCrate_OBJ/WoodCrate_OBJ.obj");
-	/*texture.diffuseMap = new STImage("models/WoodCrate_OBJ/D.jpg");
-	texture.specularMap = new STImage("models/WoodCrate_OBJ/S.jpg");
-	texture.normalMap = new STImage("models/WoodCrate_OBJ/NM.jpg");*/
+Torch::Torch() : Model("models/Torch_OBJ/Torch_Low_Poly.obj") {
+
+}
+
+Torch::Torch(float scale) : Model("models/Torch_OBJ/Torch_Low_Poly.obj", scale) {
+
 }
 
 Torch::~Torch() {
-	delete model;
+	
 }
 
 void Torch::render() {
-	model->render();
+	Model::render();
 }

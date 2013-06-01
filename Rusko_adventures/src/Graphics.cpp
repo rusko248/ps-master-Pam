@@ -199,17 +199,48 @@ void renderWorld(){
 }
 
 
+/**
+ * Jump function
+ * Uses catmull rom to simulate jump
+ */
+void jump()
+{
+    int u_temp = (jumpTimer+10) %10;
+    float u = float(u_temp)/10 + .1f; //adds the .1f to make sure that we go through the last control point
+    
+    int i = jumpTimer/10;
+    STPoint3 fu = cr->curveAt(u, i);
+    
+    //calculates where the world needs to be after a jump
+    worldPos.y -= (fu.y - lastJump.y);
+    worldPos.z -= (fu.z - lastJump.z)*cos(PI/180*worldAngle);
+    worldPos.x += (fu.z - lastJump.z)*sin(PI/180*worldAngle);
+    
+    lastJump.y = fu.y;
+    lastJump.z = fu.z; //makes sure to record lastJump.z position
+    jumpTimer++;
+    if (int(jumpTimer/10) >= numControlPoints-1) {
+        jumpOn = false;
+        lastJump.x = lastJump.y = lastJump.z = 0;
+    }
+}
+
+
 /** Rends the main character, who should remain at origin**/
 void drawRusko(){
     //transform Rusko, right now only renders (rusko remains static)
     //can add the particle system of the fire here
     
-    if (upKeyPressed) {
+    if (upKeyPressed && !jumpOn) {
         frame_walk++;
     }
-    if (downKeyPressed) {
+    if (downKeyPressed && !jumpOn) {
         frame_walk--;
     }
+    if (jumpOn) {
+//
+    }
+    
     
     rusko->render(frame_walk);
 }
@@ -269,31 +300,7 @@ void DisplayCallback()
 }
 
 
-/**
- * Jump function
- * Uses catmull rom to simulate jump
- */
-void jump()
-{
-    int u_temp = (jumpTimer+10) %10;
-    float u = float(u_temp)/10 + .1f; //adds the .1f to make sure that we go through the last control point
-    
-    int i = jumpTimer/10;
-    STPoint3 fu = cr->curveAt(u, i);
-    
-    //calculates where the world needs to be after a jump
-    worldPos.y -= (fu.y - lastJump.y);
-    worldPos.z -= (fu.z - lastJump.z)*cos(PI/180*worldAngle);
-    worldPos.x += (fu.z - lastJump.z)*sin(PI/180*worldAngle);
-    
-    lastJump.y = fu.y;
-    lastJump.z = fu.z; //makes sure to record lastJump.z position
-    jumpTimer++;
-    if (int(jumpTimer/10) >= numControlPoints-1) {
-        jumpOn = false;
-        lastJump.x = lastJump.y = lastJump.z = 0;
-    }
-}
+
 
 /**
  * Timer function for moving forward/back, and turning
@@ -340,7 +347,7 @@ static void TimerJump(int value){
         systemSound->jumping = false;
     }
     
-    glutTimerFunc(200/fps, TimerJump, 0); // 10 milliseconds
+    glutTimerFunc(100/fps, TimerJump, 0); // 10 milliseconds
 }
 
 
@@ -416,7 +423,7 @@ void GraphicsMainLoop()
 	glutReshapeFunc(ReshapeCallback);
     
     glutTimerFunc(2000/fps, Timer, 0); //timer for moving up/down/turning
-    glutTimerFunc(200/fps, TimerJump, 0); //timer for jumping
+    glutTimerFunc(100/fps, TimerJump, 0); //timer for jumping
     glutTimerFunc(1000/fps,timer,window_id);
     
     glutKeyboardFunc(KeyboardCallback);

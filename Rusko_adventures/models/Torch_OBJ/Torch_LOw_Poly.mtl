@@ -1,0 +1,13 @@
+# Blender3D MTL File: Torch_LOw_Poly.blend
+# Material Count: 1
+newmtl Torch__Torch_Diffuse.tga
+Ns 692.156863
+Ka 0.000000 0.000000 0.000000
+Kd 0.400000 0.400000 0.400000
+Ks 0.098461 0.095218 0.091337
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Torch_Diffuse.tga
+
+

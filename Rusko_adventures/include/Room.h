@@ -26,7 +26,7 @@ struct Floor {
 	int getIndex(int u, int v) {
 		assert(u >= 0 && u < width);
 		assert(v >= 0 && v < length);
-		return u + length*v;
+		return u + width*v;
 	}
 };
 
@@ -53,6 +53,7 @@ private:
 
 	Wall *walls[4]; // near, left, far, right
 	Floor *floor;
+	int numTorches;
 
 };
 

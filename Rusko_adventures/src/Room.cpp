@@ -2,6 +2,12 @@
 #define _USE_MATH_DEFINES
 
 #include "Room.h"
+#include <cmath>
+#include <algorithm>
+
+using namespace std;
+
+#define PI 3.14159265
 
 #define FREE 0
 #define TORCH 1
@@ -9,15 +15,18 @@
 #define SPIKES 3
 #define PIT 4
 
-float boxScale = 0.2f;
+float torchScale = 1.0f;
+float boxScale = 1.0f;
 
-Torch torch = Torch();
-Box box = Box(boxScale);
-Spikes spikes = Spikes();
+Torch torch;
+Box box;
+Spikes spikes;
+
+float minHeight = 3.0f, maxHeight = 10.0f;
 
 Room::Room() {
-	dim[0] = dim[1] = dim[2] = 200;
-	scale = 0.2f;
+	dim[0] = dim[1] = dim[2] = 10;
+	scale = 1.0f;
 	
 	initRoom();
 }
@@ -51,10 +60,16 @@ void Room::initRoom() {
 	pos = STPoint3(0,0,0);
 
 	level = 1;
+	numTorches = 0;
+
+	torch = Torch(torchScale*scale);
+	box = Box(boxScale*scale);
+	spikes = Spikes();
 }
 
 void Room::setLevel(int lv) {
 	level = lv;
+	generateTorches();
 	generateObstacles();
 }
 
@@ -166,6 +181,10 @@ void Room::renderObjects() {
 
 			switch (walls[j]->objPos[i]) {
 			case TORCH:
+				if (j == 0) { glTranslatef(0, 0, torch.bbox.minz); glRotatef(180.0f, 0, 1, 0); }
+				else if (j == 1) { glTranslatef(-torch.bbox.minz, 0, 0); glRotatef(90.0f, 0, 1, 0); }
+				else if (j == 2) { glTranslatef(0, 0, -torch.bbox.minz); }
+				else if (j == 3) { glTranslatef(torch.bbox.minz, 0, 0); glRotatef(270.0f, 0, 1, 0); }
 				torch.render();
 				break;
 			case BOX:
@@ -183,9 +202,37 @@ void Room::renderObjects() {
 	}
 }
 
+void Room::generateTorches() {
+	if (level == 1) {
+		numTorches = 1;
+		walls[2]->objPos[walls[2]->getIndex(walls[2]->base/2, walls[2]->height/2)] = TORCH;
+		return;
+	}
+
+	srand(time(NULL));
+	numTorches = rand() % 3 + 2*level - 2;
+
+	std::vector<int> wallPos, basePos, heightPos;
+	for (int i = 0; i < numTorches; ++i) {
+		// select wall
+		int wallpos = rand() % 4;
+		wallPos.push_back(wallpos);
+		// select base position
+		int basepos = rand() % walls[wallpos]->base;
+		basePos.push_back(basepos);
+		// select height position
+		int heightMin = (int)ceilf(minHeight/scale), heightMax = min((int)floorf(maxHeight/scale), walls[wallpos]->height-1);
+		int heightpos = rand() % (heightMax-heightMin+1) + heightMin;
+		heightPos.push_back(heightpos);
+	}
+
+	for (int i = 0; i < numTorches; ++i) {
+		walls[wallPos[i]]->objPos[walls[wallPos[i]]->getIndex(basePos[i], heightPos[i])] = TORCH;
+	}
+}
+
 void Room::generateObstacles() {
 	if (level == 1) {
 		floor->objPos[floor->getIndex(floor->width/2, floor->length/2)] = BOX;
-		walls[2]->objPos[walls[2]->getIndex(walls[2]->base/2, walls[2]->height/2)] = TORCH;
 	}
 }

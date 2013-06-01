@@ -16,6 +16,7 @@ public:
 	~Rusko();
 	
 	void render(int frame);
+    STPoint3 getTorchPos(int frame);
     
 private:
 	Model *model;
@@ -26,7 +27,9 @@ private:
     int currentFrame = 0;
     
     // List of objects to render
-    std::vector<Model *> renderList;
+    std::vector<Model *> runAnimation;
+    std::vector<Model *> torchPosition;
+
     
 };
 

@@ -15,15 +15,15 @@ class Model : Renderable
 public:
 	Model();
 	Model(const std::string &path);
+	Model(const std::string &path, float scale);
 	virtual ~Model();
 
 	void render();
-	void scale(float s);
 
 	BBox bbox;
 
 private:
-	void fitSphere();
+	void fitSphere(float scale);
 	BBox findBBox();
 
 	Mesh mesh;
