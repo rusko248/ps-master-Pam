@@ -258,7 +258,8 @@ void drawRusko(){
     
     //jump
     else if (jumpOn) {
-        torchPos = rusko->renderJump(rusko_frameJump);
+        rusko_frameWalk++;
+        torchPos = rusko->renderJump(rusko_frameWalk);
     }
     
     //still
