@@ -1,0 +1,9 @@
+# Blender v2.63 (sub 0) OBJ File: 'Rusko_ani_11_runToWalk.blend'
+# www.blender.org
+o Plane
+v -1.927233 6.887244 1.480172
+v -1.923885 6.890324 1.488045
+v -1.935578 6.887091 1.483781
+v -1.932230 6.890172 1.491653
+s off
+f 2 1 3 4

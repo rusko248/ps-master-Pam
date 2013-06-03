@@ -29,15 +29,15 @@ Sound *systemSound;
 // Camera/world positions, initialized at setup
 STVector3 camPos, worldPos, lastJump;
 float worldAngle;
+int initialYPos = -1;
 
 // CatmullRom Jump
 bool jumpOn;
-int jumpTimer;
-int numControlPoints;
+int rusko_frameJump;
 CatmullRom* cr;
 
 //Walk/Jump frame counters
-int frame_walk = 0;
+int rusko_frameWalk = 0;
 
 // Lights
 float light0Position[4];
@@ -75,7 +75,7 @@ void setup(){
     
     //Initial world position
     worldPos.x = 0;
-    worldPos.y = -.7; //how is the room positioned?
+    worldPos.y = initialYPos; //how is the room positioned?
     worldPos.z = 0;
     worldAngle = -90;
     
@@ -107,11 +107,10 @@ void setup(){
     
     //Jump stuff-CatmullRom file uploaded
     jumpOn = false;
-    jumpTimer = 0;
+    rusko_frameJump = 0;
     lastJump.x = lastJump.y = lastJump.z = 0;
-    cr = new CatmullRom();
-    cr->readFile("models/rusko/jump_controlPoints.txt");
-    numControlPoints = cr->numControlPoints;
+
+    cr = new CatmullRom("models/rusko/jump_controlPoints.txt");
     
     //Interaction/keyboard
     upKeyPressed = downKeyPressed = false;
@@ -205,44 +204,69 @@ void renderWorld(){
  */
 void jump()
 {
-    int u_temp = (jumpTimer+10) %10;
-    float u = float(u_temp)/10 + .1f; //adds the .1f to make sure that we go through the last control point
-    
-    int i = jumpTimer/10;
-    STPoint3 fu = cr->curveAt(u, i);
-    
-    //calculates where the world needs to be after a jump
-    worldPos.y -= (fu.y - lastJump.y);
-    worldPos.z -= (fu.z - lastJump.z)*cos(PI/180*worldAngle);
-    worldPos.x += (fu.z - lastJump.z)*sin(PI/180*worldAngle);
-    
-    lastJump.y = fu.y;
-    lastJump.z = fu.z; //makes sure to record lastJump.z position
-    jumpTimer++;
-    if (int(jumpTimer/10) >= numControlPoints-1) {
+    rusko_frameJump += 3;
+    int totPoints = cr->totalPoints;
+
+    if (rusko_frameJump >= totPoints) {
         jumpOn = false;
         lastJump.x = lastJump.y = lastJump.z = 0;
+        worldPos.y = initialYPos;
+    }
+    else {
+        STPoint3 fu = cr->pointAt(rusko_frameJump);
+        
+        //calculates where the world needs to be after a jump
+        worldPos.y -= (fu.y - lastJump.y);
+        worldPos.z -= (fu.z - lastJump.z)*cos(PI/180*worldAngle);
+        worldPos.x += (fu.z - lastJump.z)*sin(PI/180*worldAngle);
+        
+        lastJump.y = fu.y;
+        lastJump.z = fu.z; //makes sure to record lastJump.z position
     }
 }
 
 
 /** Rends the main character, who should remain at origin**/
 void drawRusko(){
-    //transform Rusko, right now only renders (rusko remains static)
-    //can add the particle system of the fire here
+
+    STPoint3 torchPos;
+
+    /**deals with animation**/
     
+    //walk forward
     if (upKeyPressed && !jumpOn) {
-        frame_walk++;
-    }
-    if (downKeyPressed && !jumpOn) {
-        frame_walk--;
-    }
-    if (jumpOn) {
-//
+        torchPos = rusko->renderWalk(rusko_frameWalk);
+        rusko_frameWalk++;
     }
     
-    rusko->render(frame_walk);
-    STPoint3 torchPos = rusko->getTorchPos(frame_walk);
+    //walk backward
+    else if (downKeyPressed && !jumpOn) {
+        torchPos = rusko->renderBackWalk(rusko_frameWalk);
+        rusko_frameWalk++;
+    }
+    
+    //turning left
+    else if (leftKeyPressed){
+        torchPos = rusko->renderStepLeft(rusko_frameWalk);
+        rusko_frameWalk++;
+    }
+    //turning right
+    else if (rightKeyPressed){
+        torchPos = rusko->renderStepRight(rusko_frameWalk);
+        rusko_frameWalk++;
+    }
+    
+    //jump
+    else if (jumpOn) {
+        torchPos = rusko->renderJump(rusko_frameJump);
+    }
+    
+    //still
+    else {
+        torchPos = rusko->render(0);
+    }
+    
+    
     xpos = torchPos.x;
     ypos = torchPos.y;
     zpos = torchPos.z;
@@ -325,9 +349,11 @@ static void Timer(int value)
         worldPos.z += 1*cos(PI/180*worldAngle);
     }
     if (rightKeyPressed){
+        if (worldAngle == 360) worldAngle = 0;
         worldAngle += 5;
     }
     if (leftKeyPressed){
+        if (worldAngle == 360) worldAngle = 0;
         worldAngle -= 5;
     }
     if (upKeyPressed || downKeyPressed || rightKeyPressed || leftKeyPressed ){
@@ -367,7 +393,7 @@ void KeyboardCallback(unsigned char key, int x, int y)
         case ' ':  //activates jumping
             if (!jumpOn) {
                 jumpOn = true;
-                jumpTimer = 0;
+                rusko_frameJump = 0;
             }
             glutPostRedisplay();
             break;
@@ -404,12 +430,18 @@ void KeySpecialUp(int key, int x, int y)
 {
     if (key == GLUT_KEY_RIGHT){
         rightKeyPressed = false;
+        rusko_frameWalk = 0;
     } else if (key == GLUT_KEY_LEFT){
         leftKeyPressed = false;
+        rusko_frameWalk = 0;
     }if (key == GLUT_KEY_UP){
         upKeyPressed = false;
+        rusko_frameWalk = 0;
+        rusko_frameJump = 0;
     } else if (key == GLUT_KEY_DOWN){
         downKeyPressed = false;
+        rusko_frameWalk = 0;
+        rusko_frameJump = 0;
     }
 }
 

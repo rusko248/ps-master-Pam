@@ -18,6 +18,16 @@ CatmullRom::CatmullRom(){
     controlPoints = new vector<STPoint3>();
 }
 
+CatmullRom::CatmullRom(string filename){
+    segmentNum = -1;
+    numControlPoints = 0;
+    controlPoints = new vector<STPoint3>();
+    allPoints = new vector<STPoint3>();
+    this->readFile(filename);
+    createAllPoints();
+}
+
+
 
 void CatmullRom::readFile(string filename)
 {
@@ -104,4 +114,21 @@ STPoint3 CatmullRom::curveAt(float u, int i)
     
     fu = STPoint3(c0 + c1*u + c2*((float)pow(u, 2)) + c3*((float)pow(u, 3)));
     return fu;
+}
+
+
+void CatmullRom::createAllPoints(){
+    totalPoints = 0;
+    for (int i = 0; i < numControlPoints-1; i++){
+        for (int j = 0; j <= 10; j++){
+            STPoint3 fu = this->curveAt((float)j/10, i);
+            allPoints->push_back(fu);
+            totalPoints++;
+        }
+    }
+}
+
+STPoint3 CatmullRom::pointAt(int i)
+{
+    return allPoints->at(i);
 }

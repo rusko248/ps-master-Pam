@@ -15,22 +15,30 @@ public:
 	Rusko();
 	~Rusko();
 	
-	void render(int frame);
-    STPoint3 getTorchPos(int frame);
-    
-private:
-	Model *model;
-	Texture texture;
-    
-    //number of frames for animation
-    int lastFrame_run = 40;
-    int currentFrame = 0;
-    
-    // List of objects to render
-    std::vector<Model *> runAnimation;
-    std::vector<Model *> torchPosition;
+	STPoint3 render(int frame);
+    STPoint3 renderWalk(int frame);
+    STPoint3 renderBackWalk(int frame);
+    STPoint3 renderStepLeft(int frame);
+    STPoint3 renderStepRight(int frame);
+    STPoint3 renderJump(int frame);
 
-    
+private:
+    // List of objects to render
+    std::vector<Model *> rusko_run;
+    std::vector<Model *> rusko_stand2run;
+    std::vector<Model *> rusko_run2stand;
+    std::vector<Model *> rusko_stepLeft;
+    std::vector<Model *> rusko_jump;
+
+
+    std::vector<Model *> torch_run;
+    std::vector<Model *> torch_stand2run;
+    std::vector<Model *> torch_run2stand;
+    std::vector<Model *> torch_stepLeft;
+    std::vector<Model *> torch_jump;
+
+    //last current frame
+    int lastFrame;
 };
 
 #endif

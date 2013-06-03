@@ -28,6 +28,7 @@ class CatmullRom
     
 public:
 	CatmullRom();
+    CatmullRom(string filename); //automatically makes all points with increment of .1
     void readFile(string filename);
     
     void addControlPoint(float x, float y, float z);
@@ -39,13 +40,20 @@ public:
     //stores number of control points in catmull-rom
     int numControlPoints;
 
+    //stores total number of sections for catmull-rom
+    STPoint3 pointAt(int i);
+    int totalPoints;
     
 private:
+    void createAllPoints();
+    vector<STPoint3>* allPoints;
+
     
     void newSegment(int i); //determines segment between point p(i) and p(i+1)
     vector<STPoint3>* controlPoints; //stores all vertices
     int segmentNum;
     STVector3 c0, c1, c2, c3;
+    
 };
 
 
