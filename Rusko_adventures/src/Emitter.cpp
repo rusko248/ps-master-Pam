@@ -337,6 +337,11 @@ void Emitter::updateFromFile(){
         curr = curr->next;
         
         vector3 pos = storedLocations[particleIndex][displayFrame];
+        
+        //Translate to be relative to current emitter instead of origin
+        pos.x += e->pos.x;
+        pos.y += e->pos.y;
+        pos.z += e->pos.z;
         toUpdate->pos = pos;
         particleIndex++;
     }

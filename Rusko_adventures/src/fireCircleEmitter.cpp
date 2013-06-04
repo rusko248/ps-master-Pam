@@ -37,10 +37,10 @@ void fireCircleEmitter::display(){
     glDepthMask(GL_FALSE);
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
     // File locations
-    std::string vertexShader = "/Users/aarondamashek/Documents/Stanford Work/Spring 2013/CS 248/ParticleSystem3/Particles/kernels/default.vert";
-    std::string fragmentShader = "/Users/aarondamashek/Documents/Stanford Work/Spring 2013/CS 248/ParticleSystem3/Particles/kernels/fire.frag";
+    std::string vertexShader = "../Particles/kernels/default.vert";
+    std::string fragmentShader = "../Particles/kernels/fire.frag";
     //std::string fragmentShader = "/Users/aarondamashek/Documents/Stanford Work/Spring 2013/CS 248/ParticleSystem3/ProgrammableShading/kernels/wind.frag";
-    std::string firePic = "/Users/aarondamashek/Documents/Stanford Work/Spring 2013/CS 248/ParticleSystem3/Particles/Lava1.jpg";
+    std::string firePic = "../Particles/Lava1.jpg";
     
     STImage   *fireImg;
     STTexture *fireTex;
@@ -66,8 +66,8 @@ void fireCircleEmitter::display(){
     // Invoke the shader.  Now OpenGL will call our
     // shader programs on anything we draw.
     shader->Bind();
-    shader->SetUniform("pointRadius", 6.0f);
-    shader->SetUniform("point_size", 4.0f);
+    shader->SetUniform("pointRadius", 3.0f);
+    shader->SetUniform("point_size", 3.0f);
     
 
     

@@ -1,0 +1,10 @@
+# Blender v2.63 (sub 0) OBJ File: 'Rusko_ani_12_stepLeft.blend'
+# www.blender.org
+o Plane
+v -2.515105 5.969361 1.991719
+v -2.512103 5.971945 1.999904
+v -2.522799 5.966330 1.995498
+v -2.519797 5.968913 2.003683
+s off
+f 2 1 3
+f 2 3 4

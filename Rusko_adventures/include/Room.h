@@ -35,7 +35,8 @@ class Room : public Renderable
 public:
 	Room();
 	Room(int w, int h, int l, float s);
-	
+	~Room();
+    
 	void setLevel(int lv);
 	void render();
 

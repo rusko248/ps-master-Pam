@@ -197,11 +197,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/Rusko.cpp"
-         timestampString = "391736154.446068"
+         timestampString = "391743946.52663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "22"
-         endingLineNumber = "22"
+         startingLineNumber = "26"
+         endingLineNumber = "26"
          landmarkName = "Rusko::Rusko()"
          landmarkType = "5">
       </FileBreakpoint>

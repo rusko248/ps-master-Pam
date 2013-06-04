@@ -59,8 +59,37 @@ Model::Model(const std::string &path, float scale) {
 	bbox = findBBox();
 }
 
+Model::Model(const std::string &path, STPoint3 centerMass, float maxLength) {
+	IO::Options opt;
+	opt += IO::Options::VertexNormal;
+	opt += IO::Options::FaceNormal;
+	opt += IO::Options::VertexColor;
+	opt += IO::Options::FaceColor;
+	
+	mesh.request_face_normals();
+	mesh.request_vertex_normals();
+	mesh.request_face_colors();
+	mesh.request_vertex_colors();
+	mesh.request_vertex_texcoords2D();
+	
+	if ( !IO::read_mesh(mesh, path, opt )) {
+		printf("Cannot load mesh from %s\n", path.c_str());
+		exit(1);
+	}
+	
+	mesh.update_normals();
+    
+	fitSphere_withOffset(1.f, centerMass, maxLength);
+    
+	bbox = findBBox();
+}
+
 Model::~Model() {
 	
+}
+
+STPoint3 Model::getCenterPoint(){
+    return centerPoint;
 }
 
 void Model::render() {
@@ -109,13 +138,37 @@ void Model::fitSphere(float scale) {
 	Vec3f cm(0,0,0);
 	for (Mesh::ConstVertexIter vIt = mesh.vertices_begin(); vIt != mesh.vertices_end(); ++vIt) cm += mesh.point(vIt);
 	cm /= mesh.n_vertices();
+    
 	for (Mesh::VertexIter vIt = mesh.vertices_begin(); vIt != mesh.vertices_end(); ++vIt) mesh.point(vIt) -= cm;
 
+    centerMass = STPoint3(cm[0], cm[1], cm[2]);
+    
 	// Fit in the unit sphere
 	float maxLength = 0;
 	for (Mesh::ConstVertexIter vIt = mesh.vertices_begin(); vIt != mesh.vertices_end(); ++vIt) maxLength = max(maxLength, mesh.point(vIt).length());
+    scaleLength = maxLength;
+    
 	for (Mesh::VertexIter vIt = mesh.vertices_begin(); vIt != mesh.vertices_end(); ++vIt) mesh.point(vIt) *= (scale / maxLength);
 }
+
+
+
+void Model::fitSphere_withOffset(float scale, STPoint3 centerMass, float maxLength) {
+	// Move center of mass to origin
+	Vec3f cm(centerMass.x, centerMass.y, centerMass.z);
+	for (Mesh::VertexIter vIt = mesh.vertices_begin(); vIt != mesh.vertices_end(); ++vIt) mesh.point(vIt) -= cm;
+    
+	// Fit in the unit sphere
+	for (Mesh::VertexIter vIt = mesh.vertices_begin(); vIt != mesh.vertices_end(); ++vIt) mesh.point(vIt) *= (scale / maxLength);
+    
+    
+    cm = Vec3f(0, 0, 0);
+    for (Mesh::ConstVertexIter vIt = mesh.vertices_begin(); vIt != mesh.vertices_end(); ++vIt) cm += mesh.point(vIt);
+	cm /= mesh.n_vertices();
+    
+    centerPoint = STPoint3(cm[0], cm[1], cm[2]);
+}
+
 
 BBox Model::findBBox() {
 	float minx, miny, minz; minx = miny = minz = 10000.0f;
@@ -132,4 +185,13 @@ BBox Model::findBBox() {
 	ret.maxx = maxx; ret.maxy = maxy; ret.maxz = maxz;
 
 	return ret;
+}
+
+
+STPoint3 Model::getCenterMass(){
+    return centerMass;
+}
+
+float Model::getMaxLength(){
+    return scaleLength;
 }

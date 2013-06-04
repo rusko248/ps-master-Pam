@@ -163,31 +163,12 @@ bool turbulentCircleEmitter::updateParticle(particle *p){
         p->prevPos.y = p->pos.y;
         p->prevPos.z = p->pos.z;
         
-        //p->dir = p->dir*(fmax((p->life),e->life/1.1)/(float)e->life);
-        
-
-        
-        //p->dir.x += e->force.x*cosf(p->pos.y)*p->side;
-        //p->dir.y += e->force.y*cosf(p->pos.y)*p->side;
-        //p->dir.z += e->force.z*cosf(p->pos.y)*p->side;
-        
-        //p->dir.y += p->pos.z * p->pos.x / 20 * randDist();
-        //p->dir.z += p->pos.y * p->pos.x / 20 * randDist();
-        
-        //p->pos.y = p->radius * cosf((p->pos.x*2 + p->rand)/e->speed) * 1.5;
-        //p->pos.z = p->radius * sinf((p->pos.x*2 + p->rand)/e->speed);
-        
-        //p->pos.y = cosf((p->pos.x)*e->life/e->lifeVar)*this->radius*p->rand;
-        //p->pos.z = p->radius * sinf((p->pos.x)/e->speed);
-        
-        //p->pos.y = cosf((p->pos.x)*e->life/e->lifeVar)*this->radius*p->rand;
-        //p->pos.z = p->radius * sinf((p->pos.x)*e->life/e->lifeVar)*this->radius*p->rand;
-        
+        //Here use e->pos.x instead of y since it is being rotated in the transform
         if(p->side < 0){
-            p->pos.y = e->pos.y + cosf((p->pos.x)*e->life/e->lifeVar)*p->radius;
+            p->pos.y = e->pos.x + cosf((p->pos.x)*e->life/e->lifeVar)*p->radius;
             p->pos.z = e->pos.z + p->radius * sinf((p->pos.x)*e->life/e->lifeVar)*p->radius;
         }else{
-            p->pos.y = e->pos.y + sinf((p->pos.x)*e->life/e->lifeVar)*p->radius;
+            p->pos.y = e->pos.x + sinf((p->pos.x)*e->life/e->lifeVar)*p->radius;
             p->pos.z = e->pos.z + p->radius * cosf((p->pos.x)*e->life/e->lifeVar)*p->radius;
         }
         
