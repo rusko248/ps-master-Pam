@@ -84,18 +84,17 @@ void Room::initRoom() {
 	torch = Torch(torchScale*scale);
 	box = Box(boxScale*scale);
 	spikes = Spikes();
+
+	floorBrickImage = new STImage("models/Room/BrickFloor.jpg");
+	wallBrickImage = new STImage("models/Room/BrickWall.jpg");
+	floorTexture = new STTexture(floorBrickImage);
+	wallTexture = new STTexture(wallBrickImage);
 }
 
 void Room::setLevel(int lv) {
 	level = lv;
-    
 	generateTorches();
 	generateObstacles();
-    
-    floorBrickImage = new STImage("models/Room/BrickFloor.jpg");
-    wallBrickImage = new STImage("models/Room/BrickWall.jpg");
-    floorTexture = new STTexture(floorBrickImage);
-    wallTexture = new STTexture(wallBrickImage);
 }
 
 void Room::render() {

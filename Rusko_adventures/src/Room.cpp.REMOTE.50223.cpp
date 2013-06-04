@@ -4,6 +4,9 @@
 #include "Room.h"
 #include <cmath>
 
+
+
+
 using namespace std;
 
 #define PI 3.14159265
@@ -55,8 +58,8 @@ Room::Room(int w, int h, int l, float s) {
 }
 
 Room::~Room() {
-	delete floorBrickImage, wallBrickImage;
-	delete floorTexture, wallTexture;
+	//delete floorBrickImage, wallBrickImage;
+	//delete floorTexture, wallTexture;
 }
 
 void Room::initRoom() {

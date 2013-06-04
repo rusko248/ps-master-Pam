@@ -171,7 +171,11 @@ void GraphicsInit(int argc, char** argv)
 
 void gameLogic() {
 	if (gameState == GAME_LOADING) {
+<<<<<<< HEAD
+		room = Room(20,20,30,1);
+=======
 		room = Room();
+>>>>>>> c6b8557adbd0e1ffe1edb52c696f8ae6511d420e
 		room.setLevel(5);
         gameState = GAME_RUNNING;
     } else if (gameState == GAME_RUNNING){
@@ -187,7 +191,6 @@ void renderWorld(){
     
     glRotated(worldAngle, 0, 1, 0);  //rotates world with given angle
     glTranslatef(worldPos.x, worldPos.y, worldPos.z);  //translates to new position
-    
 
  	// Draw
 	for(unsigned i = 0; i<renderList.size(); i++)
