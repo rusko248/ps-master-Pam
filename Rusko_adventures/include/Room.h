@@ -36,7 +36,7 @@ public:
 	Room();
 	Room(int w, int h, int l, float s);
 	~Room();
-    
+	
 	void setLevel(int lv);
 	void render();
 
@@ -54,7 +54,6 @@ private:
 
 	Wall *walls[4]; // near, left, far, right
 	Floor *floor;
-	int numTorches;
 
 };
 
