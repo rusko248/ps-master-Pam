@@ -5,7 +5,7 @@
 #include "Framework.h"
 #include "Graphics.h"
 #include "Renderable.h"
-#include "DeferredLighting.h" //for deferred lighting
+//#include "DeferredLighting.h" //for deferred lighting
 #include "Room.h"
 #include <vector>
 
@@ -36,7 +36,7 @@ std::vector<Renderable *> renderList;
 
 // Room
 Room room;
-<<<<<<< HEAD
+
 Rusko* rusko;
 
 //Fire
@@ -130,12 +130,10 @@ void setup(){
 	// Enable texture
 	glEnable(GL_TEXTURE_2D);
 }
-=======
->>>>>>> 50024f08657e1249540d02e0c5e847f6045b5b93
 
 //Lighting
-DeferredLighting* dfe;
-std::string shaderPath = "../../shaders";	// Path for DeferredLighting shaders
+//DeferredLighting* dfe;
+//std::string shaderPath = "../../shaders";	// Path for DeferredLighting shaders
 
 // Initializes the graphics system (i.e. Open GL)
 void GraphicsInit(int argc, char** argv)
@@ -233,7 +231,7 @@ void display() {
 	gameLogic();
 
 	//sets up G-Buffer for lighting
-	dfe->PreDrawScene();
+	//dfe->PreDrawScene();
 	
 
 	// Draw
@@ -244,15 +242,15 @@ void display() {
 	renderList.clear();
 	
 	//preps for lighting
-	dfe->PostDrawScene();
+	//dfe->PostDrawScene();
 	
 	/*-------------------------
 	Performs deferred lighting
 	-------------------------*/
-	dfe->DrawDirectionalAndAmbient(windowWidth, windowHeight);
-	dfe->PreDrawPointLights(windowWidth, windowHeight, zNear, zFar);
-	DrawPointLights();
-	dfe->PostDrawPointLights();
+	//dfe->DrawDirectionalAndAmbient(windowWidth, windowHeight);
+	//dfe->PreDrawPointLights(windowWidth, windowHeight, zNear, zFar);
+	//DrawPointLights();
+	//dfe->PostDrawPointLights();
 
 	glutSwapBuffers();
 }
