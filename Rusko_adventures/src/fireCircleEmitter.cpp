@@ -34,7 +34,8 @@ void fireCircleEmitter::display(){
     //sf::Image::Bind(); //or glBindTexture(id);
     
     glEnable(GL_POINT_SPRITE);
-    glDepthMask(GL_FALSE);
+    glDepthMask(GL_TRUE);
+    glEnable(GL_DEPTH_TEST);
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
     // File locations
     std::string vertexShader = "../Particles/kernels/default.vert";
@@ -61,13 +62,13 @@ void fireCircleEmitter::display(){
     // Bind the textures we've loaded into openGl to
     // the variable names we specify in the fragment
     // shader.
-    shader->SetTexture("fireTex", 0);
+    shader->SetTexture("texture", 0);
     
     // Invoke the shader.  Now OpenGL will call our
     // shader programs on anything we draw.
     shader->Bind();
-    shader->SetUniform("pointRadius", 3.0f);
-    shader->SetUniform("point_size", 3.0f);
+    shader->SetUniform("pointRadius", 6.0f);
+    shader->SetUniform("point_size", 4.0f);
     
 
     

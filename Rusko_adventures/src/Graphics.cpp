@@ -187,7 +187,6 @@ void renderWorld(){
     
     glRotated(worldAngle, 0, 1, 0);  //rotates world with given angle
     glTranslatef(worldPos.x, worldPos.y, worldPos.z);  //translates to new position
-    
 
  	// Draw
 	for(unsigned i = 0; i<renderList.size(); i++)

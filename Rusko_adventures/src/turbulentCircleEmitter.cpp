@@ -37,7 +37,7 @@ void turbulentCircleEmitter::display(){
     //sf::Image::Bind(); //or glBindTexture(id);
     
     glEnable(GL_POINT_SPRITE);
-    glDepthMask(GL_FALSE);
+    glDepthMask(GL_TRUE);
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
     // File locations
     std::string vertexShader = "/Users/aarondamashek/Documents/Stanford Work/Spring 2013/CS 248/ParticleSystem3/Particles/kernels/default.vert";
@@ -64,7 +64,36 @@ void turbulentCircleEmitter::display(){
     // Bind the textures we've loaded into openGl to
     // the variable names we specify in the fragment
     // shader.
-    shader->SetTexture("windTex", 0);
+    shader->SetTexture("texture", 0);
+    
+    glActiveTexture(GL_TEXTURE1);
+    GLuint depthBuffer;
+    glGenFramebuffers(1, &depthBuffer);
+
+    glBindFramebuffer( GL_READ_FRAMEBUFFER, depthBuffer);
+ 
+    GLuint texDepthBuffer = 1;
+    glGenTextures( 1, &texDepthBuffer );
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture( GL_TEXTURE_2D, texDepthBuffer );
+
+
+ 
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+    
+    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_NONE);
+    glTexParameteri (GL_TEXTURE_2D, GL_DEPTH_TEXTURE_MODE, GL_ALPHA);
+    
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, 640, 480, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+    
+    glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, texDepthBuffer, 0);
+
+    shader->SetTexture("texDepthBuffer", 1);
     
     // Invoke the shader.  Now OpenGL will call our
     // shader programs on anything we draw.
@@ -92,6 +121,9 @@ void turbulentCircleEmitter::display(){
     
     glActiveTexture(GL_TEXTURE0);
     windTex->UnBind();
+    
+    glDeleteFramebuffers( 1, &depthBuffer );
+    
     delete windImg;
     delete windTex;
     delete shader;
@@ -115,7 +147,7 @@ bool turbulentCircleEmitter::addParticle(){
         float radScalar = randDist();
         newParticle->rand = radScalar;
         newParticle->radius = radius * radScalar;
-        STVector3 point = STVector3(e->pos.x + radius*radScalar*cosf(angle), e->pos.y, e->pos.z + radius*radScalar*sinf(angle));
+        STVector3 point = STVector3(radius*radScalar*cosf(angle), 0, radius*radScalar*sinf(angle));
         STVector3 straightUp = STVector3(0,1,0);
         STVector3 circleDir = STVector3(e->dir.x, e->dir.y, e->dir.z);
         
@@ -126,9 +158,9 @@ bool turbulentCircleEmitter::addParticle(){
         rotateCircle.Normalize();
         
         STVector3 rotatedPoint = rotateCircle.rotate(point, rotateCircle);
-        newParticle->pos.x = rotatedPoint.x;
-        newParticle->pos.y = rotatedPoint.y;
-        newParticle->pos.z = rotatedPoint.z;
+        newParticle->pos.x = rotatedPoint.x + e->pos.x;
+        newParticle->pos.y = rotatedPoint.y + e->pos.y;
+        newParticle->pos.z = rotatedPoint.z + e->pos.z;
         
         
         /*
@@ -163,16 +195,24 @@ bool turbulentCircleEmitter::updateParticle(particle *p){
         p->prevPos.y = p->pos.y;
         p->prevPos.z = p->pos.z;
         
-        //Here use e->pos.x instead of y since it is being rotated in the transform
         if(p->side < 0){
-            p->pos.y = e->pos.x + cosf((p->pos.x)*e->life/e->lifeVar)*p->radius;
-            p->pos.z = e->pos.z + p->radius * sinf((p->pos.x)*e->life/e->lifeVar)*p->radius;
+            p->pos.y = e->pos.y + cosf((p->pos.x)*e->life/e->lifeVar)*p->radius;
+            if(abs(e->dir.x) == 1){
+                p->pos.z = e->pos.z + p->radius * sinf((p->pos.x)*e->life/e->lifeVar)*p->radius;
+            }else{
+                p->pos.x = e->pos.x + p->radius * sinf((p->pos.z)*e->life/e->lifeVar)*p->radius;
+            }
         }else{
-            p->pos.y = e->pos.x + sinf((p->pos.x)*e->life/e->lifeVar)*p->radius;
-            p->pos.z = e->pos.z + p->radius * cosf((p->pos.x)*e->life/e->lifeVar)*p->radius;
+            p->pos.y = e->pos.y + sinf((p->pos.x)*e->life/e->lifeVar)*p->radius;
+            if(abs(e->dir.x) == 1){
+                p->pos.z = e->pos.z + p->radius * cosf((p->pos.x)*e->life/e->lifeVar)*p->radius;
+            }else{
+                p->pos.x = e->pos.x + p->radius * cosf((p->pos.z)*e->life/e->lifeVar)*p->radius;
+            }
         }
         
-        p->pos.x += p->dir.x;
+        p->pos.z += p->dir.z * abs(e->dir.z);
+        p->pos.x += p->dir.x * abs(e->dir.x);
         
         p->dir.y += p->pos.z * p->pos.x * randDist();
         p->dir.z += p->pos.y * p->pos.x * randDist();

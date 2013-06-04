@@ -87,8 +87,8 @@ void Room::initRoom() {
 
 	floorBrickImage = new STImage("models/Room/BrickFloor.jpg");
 	wallBrickImage = new STImage("models/Room/BrickWall.jpg");
-	floorTexture = new STTexture(floorBrickImage);
-	wallTexture = new STTexture(wallBrickImage);
+	//floorTexture = new STTexture(floorBrickImage);
+	//wallTexture = new STTexture(wallBrickImage);
 }
 
 void Room::setLevel(int lv) {
@@ -108,7 +108,7 @@ void Room::renderLayout() {
 	glMaterialfv(GL_FRONT, GL_SPECULAR,  materialSpecular);
 	glMaterialfv(GL_FRONT, GL_SHININESS, &shininess);
 
-	floorTexture->Bind();
+	//floorTexture->Bind();
 	glBegin(GL_QUADS);
 		// floor
 		for (int v = 0; v < floor->length; ++v) {
@@ -129,9 +129,9 @@ void Room::renderLayout() {
 			}
 		}
 	glEnd();
-	floorTexture->UnBind();
+	//floorTexture->UnBind();
 
-	wallTexture->Bind();
+	//wallTexture->Bind();
 	glBegin(GL_QUADS);
 		// near wall
 		for (int v = 0; v < walls[0]->height; ++v) {
@@ -205,7 +205,7 @@ void Room::renderLayout() {
 			}
 		}
 	glEnd();
-	wallTexture->UnBind();
+	//wallTexture->UnBind();
 }
 
 void Room::renderObjects() {
