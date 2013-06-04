@@ -172,7 +172,7 @@ void GraphicsInit(int argc, char** argv)
 void gameLogic() {
 	if (gameState == GAME_LOADING) {
 		room = Room();
-		room.setLevel(1);
+		room.setLevel(5);
         gameState = GAME_RUNNING;
     } else if (gameState == GAME_RUNNING){
 		renderList.push_back((Renderable *)&room);
@@ -267,10 +267,10 @@ void drawRusko(){
         torchPos = rusko->render(0);
     }
     
-    
     xpos = torchPos.x;
     ypos = torchPos.y;
     zpos = torchPos.z;
+    
 }
 
 

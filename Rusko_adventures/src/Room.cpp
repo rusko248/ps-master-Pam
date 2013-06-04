@@ -4,6 +4,9 @@
 #include "Room.h"
 #include <cmath>
 
+
+
+
 using namespace std;
 
 #define PI 3.14159265
@@ -55,8 +58,8 @@ Room::Room(int w, int h, int l, float s) {
 }
 
 Room::~Room() {
-	delete floorBrickImage, wallBrickImage;
-	delete floorTexture, wallTexture;
+	//delete floorBrickImage, wallBrickImage;
+	//delete floorTexture, wallTexture;
 }
 
 void Room::initRoom() {
@@ -84,17 +87,18 @@ void Room::initRoom() {
 	torch = Torch(torchScale*scale);
 	box = Box(boxScale*scale);
 	spikes = Spikes();
-
-	floorBrickImage = new STImage("models/Room/BrickFloor.jpg");
-	wallBrickImage = new STImage("models/Room/BrickWall.jpg");
-	floorTexture = new STTexture(floorBrickImage);
-	wallTexture = new STTexture(wallBrickImage);
 }
 
 void Room::setLevel(int lv) {
 	level = lv;
+    
 	generateTorches();
 	generateObstacles();
+    
+    floorBrickImage = new STImage("models/Room/BrickFloor.jpg");
+    wallBrickImage = new STImage("models/Room/BrickWall.jpg");
+    floorTexture = new STTexture(floorBrickImage);
+    wallTexture = new STTexture(wallBrickImage);
 }
 
 void Room::render() {
