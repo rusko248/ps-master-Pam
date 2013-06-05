@@ -27,6 +27,7 @@
 		0911EFE81758556F0072D538 /* common_platform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0911EFDE1758556E0072D538 /* common_platform.mm */; };
 		0911EFEC175855BC0072D538 /* common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0911EFEB175855BC0072D538 /* common.cpp */; };
 		095BCED417597D7E00264620 /* turbulentCircleEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 095BCED317597D7E00264620 /* turbulentCircleEmitter.cpp */; };
+		09CDBB6F175F18A800B67D26 /* RuskoPhysics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 09CDBB6D175F18A700B67D26 /* RuskoPhysics.cpp */; };
 		3F124A0F1753164A00EB6E07 /* Box.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F124A061753164A00EB6E07 /* Box.cpp */; };
 		3F124A101753164A00EB6E07 /* CatmullRom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F124A071753164A00EB6E07 /* CatmullRom.cpp */; };
 		3F124A111753164A00EB6E07 /* Graphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F124A081753164A00EB6E07 /* Graphics.cpp */; };
@@ -115,6 +116,8 @@
 		0911EFF617585F940072D538 /* Step1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Step1.mp3; path = sounds/Step1.mp3; sourceTree = "<group>"; };
 		095BCED217597D6E00264620 /* turbulentCircleEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = turbulentCircleEmitter.h; sourceTree = "<group>"; };
 		095BCED317597D7E00264620 /* turbulentCircleEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = turbulentCircleEmitter.cpp; sourceTree = "<group>"; };
+		09CDBB6D175F18A700B67D26 /* RuskoPhysics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RuskoPhysics.cpp; path = ../RuskoPhysics.cpp; sourceTree = "<group>"; };
+		09CDBB6E175F18A700B67D26 /* RuskoPhysics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RuskoPhysics.h; path = ../RuskoPhysics.h; sourceTree = "<group>"; };
 		3F124A061753164A00EB6E07 /* Box.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Box.cpp; sourceTree = "<group>"; };
 		3F124A071753164A00EB6E07 /* CatmullRom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CatmullRom.cpp; sourceTree = "<group>"; };
 		3F124A081753164A00EB6E07 /* Graphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Graphics.cpp; sourceTree = "<group>"; };
@@ -4310,6 +4313,7 @@
 		3F124A051753164A00EB6E07 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				09CDBB6D175F18A700B67D26 /* RuskoPhysics.cpp */,
 				0911EFEE175855FF0072D538 /* Particles */,
 				0908541B175582D500A7D82E /* Quaternion.cpp */,
 				0908541C175582D500A7D82E /* Sound.cpp */,
@@ -4331,6 +4335,7 @@
 		3F124A181753165D00EB6E07 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				09CDBB6E175F18A700B67D26 /* RuskoPhysics.h */,
 				3F1E67BE175EF14C00CD445D /* loadscreen.h */,
 				0911EFE91758557E0072D538 /* Common */,
 				0911EFEA175855910072D538 /* fmod */,
@@ -9251,6 +9256,7 @@
 				0911EFEC175855BC0072D538 /* common.cpp in Sources */,
 				095BCED417597D7E00264620 /* turbulentCircleEmitter.cpp in Sources */,
 				3F1E67BC175EF13E00CD445D /* loadscreen.cpp in Sources */,
+				09CDBB6F175F18A800B67D26 /* RuskoPhysics.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
