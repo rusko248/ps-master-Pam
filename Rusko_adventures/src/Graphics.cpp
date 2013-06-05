@@ -15,6 +15,7 @@
 
 // PI def
 const float PI = 3.14159265;
+const int FLOOR_POS = -1;
 
 // OpenGL display
 int windowWidth  = 640;
@@ -29,7 +30,7 @@ Sound *systemSound;
 // Camera/world positions, initialized at setup
 STVector3 camPos, worldPos, lastJump;
 float worldAngle;
-int initialYPos = -1;
+int groundPos = FLOOR_POS;
 
 // CatmullRom Jump
 bool jumpOn;
@@ -47,6 +48,9 @@ float light0Position[4];
 #define GAME_RUNNING 1
 int gameState = GAME_LOADING;
 
+//Current Game Level
+int gameLevel = 1;
+
 // List of objects to render
 std::vector<Renderable *> renderList;
 
@@ -63,6 +67,27 @@ float ypos = 0.0f;
 const int fps=50;
 int window_id=0;
 
+
+/**
+ * Makes sure every time new level starts
+ * these variables are reset
+ **/
+void resetGameVariables(){
+    //Initial world position
+    //how is the room positioned... DEPENDS ON ROOM
+    worldPos.x = -5;
+    worldPos.y = groundPos;
+    worldPos.z = 2;
+    worldAngle = 180;
+    
+    //Camera
+    camPos.x = 0;
+    camPos.y = 2;
+    camPos.z = -2.5;
+
+}
+
+
 /**
  * Initializes variables, and does initial setup
  **/
@@ -73,27 +98,14 @@ void setup(){
 	glEnable(GL_DEPTH_TEST);
 	glShadeModel(GL_SMOOTH);
     
-    //Initial world position
-    worldPos.x = 0;
-    worldPos.y = initialYPos; //how is the room positioned?
-    worldPos.z = 0;
-    worldAngle = -90;
+
+    resetGameVariables();
     
+    //Rusko model
+    rusko = new Rusko();
     //Sound
     systemSound = new Sound();
     
-    //Rusko position
-    camPos.x = 0;
-    camPos.y = 2;
-    camPos.z = -2.5;
-    //Rusko model
-    rusko = new Rusko();
-    
-    //Fire model
-    xpos = -.6;
-    ypos = .6;
-    zpos=.25;
-
     vector3 pos = vector3(xpos,ypos,zpos);
     //vector3 fire = vector3(0,-.0001,0);
     vector3 fire = vector3(.0005,.0001,.0005);
@@ -169,10 +181,12 @@ void GraphicsInit(int argc, char** argv)
 
 }
 
+
 void gameLogic() {
 	if (gameState == GAME_LOADING) {
+        resetGameVariables();
 		room = Room();
-		room.setLevel(5);
+		room.setLevel(gameLevel);
         gameState = GAME_RUNNING;
     } else if (gameState == GAME_RUNNING){
 		renderList.push_back((Renderable *)&room);
@@ -210,7 +224,7 @@ void jump()
     if (rusko_frameJump >= totPoints) {
         jumpOn = false;
         lastJump.x = lastJump.y = lastJump.z = 0;
-        worldPos.y = initialYPos;
+        worldPos.y = groundPos;
     }
     else {
         STPoint3 fu = cr->pointAt(rusko_frameJump);
@@ -398,6 +412,12 @@ void KeyboardCallback(unsigned char key, int x, int y)
             }
             glutPostRedisplay();
             break;
+        case 'q':
+            gameState = GAME_LOADING;
+            gameLevel++;
+            printf("\n oooo new level: %i \n", gameLevel);
+            glutPostRedisplay();
+            
         default:
             break;
     }
