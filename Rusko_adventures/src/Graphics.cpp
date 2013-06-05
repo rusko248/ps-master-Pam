@@ -11,7 +11,7 @@
 #include "Rusko.h"
 #include "ParticleManager.h"
 #include "Sound.h"
-
+#include "Loadscreen.h"
 
 // PI def
 const float PI = 3.14159265;
@@ -26,6 +26,10 @@ bool upKeyPressed, downKeyPressed, rightKeyPressed, leftKeyPressed;
 
 //System sound
 Sound *systemSound;
+
+//Loadscreen
+Loadscreen* loadscreen;
+
 
 // Camera/world positions, initialized at setup
 STVector3 camPos, worldPos, lastJump;
@@ -46,6 +50,7 @@ float light0Position[4];
 // Game states
 #define GAME_LOADING 0
 #define GAME_RUNNING 1
+#define GAME_LSCREEN 2
 int gameState = GAME_LOADING;
 
 //Current Game Level
@@ -53,6 +58,8 @@ int gameLevel = 1;
 
 // List of objects to render
 std::vector<Renderable *> renderList;
+
+
 
 // Models
 Room room;
@@ -91,7 +98,7 @@ void resetGameVariables(){
     lastJump.x = lastJump.y = lastJump.z = 0;
 
     //Interaction/keyboard
-    upKeyPressed = downKeyPressed = false;
+    upKeyPressed = downKeyPressed = rightKeyPressed = leftKeyPressed = false;
 }
 
 
@@ -105,13 +112,15 @@ void setup(){
 	glEnable(GL_DEPTH_TEST);
 	glShadeModel(GL_SMOOTH);
     
-
     resetGameVariables();
     
     //Rusko model
     rusko = new Rusko();
     //Sound
     systemSound = new Sound();
+    
+    //Loadscreen
+    loadscreen = new Loadscreen();
     
     vector3 pos = vector3(xpos,ypos,zpos);
     //vector3 fire = vector3(0,-.0001,0);
@@ -187,9 +196,11 @@ void gameLogic() {
         resetGameVariables();
 		room = Room();
 		room.setLevel(gameLevel);
-        gameState = GAME_RUNNING;
+        gameState = GAME_LSCREEN;
     } else if (gameState == GAME_RUNNING){
 		renderList.push_back((Renderable *)&room);
+    } else if (gameState == GAME_LSCREEN){
+        loadscreen->render(gameLevel);
     }
 }
 
@@ -312,6 +323,15 @@ void ReshapeCallback(int w, int h)
     glLoadIdentity();
 }
 
+void drawParticles(){
+    particles->resetPos(0, vector3(xpos, ypos, zpos));
+    particles->display();
+    particles->update();
+    static int frame = 0;
+    frame++;
+    glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION,2 + sinf(frame));
+}
+
 
 /**
  * Display callback function
@@ -322,17 +342,11 @@ void DisplayCallback()
     
     gameLogic();
 
-    renderWorld(); //transforms and draws the world as Rusko moves around
-    drawRusko();  //transforms and draws Rusko
-    
-    
-    particles->resetPos(0, vector3(xpos, ypos, zpos));
-    particles->display();
-    particles->update();
-    static int frame = 0;
-    frame++;
-    glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION,2 + sinf(frame));
-    
+    if (gameState == GAME_RUNNING){
+        renderWorld(); //transforms and draws the world as Rusko moves around
+        drawRusko();  //transforms and draws Rusko
+        drawParticles();
+    }
     
     ReshapeCallback(windowWidth, windowHeight);
     
@@ -413,9 +427,12 @@ void KeyboardCallback(unsigned char key, int x, int y)
             glutPostRedisplay();
             break;
         case 'q':
-            gameState = GAME_LOADING;
-            gameLevel++;
-            printf("\n oooo new level: %i \n", gameLevel);
+            if (gameState == GAME_LSCREEN) gameState = GAME_RUNNING;
+            else {
+                gameState = GAME_LOADING;
+                gameLevel++;
+                printf("\n oooo new level: %i \n", gameLevel);
+            }
             glutPostRedisplay();
             
         default:
