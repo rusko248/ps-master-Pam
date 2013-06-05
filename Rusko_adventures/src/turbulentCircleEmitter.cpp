@@ -30,18 +30,16 @@ void turbulentCircleEmitter::display(){
     glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ZERO, GL_ONE_MINUS_SRC_ALPHA);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
-    
     glTexEnvf( GL_POINT_SPRITE, GL_COORD_REPLACE, GL_TRUE );
     
     glBindTexture(GL_TEXTURE_2D, 0);
-    //sf::Image::Bind(); //or glBindTexture(id);
     
     glEnable(GL_POINT_SPRITE);
-    glDepthMask(GL_TRUE);
+    glDepthMask(GL_FALSE);
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+    
     // File locations
     std::string vertexShader = "../Particles/kernels/default.vert";
-    //std::string fragmentShader = "/Users/aarondamashek/Documents/Stanford Work/Spring 2013/CS 248/ParticleSystem3/Particles/kernels/wind.frag";
     std::string fragmentShader = "../Particles/kernels/fire.frag";
     std::string windPic = "../Particles/wind.png";
     
@@ -66,35 +64,6 @@ void turbulentCircleEmitter::display(){
     // shader.
     shader->SetTexture("texture", 0);
     
-    glActiveTexture(GL_TEXTURE1);
-    GLuint depthBuffer;
-    glGenFramebuffers(1, &depthBuffer);
-
-    glBindFramebuffer( GL_READ_FRAMEBUFFER, depthBuffer);
- 
-    GLuint texDepthBuffer = 1;
-    glGenTextures( 1, &texDepthBuffer );
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture( GL_TEXTURE_2D, texDepthBuffer );
-
-
- 
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-    
-    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_NONE);
-    glTexParameteri (GL_TEXTURE_2D, GL_DEPTH_TEXTURE_MODE, GL_ALPHA);
-    
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, 640, 480, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
-    
-    glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, texDepthBuffer, 0);
-
-    shader->SetTexture("texDepthBuffer", 1);
-    
     // Invoke the shader.  Now OpenGL will call our
     // shader programs on anything we draw.
     shader->Bind();
@@ -114,15 +83,13 @@ void turbulentCircleEmitter::display(){
     glDisable(GL_VERTEX_PROGRAM_POINT_SIZE);
     glDisable(GL_BLEND);
     glDisable(GL_TEXTURE_2D);
-    glDepthMask(GL_FALSE);
+    glDepthMask(GL_TRUE);
     glDisable(GL_POINT_SMOOTH);
     
     shader->UnBind();
     
     glActiveTexture(GL_TEXTURE0);
     windTex->UnBind();
-    
-    glDeleteFramebuffers( 1, &depthBuffer );
     
     delete windImg;
     delete windTex;

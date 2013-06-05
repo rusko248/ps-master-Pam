@@ -34,7 +34,6 @@ void windCircleEmitter::display(){
     glTexEnvf( GL_POINT_SPRITE, GL_COORD_REPLACE, GL_TRUE );
     
     glBindTexture(GL_TEXTURE_2D, 0);
-    //sf::Image::Bind(); //or glBindTexture(id);
     
     glEnable(GL_POINT_SPRITE);
     glDepthMask(GL_FALSE);
@@ -42,7 +41,6 @@ void windCircleEmitter::display(){
     // File locations
     std::string vertexShader = "../Particles/kernels/default.vert";
     std::string fragmentShader = "../Particles/kernels/wind.frag";
-    //std::string fragmentShader = "/Users/aarondamashek/Documents/Stanford Work/Spring 2013/CS 248/ParticleSystem3/ProgrammableShading/kernels/wind.frag";
     std::string windPic = "../Particles/wind.png";
     
     STImage   *windImg;
