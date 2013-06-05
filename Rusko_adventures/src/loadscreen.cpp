@@ -22,13 +22,13 @@ void Loadscreen::render(int level){
 
 
 void Loadscreen::renderLevel(int level){
-    printf("level %i", level);
-    glBegin(GL_QUAD_STRIP);
+    //printf("level %i", level);
+    glBegin(GL_QUADS);
     glColor3f(1.0, 0, 0);
     glVertex2f(0, 0);
+    glVertex2f(0, .5);
+    glVertex2f(.5, .5);
     glVertex2f(.5, 0);
-    glVertex2f(.5, 1);
-    glVertex2f(0, 1);
     glEnd();
 }
 

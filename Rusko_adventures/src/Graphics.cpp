@@ -11,7 +11,7 @@
 #include "Rusko.h"
 #include "ParticleManager.h"
 #include "Sound.h"
-#include "Loadscreen.h"
+#include "loadscreen.h"
 
 // PI def
 const float PI = 3.14159265;
