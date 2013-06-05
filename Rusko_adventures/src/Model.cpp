@@ -32,6 +32,8 @@ Model::Model(const std::string &path) {
 	fitSphere(1.f);
 
 	bbox = findBBox();
+	bcir.x = bcir.y = bcir.z = 0.f;
+	bcir.radius = 1.f;
 }
 
 Model::Model(const std::string &path, float scale) {
@@ -57,6 +59,8 @@ Model::Model(const std::string &path, float scale) {
 	fitSphere(scale);
 
 	bbox = findBBox();
+	bcir.x = bcir.y = bcir.z = 0.f;
+	bcir.radius = scale;
 }
 
 Model::Model(const std::string &path, STPoint3 centerMass, float maxLength) {

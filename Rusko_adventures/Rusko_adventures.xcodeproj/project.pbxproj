@@ -37,6 +37,7 @@
 		3F124A161753164A00EB6E07 /* Spikes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F124A0D1753164A00EB6E07 /* Spikes.cpp */; };
 		3F124A171753164A00EB6E07 /* Torch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F124A0E1753164A00EB6E07 /* Torch.cpp */; };
 		3F124A2917532AAF00EB6E07 /* Rusko.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F124A2817532AAF00EB6E07 /* Rusko.cpp */; };
+		3F1E67BC175EF13E00CD445D /* loadscreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F1E67BB175EF13E00CD445D /* loadscreen.cpp */; };
 		3F4E4D4317499BE3001260C7 /* libOpenMeshCored.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F4E4D3D17499BCA001260C7 /* libOpenMeshCored.2.3.dylib */; };
 		3F4E4D4417499BE3001260C7 /* libOpenMeshCored.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F4E4D3E17499BCA001260C7 /* libOpenMeshCored.a */; };
 		3F4E4D4617499BE3001260C7 /* libOpenMeshToolsd.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F4E4D4017499BCA001260C7 /* libOpenMeshToolsd.2.3.dylib */; };
@@ -4165,6 +4166,8 @@
 		3F195B781745E1EB00CC651D /* hh */ = {isa = PBXFileReference; lastKnownFileType = text; path = hh; sourceTree = "<group>"; };
 		3F195B791745E1EB00CC651D /* VERSION */ = {isa = PBXFileReference; lastKnownFileType = text; path = VERSION; sourceTree = "<group>"; };
 		3F195B7A1745E1EB00CC651D /* VS2008OpenMesh.sln */ = {isa = PBXFileReference; lastKnownFileType = text; path = VS2008OpenMesh.sln; sourceTree = "<group>"; };
+		3F1E67BB175EF13E00CD445D /* loadscreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = loadscreen.cpp; sourceTree = "<group>"; };
+		3F1E67BE175EF14C00CD445D /* loadscreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = loadscreen.h; sourceTree = "<group>"; };
 		3F4E4D3D17499BCA001260C7 /* libOpenMeshCored.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libOpenMeshCored.2.3.dylib; path = "../OpenMesh-2.3.1/buildDebug/src/OpenMesh/Core/libOpenMeshCored.2.3.dylib"; sourceTree = SOURCE_ROOT; };
 		3F4E4D3E17499BCA001260C7 /* libOpenMeshCored.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOpenMeshCored.a; path = "../OpenMesh-2.3.1/buildDebug/Build/lib/OpenMesh/libOpenMeshCored.a"; sourceTree = "<group>"; };
 		3F4E4D3F17499BCA001260C7 /* libOpenMeshCored.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libOpenMeshCored.2.3.dylib; path = "../OpenMesh-2.3.1/buildDebug/src/OpenMesh/Core/libOpenMeshCored.2.3.dylib"; sourceTree = "<group>"; };
@@ -4314,6 +4317,7 @@
 				3F124A061753164A00EB6E07 /* Box.cpp */,
 				3F124A071753164A00EB6E07 /* CatmullRom.cpp */,
 				3F124A081753164A00EB6E07 /* Graphics.cpp */,
+				3F1E67BB175EF13E00CD445D /* loadscreen.cpp */,
 				3F124A091753164A00EB6E07 /* main.cpp */,
 				3F124A0A1753164A00EB6E07 /* Model.cpp */,
 				3F124A0B1753164A00EB6E07 /* Obstacle.cpp */,
@@ -4327,6 +4331,7 @@
 		3F124A181753165D00EB6E07 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				3F1E67BE175EF14C00CD445D /* loadscreen.h */,
 				0911EFE91758557E0072D538 /* Common */,
 				0911EFEA175855910072D538 /* fmod */,
 				090C28B11754848B00F06D15 /* Sound.h */,
@@ -9245,6 +9250,7 @@
 				0911EFE81758556F0072D538 /* common_platform.mm in Sources */,
 				0911EFEC175855BC0072D538 /* common.cpp in Sources */,
 				095BCED417597D7E00264620 /* turbulentCircleEmitter.cpp in Sources */,
+				3F1E67BC175EF13E00CD445D /* loadscreen.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

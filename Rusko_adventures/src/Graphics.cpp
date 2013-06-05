@@ -11,10 +11,11 @@
 #include "Rusko.h"
 #include "ParticleManager.h"
 #include "Sound.h"
-
+#include "loadscreen.h"
 
 // PI def
 const float PI = 3.14159265;
+const int FLOOR_POS = -1;
 
 // OpenGL display
 int windowWidth  = 640;
@@ -26,10 +27,14 @@ bool upKeyPressed, downKeyPressed, rightKeyPressed, leftKeyPressed;
 //System sound
 Sound *systemSound;
 
+//Loadscreen
+Loadscreen* loadscreen;
+
+
 // Camera/world positions, initialized at setup
 STVector3 camPos, worldPos, lastJump;
 float worldAngle;
-int initialYPos = -1;
+int groundPos = FLOOR_POS;
 
 // CatmullRom Jump
 bool jumpOn;
@@ -45,10 +50,16 @@ float light0Position[4];
 // Game states
 #define GAME_LOADING 0
 #define GAME_RUNNING 1
+#define GAME_LSCREEN 2
 int gameState = GAME_LOADING;
+
+//Current Game Level
+int gameLevel = 1;
 
 // List of objects to render
 std::vector<Renderable *> renderList;
+
+
 
 // Models
 Room room;
@@ -63,6 +74,34 @@ float ypos = 0.0f;
 const int fps=50;
 int window_id=0;
 
+
+/**
+ * Makes sure every time new level starts
+ * these variables are reset
+ **/
+void resetGameVariables(){
+    //Initial world position
+    //how is the room positioned... DEPENDS ON ROOM
+    worldPos.x = -5;
+    worldPos.y = groundPos;
+    worldPos.z = 2;
+    worldAngle = 180;
+    
+    //Camera
+    camPos.x = 0;
+    camPos.y = 2;
+    camPos.z = -2.5;
+    
+    //Jump stuff
+    jumpOn = false;
+    rusko_frameJump = 0;
+    lastJump.x = lastJump.y = lastJump.z = 0;
+
+    //Interaction/keyboard
+    upKeyPressed = downKeyPressed = rightKeyPressed = leftKeyPressed = false;
+}
+
+
 /**
  * Initializes variables, and does initial setup
  **/
@@ -73,27 +112,16 @@ void setup(){
 	glEnable(GL_DEPTH_TEST);
 	glShadeModel(GL_SMOOTH);
     
-    //Initial world position
-    worldPos.x = 0;
-    worldPos.y = initialYPos; //how is the room positioned?
-    worldPos.z = 0;
-    worldAngle = -90;
+    resetGameVariables();
     
+    //Rusko model
+    rusko = new Rusko();
     //Sound
     systemSound = new Sound();
     
-    //Rusko position
-    camPos.x = 0;
-    camPos.y = 2;
-    camPos.z = -2.5;
-    //Rusko model
-    rusko = new Rusko();
+    //Loadscreen
+    loadscreen = new Loadscreen();
     
-    //Fire model
-    xpos = -.6;
-    ypos = .6;
-    zpos=.25;
-
     vector3 pos = vector3(xpos,ypos,zpos);
     //vector3 fire = vector3(0,-.0001,0);
     vector3 fire = vector3(.0005,.0001,.0005);
@@ -106,14 +134,7 @@ void setup(){
     particles->addEmitter(f);
     
     //Jump stuff-CatmullRom file uploaded
-    jumpOn = false;
-    rusko_frameJump = 0;
-    lastJump.x = lastJump.y = lastJump.z = 0;
-
     cr = new CatmullRom("models/rusko/jump_controlPoints.txt");
-    
-    //Interaction/keyboard
-    upKeyPressed = downKeyPressed = false;
     
     // Enable global lights
 	glEnable(GL_LIGHTING);
@@ -169,13 +190,17 @@ void GraphicsInit(int argc, char** argv)
 
 }
 
+
 void gameLogic() {
 	if (gameState == GAME_LOADING) {
+        resetGameVariables();
 		room = Room();
-		room.setLevel(5);
-        gameState = GAME_RUNNING;
+		room.setLevel(gameLevel);
+        gameState = GAME_LSCREEN;
     } else if (gameState == GAME_RUNNING){
 		renderList.push_back((Renderable *)&room);
+    } else if (gameState == GAME_LSCREEN){
+        loadscreen->render(gameLevel);
     }
 }
 
@@ -210,7 +235,7 @@ void jump()
     if (rusko_frameJump >= totPoints) {
         jumpOn = false;
         lastJump.x = lastJump.y = lastJump.z = 0;
-        worldPos.y = initialYPos;
+        worldPos.y = groundPos;
     }
     else {
         STPoint3 fu = cr->pointAt(rusko_frameJump);
@@ -298,6 +323,15 @@ void ReshapeCallback(int w, int h)
     glLoadIdentity();
 }
 
+void drawParticles(){
+    particles->resetPos(0, vector3(xpos, ypos, zpos));
+    particles->display();
+    particles->update();
+    static int frame = 0;
+    frame++;
+    glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION,2 + sinf(frame));
+}
+
 
 /**
  * Display callback function
@@ -308,17 +342,11 @@ void DisplayCallback()
     
     gameLogic();
 
-    renderWorld(); //transforms and draws the world as Rusko moves around
-    drawRusko();  //transforms and draws Rusko
-    
-    
-    particles->resetPos(0, vector3(xpos, ypos, zpos));
-    particles->display();
-    particles->update();
-    static int frame = 0;
-    frame++;
-    glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION,2 + sinf(frame));
-    
+    if (gameState == GAME_RUNNING){
+        renderWorld(); //transforms and draws the world as Rusko moves around
+        drawRusko();  //transforms and draws Rusko
+        drawParticles();
+    }
     
     ReshapeCallback(windowWidth, windowHeight);
     
@@ -398,6 +426,15 @@ void KeyboardCallback(unsigned char key, int x, int y)
             }
             glutPostRedisplay();
             break;
+        case 13: //toggles from one level to the next
+            if (gameState == GAME_LSCREEN) gameState = GAME_RUNNING;
+            else {
+                gameState = GAME_LOADING;
+                gameLevel++;
+                printf("\n oooo new level: %i \n", gameLevel);
+            }
+            glutPostRedisplay();
+            
         default:
             break;
     }

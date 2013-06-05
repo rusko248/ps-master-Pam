@@ -10,6 +10,7 @@
 // walls and floors are grids
 struct Wall {
 	int base, height;
+	float fbase, fheight;
 	std::string objPos;
 
 	int getIndex(int u, int v) {
@@ -21,6 +22,7 @@ struct Wall {
 
 struct Floor {
 	int width, length;
+	float fwidth, flength;
 	std::string objPos;
 
 	int getIndex(int u, int v) {
@@ -28,6 +30,21 @@ struct Floor {
 		assert(v >= 0 && v < length);
 		return u + width*v;
 	}
+};
+
+struct ObsBound {
+	ObsBound() {
+		type = '0';
+		bcir = BCir();
+	}
+
+	ObsBound& operator=(const ObsBound& o) {
+		this->type = o.type;
+		this->bcir = o.bcir;
+	}
+
+	char type;
+	BCir bcir;
 };
 
 class Room : public Renderable
@@ -38,6 +55,9 @@ public:
 	~Room();
 	
 	void setLevel(int lv);
+	Floor *getFloor();
+	Wall **getWalls();
+	void getObList(std::vector<ObsBound> &o);
 	void render();
 
 	int dim[3];
@@ -48,12 +68,15 @@ public:
 private:
 	void renderLayout();
 	void renderObjects();
+	void renderPits();
 	void generateTorches();
 	void generateObstacles();
 	void initRoom();
+	void updateBCir();
 
 	Wall *walls[4]; // near, left, far, right
 	Floor *floor;
+	std::vector<ObsBound> obList;
 
 };
 

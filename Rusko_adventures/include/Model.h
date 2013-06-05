@@ -27,6 +27,7 @@ public:
     float getMaxLength();
 
 	BBox bbox;
+	BCir bcir;
 
 private:
 	void fitSphere(float scale);

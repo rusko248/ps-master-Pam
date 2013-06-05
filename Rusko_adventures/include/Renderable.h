@@ -42,4 +42,25 @@ struct BBox {
 	float maxx, maxy, maxz;
 };
 
+struct BCir {
+	BCir() {
+		x = y = z = 0.f;
+		radius = 0.f;
+	}
+
+	BCir(float xx, float yy, float zz) {
+		x = xx; y = yy; z = zz;
+		radius = 0.f;
+	}
+
+	BCir& operator=(const BCir& c) {
+		this->x = x; this->y = y; this->z = z;
+		this->radius = radius;
+		return *this;
+	}
+
+	float x, y, z;
+	float radius;
+};
+
 #endif
