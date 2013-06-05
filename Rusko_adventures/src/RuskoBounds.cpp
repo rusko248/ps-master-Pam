@@ -9,7 +9,7 @@
 #include "RuskoBounds.h"
 
 RuskoBounds::RuskoBounds(){
-
+    obsList = new vector<ObsBound*>();
 }
 
 RuskoBounds::~RuskoBounds(){
@@ -19,7 +19,7 @@ RuskoBounds::~RuskoBounds(){
 void RuskoBounds::setRoom(Room* room){
     this->room = room;
     floorBounds = room->getFloor();
-
+    //room->getObList(obsList);
 }
 
 void RuskoBounds:: reset(){

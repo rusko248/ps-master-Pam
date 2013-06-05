@@ -95,7 +95,7 @@ void resetGameVariables(){
     //Camera
     camPos.x = 0;
     camPos.y = 2;
-    camPos.z = -2.5;
+    camPos.z = -2;
     
     //Jump stuff
     jumpOn = false;

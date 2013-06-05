@@ -28,7 +28,9 @@ public:
 protected:
     Room* room;
     Floor* floorBounds;
-
+    ObsBound* obsBound;
+    vector<ObsBound*>* obsList;
+    
 };
 
 
