@@ -100,7 +100,7 @@ void setup(){
     vector3 wind = vector3(0,.0001,.0005);
     vector3 dir = vector3(0,1,0);
     vector3 dirVar = vector3(.25,0,.25);
-    particles = new ParticleManager(7000);
+    particles = new ParticleManager(20000);
 
     fireCircleEmitter *f = new fireCircleEmitter(.12, &particles->particlePool, particles->nextId(), pos, dir, dirVar, .02, 0, 2000, 50, 20, 15, 5, fire);
     particles->addEmitter(f);
