@@ -4,6 +4,9 @@
 #include "Room.h"
 #include <cmath>
 
+
+
+
 using namespace std;
 
 #define PI 3.14159265
@@ -55,8 +58,8 @@ Room::Room(int w, int h, int l, float s) {
 }
 
 Room::~Room() {
-	delete floorBrickImage, wallBrickImage;
-	delete floorTexture, wallTexture;
+	//delete floorBrickImage, wallBrickImage;
+	//delete floorTexture, wallTexture;
 }
 
 void Room::initRoom() {
@@ -84,6 +87,14 @@ void Room::initRoom() {
 	torch = Torch(torchScale*scale);
 	box = Box(boxScale*scale);
 	spikes = Spikes();
+<<<<<<< HEAD
+
+	floorBrickImage = new STImage("models/Room/BrickFloor.jpg");
+	wallBrickImage = new STImage("models/Room/BrickWall.jpg");
+	//floorTexture = new STTexture(floorBrickImage);
+	//wallTexture = new STTexture(wallBrickImage);
+=======
+>>>>>>> c6b8557adbd0e1ffe1edb52c696f8ae6511d420e
 }
 
 void Room::setLevel(int lv) {
@@ -109,7 +120,7 @@ void Room::renderLayout() {
 	glMaterialfv(GL_FRONT, GL_SPECULAR,  materialSpecular);
 	glMaterialfv(GL_FRONT, GL_SHININESS, &shininess);
 
-	floorTexture->Bind();
+	//floorTexture->Bind();
 	glBegin(GL_QUADS);
 		// floor
 		for (int v = 0; v < floor->length; ++v) {
@@ -130,9 +141,9 @@ void Room::renderLayout() {
 			}
 		}
 	glEnd();
-	floorTexture->UnBind();
+	//floorTexture->UnBind();
 
-	wallTexture->Bind();
+	//wallTexture->Bind();
 	glBegin(GL_QUADS);
 		// near wall
 		for (int v = 0; v < walls[0]->height; ++v) {
@@ -206,7 +217,7 @@ void Room::renderLayout() {
 			}
 		}
 	glEnd();
-	wallTexture->UnBind();
+	//wallTexture->UnBind();
 }
 
 void Room::renderObjects() {

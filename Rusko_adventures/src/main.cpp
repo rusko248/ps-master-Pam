@@ -6,9 +6,9 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-
+    
 	GraphicsInit(argc, argv);
 	GraphicsMainLoop();
-	
+    
 	return 0;
 }

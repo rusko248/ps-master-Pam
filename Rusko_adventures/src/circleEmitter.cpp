@@ -57,7 +57,7 @@ bool circleEmitter::addParticle(){
         float radScalar = randDist();
         newParticle->rand = radScalar;
         newParticle->radius = radius * radScalar;
-        STVector3 point = STVector3(e->pos.x + radius*radScalar*cosf(angle), e->pos.y, e->pos.z + radius*radScalar*sinf(angle));
+        STVector3 point = STVector3(radius*radScalar*cosf(angle), 0, radius*radScalar*sinf(angle));
         STVector3 straightUp = STVector3(0,1,0);
         STVector3 circleDir = STVector3(e->dir.x, e->dir.y, e->dir.z);
         
@@ -68,9 +68,9 @@ bool circleEmitter::addParticle(){
         rotateCircle.Normalize();
 
         STVector3 rotatedPoint = rotateCircle.rotate(point, rotateCircle);
-        newParticle->pos.x = rotatedPoint.x;
-        newParticle->pos.y = rotatedPoint.y;
-        newParticle->pos.z = rotatedPoint.z;
+        newParticle->pos.x = rotatedPoint.x + e->pos.x;
+        newParticle->pos.y = rotatedPoint.y + e->pos.y;
+        newParticle->pos.z = rotatedPoint.z + e->pos.z;
 
 /*
         newParticle->pos.x = e->pos.x + radius*sinf(angle);
