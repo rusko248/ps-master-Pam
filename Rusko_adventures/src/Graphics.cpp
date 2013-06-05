@@ -156,7 +156,7 @@ void GraphicsInit(int argc, char** argv)
 {
 	// Initialize GLUT
 	glutInit(&argc, argv); 
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH); 
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH | GLUT_ALPHA); 
 	glutInitWindowSize(windowWidth, windowHeight); 
 	glutCreateWindow("Rusko's Adventures");
 
