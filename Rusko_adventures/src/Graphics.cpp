@@ -59,7 +59,8 @@ int gameLevel = 1;
 // List of objects to render
 std::vector<Renderable *> renderList;
 
-
+//Collision stuff
+Floor* floorBounds;
 
 // Models
 Room room;
@@ -99,6 +100,20 @@ void resetGameVariables(){
 
     //Interaction/keyboard
     upKeyPressed = downKeyPressed = rightKeyPressed = leftKeyPressed = false;
+    
+    //Gets bounds
+    floorBounds = room.getFloor();
+}
+
+
+
+//whether or not Rusko will be in bounds
+bool inBounds(STVector3 futurePos){
+    float fwidth = floorBounds->fwidth;
+    float flength = floorBounds->flength;
+    if (futurePos.x <= -fwidth || futurePos.x >= 0) return false;
+    if (futurePos.z >= flength || futurePos.z <= 0) return false;
+    return true;
 }
 
 
@@ -192,14 +207,19 @@ void GraphicsInit(int argc, char** argv)
 
 
 void gameLogic() {
-	if (gameState == GAME_LOADING) {
+	if (gameState == GAME_LOADING)
+    {
         resetGameVariables();
 		room = Room();
 		room.setLevel(gameLevel);
         gameState = GAME_LSCREEN;
-    } else if (gameState == GAME_RUNNING){
+    }
+    else if (gameState == GAME_RUNNING)
+    {
 		renderList.push_back((Renderable *)&room);
-    } else if (gameState == GAME_LSCREEN){
+    }
+    else if (gameState == GAME_LSCREEN)
+    {
         loadscreen->render(gameLevel);
     }
 }
@@ -363,32 +383,53 @@ void DisplayCallback()
  */
 static void Timer(int value)
 {
-    if (upKeyPressed) {
-        worldPos.x += 1*sin(PI/180*worldAngle);
-        worldPos.z -= 1*cos(PI/180*worldAngle);
-        if(systemSound->walking == false && systemSound->jumping != true){
-            systemSound->startWalking();
+    if (gameState == GAME_RUNNING) {
+        
+        STVector3 futurePos = STVector3(worldPos.x, worldPos.y, worldPos.z);
+        
+        if (upKeyPressed) {
+            futurePos.x = worldPos.x + 1*sin(PI/180*worldAngle);
+            futurePos.z = worldPos.z - 1*cos(PI/180*worldAngle);
+            
+            if (inBounds(futurePos)){
+                worldPos.x = futurePos.x;
+                worldPos.z = futurePos.z;
+                
+                if(systemSound->walking == false && systemSound->jumping != true){
+                    systemSound->startWalking();
+                }
+                if(systemSound->jumping == true) systemSound->stopWalking();
+                }else{
+                systemSound->stopWalking();
+            }
+            
         }
-        if(systemSound->jumping == true) systemSound->stopWalking();
-    }else{
-        systemSound->stopWalking();
+        else if (downKeyPressed) {
+            futurePos.x -= 1*sin(PI/180*worldAngle);
+            futurePos.z += 1*cos(PI/180*worldAngle);
+            
+            if (inBounds(futurePos)){
+                worldPos.x = futurePos.x;
+                worldPos.z = futurePos.z;
+            }
+
+        }
+        
+        if (rightKeyPressed){
+            if (worldAngle == 360) worldAngle = 0;
+            worldAngle += 5;
+        }
+        if (leftKeyPressed){
+            if (worldAngle == 360) worldAngle = 0;
+            worldAngle -= 5;
+        }
+        if (upKeyPressed || downKeyPressed || rightKeyPressed || leftKeyPressed ){
+            glutPostRedisplay();
+        }
+        systemSound->update();
+        
     }
-    if (downKeyPressed) {
-        worldPos.x -= 1*sin(PI/180*worldAngle);
-        worldPos.z += 1*cos(PI/180*worldAngle);
-    }
-    if (rightKeyPressed){
-        if (worldAngle == 360) worldAngle = 0;
-        worldAngle += 5;
-    }
-    if (leftKeyPressed){
-        if (worldAngle == 360) worldAngle = 0;
-        worldAngle -= 5;
-    }
-    if (upKeyPressed || downKeyPressed || rightKeyPressed || leftKeyPressed ){
-      glutPostRedisplay();  
-    }
-    systemSound->update();
+    
     glutTimerFunc(2000/fps, Timer, 0); // 10 milliseconds
 }
 
@@ -397,14 +438,16 @@ static void Timer(int value)
  * Timer function for jumping, it moves faster than normal timer
  */
 static void TimerJump(int value){
-    if (jumpOn) {
-        jump();
-        if(systemSound->jumping == false) systemSound->jump();
-        glutPostRedisplay();
-    }else{
-        systemSound->jumping = false;
+    if (gameState == GAME_RUNNING){
+        if (jumpOn) {
+            jump();
+            if(systemSound->jumping == false) systemSound->jump();
+            glutPostRedisplay();
+        }else{
+            systemSound->jumping = false;
+        }
     }
-    
+
     glutTimerFunc(100/fps, TimerJump, 0); // 10 milliseconds
 }
 
