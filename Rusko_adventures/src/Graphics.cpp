@@ -426,7 +426,7 @@ void KeyboardCallback(unsigned char key, int x, int y)
             }
             glutPostRedisplay();
             break;
-        case 'q':
+        case 13: //toggles from one level to the next
             if (gameState == GAME_LSCREEN) gameState = GAME_RUNNING;
             else {
                 gameState = GAME_LOADING;
