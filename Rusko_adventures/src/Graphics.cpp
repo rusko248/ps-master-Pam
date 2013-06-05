@@ -13,6 +13,8 @@
 #include "Sound.h"
 #include "loadscreen.h"
 #include "RuskoPhysics.h"
+#include "RuskoBounds.h"
+
 // PI def
 const float PI = 3.14159265;
 const int FLOOR_POS = -1;
@@ -59,15 +61,13 @@ int gameLevel = 1;
 // List of objects to render
 std::vector<Renderable *> renderList;
 
-//Collision stuff
-Floor* floorBounds;
-
 // Models
 Room room;
 
 //Rusko
 Rusko* rusko;
 RuskoPhysics *ruskoPhys;
+RuskoBounds* ruskoBounds;
 
 
 //Fire
@@ -104,20 +104,6 @@ void resetGameVariables(){
 
     //Interaction/keyboard
     upKeyPressed = downKeyPressed = rightKeyPressed = leftKeyPressed = false;
-    
-    //Gets bounds
-    floorBounds = room.getFloor();
-}
-
-
-
-//whether or not Rusko will be in bounds
-bool inBounds(STVector3 futurePos){
-    float fwidth = floorBounds->fwidth;
-    float flength = floorBounds->flength;
-    if (futurePos.x <= -fwidth || futurePos.x >= 0) return false;
-    if (futurePos.z >= flength || futurePos.z <= 0) return false;
-    return true;
 }
 
 
@@ -136,6 +122,9 @@ void setup(){
     //Rusko model
     rusko = new Rusko();
     ruskoPhys = new RuskoPhysics(-groundPos);
+    //Rusko bounds
+    ruskoBounds = new RuskoBounds();
+    
     //Sound
     systemSound = new Sound();
     
@@ -217,6 +206,7 @@ void gameLogic() {
         resetGameVariables();
 		room = Room();
 		room.setLevel(gameLevel);
+        ruskoBounds->setRoom(&room);
         gameState = GAME_LSCREEN;
     }
     else if (gameState == GAME_RUNNING)
@@ -398,7 +388,7 @@ static void Timer(int value)
             futurePos.x = worldPos.x + 1*sin(PI/180*worldAngle);
             futurePos.z = worldPos.z - 1*cos(PI/180*worldAngle);
             
-            if (inBounds(futurePos)){
+            if (ruskoBounds->inBounds(futurePos)){
                 worldPos.x = futurePos.x;
                 worldPos.z = futurePos.z;
                 
@@ -411,15 +401,15 @@ static void Timer(int value)
             }
             
         }
+        
         else if (downKeyPressed) {
             futurePos.x -= 1*sin(PI/180*worldAngle);
             futurePos.z += 1*cos(PI/180*worldAngle);
             
-            if (inBounds(futurePos)){
+            if (ruskoBounds->inBounds(futurePos)){
                 worldPos.x = futurePos.x;
                 worldPos.z = futurePos.z;
             }
-
         }
         
         if (rightKeyPressed){
