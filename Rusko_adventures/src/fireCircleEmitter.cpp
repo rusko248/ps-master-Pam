@@ -34,8 +34,8 @@ void fireCircleEmitter::display(){
     //sf::Image::Bind(); //or glBindTexture(id);
     
     glEnable(GL_POINT_SPRITE);
-    glDepthMask(GL_TRUE);
-    glEnable(GL_DEPTH_TEST);
+    glDepthMask(GL_FALSE);
+    //glEnable(GL_DEPTH_TEST);
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
     // File locations
     std::string vertexShader = "../Particles/kernels/default.vert";
@@ -67,8 +67,8 @@ void fireCircleEmitter::display(){
     // Invoke the shader.  Now OpenGL will call our
     // shader programs on anything we draw.
     shader->Bind();
-    shader->SetUniform("pointRadius", 6.0f);
-    shader->SetUniform("point_size", 4.0f);
+    shader->SetUniform("pointRadius", 3.0f);
+    shader->SetUniform("point_size", 3.0f);
     
 
     

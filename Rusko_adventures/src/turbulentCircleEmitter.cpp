@@ -40,10 +40,10 @@ void turbulentCircleEmitter::display(){
     glDepthMask(GL_TRUE);
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
     // File locations
-    std::string vertexShader = "/Users/aarondamashek/Documents/Stanford Work/Spring 2013/CS 248/ParticleSystem3/Particles/kernels/default.vert";
+    std::string vertexShader = "../Particles/kernels/default.vert";
     //std::string fragmentShader = "/Users/aarondamashek/Documents/Stanford Work/Spring 2013/CS 248/ParticleSystem3/Particles/kernels/wind.frag";
-    std::string fragmentShader = "/Users/aarondamashek/Documents/Stanford Work/Spring 2013/CS 248/ParticleSystem3/Particles/kernels/fire.frag";
-    std::string windPic = "/Users/aarondamashek/Documents/Stanford Work/Spring 2013/CS 248/ParticleSystem3/Particles/wind.png";
+    std::string fragmentShader = "../Particles/kernels/fire.frag";
+    std::string windPic = "../Particles/wind.png";
     
     STImage   *windImg;
     STTexture *windTex;
@@ -114,7 +114,7 @@ void turbulentCircleEmitter::display(){
     glDisable(GL_VERTEX_PROGRAM_POINT_SIZE);
     glDisable(GL_BLEND);
     glDisable(GL_TEXTURE_2D);
-    glDepthMask(GL_TRUE);
+    glDepthMask(GL_FALSE);
     glDisable(GL_POINT_SMOOTH);
     
     shader->UnBind();

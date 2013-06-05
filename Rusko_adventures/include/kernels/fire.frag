@@ -6,7 +6,7 @@ varying vec4 texCoord;
  
 void main(void) {
     float sceneDepth = texture2D( texDepthBuffer, texCoord.xy).r;
-    float currDepth = gl_FragDepth;
+    //float currDepth = gl_FragDepth;
     //float currDepth = gl_FragCoord.z;
     //if(currDepth > sceneDepth) discard;
     vec3 N;
