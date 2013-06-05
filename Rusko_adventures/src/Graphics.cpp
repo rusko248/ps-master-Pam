@@ -12,7 +12,7 @@
 #include "ParticleManager.h"
 #include "Sound.h"
 #include "loadscreen.h"
-
+#include "RuskoPhysics.h"
 // PI def
 const float PI = 3.14159265;
 const int FLOOR_POS = -1;
@@ -63,7 +63,11 @@ std::vector<Renderable *> renderList;
 
 // Models
 Room room;
+
+//Rusko
 Rusko* rusko;
+RuskoPhysics *ruskoPhys;
+
 
 //Fire
 ParticleManager *particles;
@@ -116,6 +120,7 @@ void setup(){
     
     //Rusko model
     rusko = new Rusko();
+    ruskoPhys = new RuskoPhysics(-groundPos);
     //Sound
     systemSound = new Sound();
     
@@ -211,6 +216,8 @@ void renderWorld(){
     glLoadIdentity();
     
     glRotated(worldAngle, 0, 1, 0);  //rotates world with given angle
+    
+    worldPos.y = -ruskoPhys->yPos;
     glTranslatef(worldPos.x, worldPos.y, worldPos.z);  //translates to new position
     
 
@@ -397,6 +404,7 @@ static void Timer(int value)
  * Timer function for jumping, it moves faster than normal timer
  */
 static void TimerJump(int value){
+    ruskoPhys->update((float)5/fps);
     if (jumpOn) {
         jump();
         if(systemSound->jumping == false) systemSound->jump();
@@ -424,6 +432,10 @@ void KeyboardCallback(unsigned char key, int x, int y)
                 jumpOn = true;
                 rusko_frameJump = 0;
             }
+            glutPostRedisplay();
+            break;
+        case 'j':  //activates jumping
+            ruskoPhys->jump();
             glutPostRedisplay();
             break;
         case 13: //toggles from one level to the next
