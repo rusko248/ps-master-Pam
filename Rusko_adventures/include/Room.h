@@ -35,7 +35,7 @@ struct Floor {
 struct ObsBound {
 	ObsBound() {
 		type = '0';
-		bcir = Bcir();
+		bcir = BCir();
 	}
 
 	ObsBound& operator=(const ObsBound& o) {
@@ -45,7 +45,7 @@ struct ObsBound {
 
 	char type;
 	BCir bcir;
-}
+};
 
 class Room : public Renderable
 {

@@ -61,6 +61,6 @@ struct BCir {
 
 	float x, y, z;
 	float radius;
-}
+};
 
 #endif
