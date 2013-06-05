@@ -84,7 +84,14 @@ void resetGameVariables(){
     camPos.x = 0;
     camPos.y = 2;
     camPos.z = -2.5;
+    
+    //Jump stuff
+    jumpOn = false;
+    rusko_frameJump = 0;
+    lastJump.x = lastJump.y = lastJump.z = 0;
 
+    //Interaction/keyboard
+    upKeyPressed = downKeyPressed = false;
 }
 
 
@@ -118,14 +125,7 @@ void setup(){
     particles->addEmitter(f);
     
     //Jump stuff-CatmullRom file uploaded
-    jumpOn = false;
-    rusko_frameJump = 0;
-    lastJump.x = lastJump.y = lastJump.z = 0;
-
     cr = new CatmullRom("models/rusko/jump_controlPoints.txt");
-    
-    //Interaction/keyboard
-    upKeyPressed = downKeyPressed = false;
     
     // Enable global lights
 	glEnable(GL_LIGHTING);
