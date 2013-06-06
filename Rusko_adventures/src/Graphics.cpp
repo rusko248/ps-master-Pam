@@ -54,6 +54,7 @@ float light0Position[4];
 #define GAME_RUNNING 1
 #define GAME_LSCREEN 2
 int gameState = GAME_LOADING;
+bool firstLoad = true;
 
 //Current Game Level
 int gameLevel = 1;
@@ -203,11 +204,12 @@ void GraphicsInit(int argc, char** argv)
 void gameLogic() {
 	if (gameState == GAME_LOADING)
     {
-        resetGameVariables();
 		room = Room();
 		room.setLevel(gameLevel);
         ruskoBounds->setRoom(&room);
-        gameState = GAME_LSCREEN;
+        if (firstLoad){
+            loadscreen->render(-1, windowWidth, windowHeight);
+        } else gameState = GAME_LSCREEN;
     }
     else if (gameState == GAME_RUNNING)
     {
@@ -215,6 +217,7 @@ void gameLogic() {
     }
     else if (gameState == GAME_LSCREEN)
     {
+        resetGameVariables();
         loadscreen->render(gameLevel, windowWidth, windowHeight);
     }
 }
@@ -397,7 +400,7 @@ static void Timer(int value)
                 }
                 if(systemSound->jumping == true) systemSound->stopWalking();
                 }else{
-                systemSound->stopWalking();
+                
             }
             
         }
@@ -471,15 +474,26 @@ void KeyboardCallback(unsigned char key, int x, int y)
             ruskoPhys->jump();
             glutPostRedisplay();
             break;
+        case 'r': //resets same level
+            if (gameState == GAME_RUNNING) {
+                gameState = GAME_LSCREEN;
+                printf("\n same level again: %i \n", gameLevel);
+            }
+            glutPostRedisplay();
+            break;
         case 13: //toggles from one level to the next
             if (gameState == GAME_LSCREEN) gameState = GAME_RUNNING;
+            else if (firstLoad && gameState == GAME_LOADING) {
+                gameState = GAME_LSCREEN;
+                firstLoad = false;
+            }
             else {
                 gameState = GAME_LOADING;
                 gameLevel++;
                 printf("\n oooo new level: %i \n", gameLevel);
             }
             glutPostRedisplay();
-            
+            break;
         default:
             break;
     }
@@ -519,6 +533,7 @@ void KeySpecialUp(int key, int x, int y)
         rusko_frameWalk = 0;
     }if (key == GLUT_KEY_UP){
         upKeyPressed = false;
+        systemSound->stopWalking();
         rusko_frameWalk = 0;
         rusko_frameJump = 0;
     } else if (key == GLUT_KEY_DOWN){

@@ -27,7 +27,7 @@ void Loadscreen::render(int level, int windowWidth, int windowHeight){
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     
-    if (level == 1) drawIntroScreen();
+    if (level == -1) drawIntroScreen();
     else renderLevel(level);
     
     glPopMatrix();
@@ -37,7 +37,9 @@ void Loadscreen::render(int level, int windowWidth, int windowHeight){
 
 void Loadscreen::renderLevel(int level){
     
-    string message = "New Level";
+    string message = "Level ";
+    message += (level + '0');
+
     drawMessageAt(message, 0, 80, STColor4f(1, 1, 1, 1));
 
 }
@@ -45,7 +47,7 @@ void Loadscreen::renderLevel(int level){
 
 void Loadscreen::drawIntroScreen(){
 
-    string welcome = "Welcome to Rusko's Aventures";
+    string welcome = "Welcome to Rusko's Aventures!";
     string instructions = "Press enter to start";
     drawMessageAt(welcome, 0, 80, STColor4f(1, 1, 1, 1));
     drawMessageAt(instructions, 0, 30, STColor4f(1, 1, 1, 1));
