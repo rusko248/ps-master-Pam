@@ -215,7 +215,7 @@ void gameLogic() {
     }
     else if (gameState == GAME_LSCREEN)
     {
-        loadscreen->render(gameLevel);
+        loadscreen->render(gameLevel, windowWidth, windowHeight);
     }
 }
 
