@@ -72,9 +72,12 @@ RuskoPhysics *ruskoPhys;
 RuskoBounds *ruskoBounds;
 RuskoCollisions *collisions;
 
-
-//Fire
+//Particles that must rotate as part of the world
 ParticleManager *particles;
+
+//Torch Fire
+ParticleManager *torchParticles;
+
 float xpos = 0.0f;
 float zpos = 0.0f;
 float ypos = 0.0f;
@@ -123,6 +126,7 @@ void setup(){
     resetGameVariables();
     
     particles = new ParticleManager(20000);
+    torchParticles = new ParticleManager(3000);
     
     //Rusko model
     rusko = new Rusko();
@@ -136,8 +140,6 @@ void setup(){
     //Loadscreen
     loadscreen = new Loadscreen();
     
-    collisions = new RuskoCollisions(&room);
-    
     vector3 pos = vector3(xpos,ypos,zpos);
     //vector3 fire = vector3(0,-.0001,0);
     vector3 fire = vector3(.0005,.0001,.0005);
@@ -147,7 +149,7 @@ void setup(){
 
 
     fireCircleEmitter *f = new fireCircleEmitter(.12, &particles->particlePool, particles->nextId(), pos, dir, dirVar, .02, 0, 2000, 50, 20, 15, 5, fire);
-    particles->addEmitter(f);
+    torchParticles->addEmitter(f);
     
     //Jump stuff-CatmullRom file uploaded
     cr = new CatmullRom("models/rusko/jump_controlPoints.txt");
@@ -213,6 +215,7 @@ void gameLogic() {
 		room = Room();
 		room.setLevel(gameLevel);
         ruskoBounds->setRoom(&room);
+        collisions = new RuskoCollisions(&room);
         if (firstLoad){
             loadscreen->render(-1, windowWidth, windowHeight);
         } else gameState = GAME_LSCREEN;
@@ -244,6 +247,9 @@ void renderWorld(){
 	for(unsigned i = 0; i<renderList.size(); i++)
 		renderList[i]->render();
 	renderList.clear();
+    
+    //Draw rotated particles
+    particles->display();
     
     glPopMatrix ();
 }
@@ -350,9 +356,9 @@ void ReshapeCallback(int w, int h)
 }
 
 void drawParticles(){
-    particles->resetPos(0, vector3(xpos, ypos, zpos));
-    particles->display();
-    particles->update();
+    torchParticles->resetPos(0, vector3(xpos, ypos, zpos));
+    torchParticles->display();
+    torchParticles->update();
     static int frame = 0;
     frame++;
     glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION,2 + sinf(frame));
@@ -372,6 +378,7 @@ void DisplayCallback()
         renderWorld(); //transforms and draws the world as Rusko moves around
         drawRusko();  //transforms and draws Rusko
         drawParticles();
+        particles->update();
     }
     
     ReshapeCallback(windowWidth, windowHeight);
@@ -397,7 +404,7 @@ static void Timer(int value)
             futurePos.x = worldPos.x + 1*sin(PI/180*worldAngle);
             futurePos.z = worldPos.z - 1*cos(PI/180*worldAngle);
             
-            if (ruskoBounds->inBounds(futurePos)){
+            if (ruskoBounds->inBounds(futurePos) && collisions->lateralMovement){
                 worldPos.x = futurePos.x;
                 worldPos.z = futurePos.z;
                 

@@ -31,6 +31,7 @@ public:
     int nextId();
     particle *particlePool;
     void resetPos(int emitter, vector3 newPos);
+    void resetRelativePos(int emitter, vector3 newPos);
 private:
     int maxParticles;
     void createParticleList(int max);

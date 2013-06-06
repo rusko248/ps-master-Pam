@@ -46,6 +46,7 @@ struct BCir {
 	BCir() {
 		x = y = z = 0.f;
 		radius = 0.f;
+        hit = false;
 	}
 
 	BCir(float xx, float yy, float zz) {
@@ -61,6 +62,7 @@ struct BCir {
 
 	float x, y, z;
 	float radius;
+    bool hit;
 };
 
 #endif

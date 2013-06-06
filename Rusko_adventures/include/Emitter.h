@@ -42,10 +42,10 @@ public:
     virtual void recordEmission(string outputFile);
     virtual void loadEmission(string filepath);
     void updateFromFile();
+    emitter *e;
     
 protected:
     particle **managerParticleList;
-    emitter *e;
     void rotationToDirection(float pitch, float yaw, vector3 *direction);
     virtual bool addParticle();
     virtual bool updateParticle(particle *p);

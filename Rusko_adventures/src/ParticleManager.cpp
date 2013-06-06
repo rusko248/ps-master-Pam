@@ -75,3 +75,10 @@ void ParticleManager::resetPos(int emitter, vector3 newPos){
         emitters[emitter]->resetPos(newPos);
     }
 }
+
+void ParticleManager::resetRelativePos(int emitter, vector3 newPos){
+    if(emitter < emitters.size()){
+        vector3 updatedPosition = vector3(emitters[emitter]->e->pos.x + newPos.x, emitters[emitter]->e->pos.y + newPos.y, emitters[emitter]->e->pos.z + newPos.z);
+        emitters[emitter]->resetPos(updatedPosition);
+    }
+}

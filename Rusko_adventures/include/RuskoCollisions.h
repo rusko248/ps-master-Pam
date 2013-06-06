@@ -21,6 +21,9 @@ extern ParticleManager *particles;
 extern RuskoPhysics *ruskoPhys;
 extern Sound *systemSound;
 
+extern STVector3 worldPos;
+extern float worldAngle;
+
 using namespace std;
 
 class RuskoCollisions
@@ -30,6 +33,7 @@ public:
     ~RuskoCollisions();
     void checkForCollisions();
     void reset();
+    bool lateralMovement;
     
 protected:
     bool collisionOccuring;

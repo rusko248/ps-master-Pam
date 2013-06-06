@@ -45,5 +45,12 @@ void RuskoPhysics::update(float timeStep){
         yAccel = -9.8;
     }
     yVel = yVel + yAccel*timeStep;
-    yPos = yPos + yVel*timeStep;
+    float deltaY = yVel*timeStep;
+    yPos = yPos + deltaY;
+    //Update particle systems that are not the original fire
+    for(int emitter = 0; emitter < particles->nextId(); emitter++){
+        if(emitter != 0){
+            //particles->resetRelativePos(emitter, vector3(0, -deltaY,0));
+        }
+    }
 }

@@ -49,6 +49,7 @@ struct ObsBound {
 	ObsBound& operator=(const ObsBound& o) {
 		this->type = o.type;
 		this->bcir = o.bcir;
+        return *this;
 	};
 
 	char type;

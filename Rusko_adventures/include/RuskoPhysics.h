@@ -10,6 +10,10 @@
 #define __Rusko_adventures__RuskoPhysics__
 
 #include <iostream>
+#include "ParticleManager.h"
+#include "RuskoPhysics.h"
+
+extern ParticleManager *particles;
 
 using namespace std;
 
