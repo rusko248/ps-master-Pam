@@ -54,7 +54,7 @@ void RuskoCollisions::reactToCollision(ObsBound* offendingObject){
             if(offendingObject->bcir.hit == false){
                 cout << "Torch identified" << endl;
                 fireCircleEmitter *torchFire = new fireCircleEmitter(&particles->particlePool, particles->nextId(), "../Particles/fireRecording.txt");
-                vector3 torchPos = vector3(offendingObject->bcir.x + worldPos.x, offendingObject->bcir.y + worldPos.y + offendingObject->bcir.radius, offendingObject->bcir.z + worldPos.z);
+                vector3 torchPos = vector3(offendingObject->bcir.x, offendingObject->bcir.y + offendingObject->bcir.radius, offendingObject->bcir.z);
                 torchFire->resetPos(torchPos);
                 particles->addEmitter(torchFire);
                 systemSound->lightTorch();
