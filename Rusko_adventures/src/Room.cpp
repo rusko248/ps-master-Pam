@@ -8,14 +8,6 @@ using namespace std;
 
 #define PI 3.14159265
 
-#define FREE '0'
-#define TORCH '1'
-#define BOX '2'
-#define SPIKES '3'
-#define PIT '4'
-#define SMOKE '5'
-#define SAFE '9'
-
 float torchScale = 0.5f;
 float boxScale = 0.7f;
 int pitSize = 3;

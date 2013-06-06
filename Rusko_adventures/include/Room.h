@@ -7,6 +7,14 @@
 #include "Box.h"
 #include "Spikes.h"
 
+#define FREE '0'
+#define TORCH '1'
+#define BOX '2'
+#define SPIKES '3'
+#define PIT '4'
+#define SMOKE '5'
+#define SAFE '9'
+
 // walls and floors are grids
 struct Wall {
 	int base, height;
@@ -41,7 +49,7 @@ struct ObsBound {
 	ObsBound& operator=(const ObsBound& o) {
 		this->type = o.type;
 		this->bcir = o.bcir;
-	}
+	};
 
 	char type;
 	BCir bcir;
