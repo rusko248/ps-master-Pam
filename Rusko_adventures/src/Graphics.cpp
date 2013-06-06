@@ -14,6 +14,7 @@
 #include "loadscreen.h"
 #include "RuskoPhysics.h"
 #include "RuskoBounds.h"
+#include "RuskoCollisions.h"
 
 // PI def
 const float PI = 3.14159265;
@@ -67,7 +68,8 @@ Room room;
 //Rusko
 Rusko* rusko;
 RuskoPhysics *ruskoPhys;
-RuskoBounds* ruskoBounds;
+RuskoBounds *ruskoBounds;
+RuskoCollisions *collisions;
 
 
 //Fire
@@ -119,6 +121,8 @@ void setup(){
     
     resetGameVariables();
     
+    particles = new ParticleManager(20000);
+    
     //Rusko model
     rusko = new Rusko();
     ruskoPhys = new RuskoPhysics(-groundPos);
@@ -131,13 +135,15 @@ void setup(){
     //Loadscreen
     loadscreen = new Loadscreen();
     
+    collisions = new RuskoCollisions(&room);
+    
     vector3 pos = vector3(xpos,ypos,zpos);
     //vector3 fire = vector3(0,-.0001,0);
     vector3 fire = vector3(.0005,.0001,.0005);
     vector3 wind = vector3(0,.0001,.0005);
     vector3 dir = vector3(0,1,0);
     vector3 dirVar = vector3(.25,0,.25);
-    particles = new ParticleManager(20000);
+
 
     fireCircleEmitter *f = new fireCircleEmitter(.12, &particles->particlePool, particles->nextId(), pos, dir, dirVar, .02, 0, 2000, 50, 20, 15, 5, fire);
     particles->addEmitter(f);
@@ -436,7 +442,8 @@ static void Timer(int value)
  */
 static void TimerJump(int value){
     if (gameState == GAME_RUNNING){
-        ruskoPhys->update((float)5/fps);
+        ruskoPhys->update((float)1/fps);
+        collisions->checkForCollisions();
 
         if (jumpOn) {
             jump();

@@ -35,6 +35,7 @@ bool RuskoCollisions::colliding(ObsBound *one, ObsBound *two){
 }
 
 void RuskoCollisions::checkForCollisions(){
+    cout << obsList.size() << endl;
     for(int obj = 0; obj < obsList.size(); obj++){
         if(colliding(ruskoBound, &obsList.at(obj))){
             reactToCollision(&obsList.at(obj));
@@ -44,10 +45,17 @@ void RuskoCollisions::checkForCollisions(){
 }
 
 void RuskoCollisions::reactToCollision(ObsBound* offendingObject){
+    cout << "Collision detected" << endl;
     char type = offendingObject->type;
     switch (type) {
-		case TORCH:
+		case TORCH:{
+            cout << "Torch identified" << endl;
+            fireCircleEmitter *torchFire = new fireCircleEmitter(&particles->particlePool, particles->nextId(), "../Particles/fireRecording.txt");
+            vector3 torchPos = vector3(offendingObject->bcir.x, offendingObject->bcir.y + offendingObject->bcir.radius, offendingObject->bcir.z);
+            torchFire->resetPos(torchPos);
+            particles->addEmitter(torchFire);
 			break;
+        }
 		case BOX:
             //if above box
             //if below box

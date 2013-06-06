@@ -13,6 +13,13 @@
 
 #include "Framework.h"
 #include "Room.h"
+#include "ParticleManager.h"
+#include "Sound.h"
+#include "RuskoPhysics.h"
+
+extern ParticleManager *particles;
+extern RuskoPhysics *ruskoPhys;
+extern Sound *systemSound;
 
 using namespace std;
 
