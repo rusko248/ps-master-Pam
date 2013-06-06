@@ -23,9 +23,9 @@ public:
     void setOnGround(bool groundContact);
     void reset(float start);
     float yPos;
+    float yVel;
     
 protected:
-    float yVel;
     float yAccel;
     bool onGround;
     

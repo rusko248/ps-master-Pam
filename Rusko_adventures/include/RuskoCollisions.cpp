@@ -20,6 +20,7 @@ RuskoCollisions::RuskoCollisions(Room *room){
     ruskoBound->bcir.z = 0;
     
     room->getObList(obsList);
+    cout << obsList.size() << endl;
 }
 
 RuskoCollisions::~RuskoCollisions(){
@@ -35,7 +36,6 @@ bool RuskoCollisions::colliding(ObsBound *one, ObsBound *two){
 }
 
 void RuskoCollisions::checkForCollisions(){
-    cout << obsList.size() << endl;
     for(int obj = 0; obj < obsList.size(); obj++){
         if(colliding(ruskoBound, &obsList.at(obj))){
             reactToCollision(&obsList.at(obj));
@@ -54,16 +54,31 @@ void RuskoCollisions::reactToCollision(ObsBound* offendingObject){
             vector3 torchPos = vector3(offendingObject->bcir.x, offendingObject->bcir.y + offendingObject->bcir.radius, offendingObject->bcir.z);
             torchFire->resetPos(torchPos);
             particles->addEmitter(torchFire);
+            systemSound->lightTorch();
 			break;
         }
-		case BOX:
+		case BOX:{
+            /*
+             if(above box){
+                ruskoPhys->setOnGround(true);
+             }
+             if(below box){
+                ruskoPhys->yVel = 0;
+             }
+             else{//hitting the side of the box
+                //Set can't move in x or z
+             }
+             */
             //if above box
             //if below box
             //if hitting the side of the box
 			break;
+        }
 		case SPIKES:
+            systemSound->die();
 			break;
 		case PIT:
+            systemSound->die();
 			break;
     }
 }
