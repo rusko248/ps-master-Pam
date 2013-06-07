@@ -15,6 +15,7 @@
 #include "RuskoPhysics.h"
 #include "RuskoBounds.h"
 #include "RuskoCollisions.h"
+#include <pthread.h>
 
 // PI def
 const float PI = 3.14159265;

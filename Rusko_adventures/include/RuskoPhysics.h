@@ -25,6 +25,7 @@ public:
     void jump();
     void update(float timeStep);
     void setOnGround(bool groundContact);
+    void setOnBox(bool boxContact);
     void reset();
     float yPos;
     float yVel;
@@ -33,6 +34,7 @@ protected:
     float yInitial;
     float yAccel;
     bool onGround;
+    bool boxContact;
     
 };
 #endif /* defined(__Rusko_adventures__RuskoPhysics__) */
