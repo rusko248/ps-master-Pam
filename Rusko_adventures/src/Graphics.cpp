@@ -74,6 +74,8 @@ RuskoCollisions *collisions;
 
 //Particles that must rotate as part of the world
 ParticleManager *particles;
+fireCircleEmitter *torchFire;
+//windCircleEmitter;
 
 //Torch Fire
 ParticleManager *torchParticles;
@@ -150,6 +152,9 @@ void setup(){
 
     fireCircleEmitter *f = new fireCircleEmitter(.12, &particles->particlePool, particles->nextId(), pos, dir, dirVar, .02, 0, 2000, 50, 20, 15, 5, fire);
     torchParticles->addEmitter(f);
+    
+    torchFire = new fireCircleEmitter(&particles->particlePool, particles->nextId(), "../Particles/fireRecording.txt");
+    particles->addEmitter(torchFire);
     
     //Jump stuff-CatmullRom file uploaded
     cr = new CatmullRom("models/rusko/jump_controlPoints.txt");
@@ -452,9 +457,11 @@ static void Timer(int value)
  */
 static void TimerJump(int value){
     if (gameState == GAME_RUNNING){
-        ruskoPhys->update((float)1/fps);
-        collisions->checkForCollisions();
+        
 
+        ruskoPhys->update((float)5/fps);
+        collisions->checkForCollisions();
+        
         if (jumpOn) {
             jump();
             if(systemSound->jumping == false) systemSound->jump();

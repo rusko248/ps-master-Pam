@@ -31,6 +31,11 @@ Emitter::Emitter(particle **pool, int emitter_id, vector3 pos, vector3 dir, vect
     displaying = true;
     recording = false;
     playFromFile = false;
+    positions.push_back(e->pos);
+}
+
+void Emitter::addDisplayPos(vector3 newPos){
+    positions.push_back(newPos);
 }
 
 inline float Emitter::randDist(){
@@ -199,6 +204,9 @@ void Emitter::update(){
 
 void Emitter::resetPos(vector3 newPos){
     e->pos = newPos;
+    if(playFromFile){
+        positions[positions.size()-1] = newPos;
+    }
 }
 
 void Emitter::setEmitting(bool emit){
@@ -268,6 +276,8 @@ void Emitter::loadEmission(string filepath){
         
         e->pos.y = readFloat(infile);
         e->pos.z = readFloat(infile);
+        
+        positions.push_back(e->pos);
         
         e->dir.x = readFloat(infile);
         
@@ -339,9 +349,9 @@ void Emitter::updateFromFile(){
         vector3 pos = storedLocations[particleIndex][displayFrame];
         
         //Translate to be relative to current emitter instead of origin
-        pos.x += e->pos.x;
-        pos.y += e->pos.y;
-        pos.z += e->pos.z;
+        //pos.x += e->pos.x;
+        //pos.y += e->pos.y;
+        //pos.z += e->pos.z;
         toUpdate->pos = pos;
         particleIndex++;
     }

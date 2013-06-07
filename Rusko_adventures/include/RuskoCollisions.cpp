@@ -12,7 +12,7 @@ RuskoCollisions::RuskoCollisions(Room *room){
     this->room = room;
     
     lateralMovement = true;
-    
+    fallIntoPit = false;
     //Set rusko bound
     ruskoBound = new ObsBound();
     ruskoBound->type = 'r';
@@ -39,6 +39,12 @@ bool RuskoCollisions::colliding(ObsBound *one, ObsBound *two){
 
 void RuskoCollisions::checkForCollisions(){
     lateralMovement = true;
+    if(!fallIntoPit){//test to see if rusko is on the floor
+        float nextYDelta = ruskoPhys->yVel*1/10;
+        if(fabs(worldPos.y - nextYDelta - FLOOR_POS) < .33){
+            ruskoPhys->setOnGround(true);
+        }
+    }
     for(int obj = 0; obj < obsList.size(); obj++){
         if(colliding(ruskoBound, &obsList.at(obj))){
             reactToCollision(&obsList.at(obj));
@@ -53,10 +59,8 @@ void RuskoCollisions::reactToCollision(ObsBound* offendingObject){
 		case TORCH:{
             if(offendingObject->bcir.hit == false){
                 cout << "Torch identified" << endl;
-                fireCircleEmitter *torchFire = new fireCircleEmitter(&particles->particlePool, particles->nextId(), "../Particles/fireRecording.txt");
                 vector3 torchPos = vector3(offendingObject->bcir.x, offendingObject->bcir.y + offendingObject->bcir.radius, offendingObject->bcir.z);
-                torchFire->resetPos(torchPos);
-                particles->addEmitter(torchFire);
+                torchFire->addDisplayPos(torchPos);
                 systemSound->lightTorch();
             }
             offendingObject->bcir.hit = true;
@@ -81,6 +85,8 @@ void RuskoCollisions::reactToCollision(ObsBound* offendingObject){
             systemSound->die();
 			break;
 		case PIT:
+            fallIntoPit = true;
+            ruskoPhys->setOnGround(false);
             systemSound->die();
 			break;
     }

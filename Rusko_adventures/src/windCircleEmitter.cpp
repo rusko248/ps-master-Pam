@@ -74,7 +74,11 @@ void windCircleEmitter::display(){
     glBegin(GL_POINTS);
     particle *curr = e->particleList;
     while(curr){
-        glVertex3f(curr->pos.x, curr->pos.y, curr->pos.z);
+        if(playFromFile){
+            glVertex3f(curr->pos.x + e->pos.x, curr->pos.y + e->pos.y, curr->pos.z + e->pos.z);
+        }else{
+            glVertex3f(curr->pos.x, curr->pos.y, curr->pos.z);
+        }
         curr = curr->next;
     }
     glEnd();

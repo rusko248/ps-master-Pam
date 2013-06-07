@@ -36,6 +36,7 @@ public:
     void update();
     virtual void display();
     void resetPos(vector3 newPos);
+    void addDisplayPos(vector3 newPos);
     void setEmitting(bool emit);
     void setDisplaying(bool display);
     
@@ -60,6 +61,7 @@ protected:
     string floatToString(float num);
     float readFloat(ifstream *infile);
     int readInt(ifstream *infile);
+    vector<vector3> positions;
     
 };
 

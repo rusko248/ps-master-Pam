@@ -21,8 +21,11 @@ extern ParticleManager *particles;
 extern RuskoPhysics *ruskoPhys;
 extern Sound *systemSound;
 
+extern const int FLOOR_POS;
 extern STVector3 worldPos;
 extern float worldAngle;
+
+extern fireCircleEmitter *torchFire;
 
 using namespace std;
 
@@ -42,6 +45,7 @@ protected:
     Room* room;
     ObsBound *ruskoBound;
     vector<ObsBound> obsList;
+    bool fallIntoPit;
     
 };
 

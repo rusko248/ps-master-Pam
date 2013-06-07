@@ -209,6 +209,8 @@ void circleEmitter::loadEmission(string filepath){
         e->pos.y = readFloat(infile);
         e->pos.z = readFloat(infile);
         
+        positions.push_back(e->pos);
+        
         e->dir.x = readFloat(infile);
 
         e->dir.y = readFloat(infile);

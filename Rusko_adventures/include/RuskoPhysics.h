@@ -25,11 +25,12 @@ public:
     void jump();
     void update(float timeStep);
     void setOnGround(bool groundContact);
-    void reset(float start);
+    void reset();
     float yPos;
     float yVel;
     
 protected:
+    float yInitial;
     float yAccel;
     bool onGround;
     

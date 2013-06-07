@@ -10,7 +10,8 @@
 
 
 RuskoPhysics::RuskoPhysics(float start){
-    yPos = start;
+    yInitial = start;
+    yPos = yInitial;
     yVel = 0;
     yAccel = 0;
     onGround = true;
@@ -22,16 +23,18 @@ RuskoPhysics::~RuskoPhysics(){
 
 void RuskoPhysics::jump(){
     onGround = false;
+    yPos += .33;
     yVel += 10;
     cout << "Jumping" << endl;
 }
 
 void RuskoPhysics::setOnGround(bool groundContact){
     onGround = groundContact;
+    yPos = yInitial;
 }
 
-void RuskoPhysics::reset(float start){
-    yPos = yPos;
+void RuskoPhysics::reset(){
+    yPos = yInitial;
     yVel = 0;
     yAccel = 0;
     onGround = true;
@@ -47,10 +50,4 @@ void RuskoPhysics::update(float timeStep){
     yVel = yVel + yAccel*timeStep;
     float deltaY = yVel*timeStep;
     yPos = yPos + deltaY;
-    //Update particle systems that are not the original fire
-    for(int emitter = 0; emitter < particles->nextId(); emitter++){
-        if(emitter != 0){
-            //particles->resetRelativePos(emitter, vector3(0, -deltaY,0));
-        }
-    }
 }

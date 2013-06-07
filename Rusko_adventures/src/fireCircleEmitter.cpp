@@ -74,7 +74,13 @@ void fireCircleEmitter::display(){
     glBegin(GL_POINTS);
     particle *curr = e->particleList;
     while(curr){
-        glVertex3f(curr->pos.x, curr->pos.y, curr->pos.z);
+        if(playFromFile){
+            for(int loc = 1; loc < positions.size(); loc++){
+                glVertex3f(curr->pos.x + positions[loc].x, curr->pos.y + positions[loc].y, curr->pos.z + positions[loc].z);
+            }
+        }else{
+            glVertex3f(curr->pos.x, curr->pos.y, curr->pos.z);
+        }
         curr = curr->next;
     }
     glEnd();
