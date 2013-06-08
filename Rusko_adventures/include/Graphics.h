@@ -32,6 +32,8 @@ extern ParticleManager *particles;
 //Torch Fire
 extern ParticleManager *torchParticles;
 
+extern Sound *systemSound;
+
 extern float xpos;
 extern float zpos;
 extern float ypos;

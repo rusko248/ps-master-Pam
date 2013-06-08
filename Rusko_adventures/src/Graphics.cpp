@@ -23,7 +23,7 @@ int windowHeight = 640;
 bool upKeyPressed, downKeyPressed, rightKeyPressed, leftKeyPressed;
 
 //System sound
-Sound *systemSound;
+
 
 //Loadscreen
 Loadscreen* loadscreen;
@@ -114,9 +114,6 @@ void setup(){
     ruskoPhys = new RuskoPhysics(-groundPos);
     //Rusko bounds
     ruskoBounds = new RuskoBounds();
-    
-    //Sound
-    systemSound = new Sound();
     
     //Loadscreen
     loadscreen = new Loadscreen();
@@ -341,10 +338,6 @@ void ReshapeCallback(int w, int h)
     glLoadIdentity();
 }
 
-void drawParticles(){
-    torchParticles->display();
-}
-
 
 /**
  * Display callback function
@@ -358,7 +351,7 @@ void DisplayCallback()
     if (gameState == GAME_RUNNING){
         renderWorld(); //transforms and draws the world as Rusko moves around
         drawRusko();  //transforms and draws Rusko
-        drawParticles();
+        torchParticles->display();
     }
     
     ReshapeCallback(windowWidth, windowHeight);
@@ -420,7 +413,6 @@ static void Timer(int value)
         if (upKeyPressed || downKeyPressed || rightKeyPressed || leftKeyPressed ){
             glutPostRedisplay();
         }
-        systemSound->update();
         
     }
     

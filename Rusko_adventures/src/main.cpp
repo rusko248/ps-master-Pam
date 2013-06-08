@@ -8,11 +8,13 @@ using namespace std;
 
 /*Threading for updates of world and particles*/
 
-const int thread_num=2;
+const int thread_num=3;
 ParticleManager *particles;
 
 //Torch Fire
 ParticleManager *torchParticles;
+
+Sound *systemSound;
 
 float xpos = 0.0f;
 float zpos = 0.0f;
@@ -38,12 +40,8 @@ void* threaded_update(void* tid_input)
 
         }
     }else{
-
-        cout << endl << endl << endl << endl << endl << endl << endl << endl;
-        cout << "start glut" << endl;
-        int argc = 1;
-        char *argv[1];
-        argv[0] = "a";
+        systemSound->update();
+        usleep(200000);
     }
 	return 0;
 }
@@ -68,6 +66,9 @@ int main(int argc, char** argv) {
     
     particles = new ParticleManager(20000);
     torchParticles = new ParticleManager(3000);
+    //Sound
+    systemSound = new Sound();
+    
     GraphicsInit(argc, argv);
     createThreads();
 	return 0;
