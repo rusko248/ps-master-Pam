@@ -3,7 +3,7 @@
 #include "Graphics.h"
 //#include "Renderable.h"
 #include <pthread.h>
-
+#include "time.h"
 using namespace std;
 
 /*Threading for updates of world and particles*/
@@ -29,12 +29,13 @@ void* threaded_update(void* tid_input)
         while(true){
             torchParticles->resetPos(0, vector3(xpos, ypos, zpos));
             torchParticles->update();
-            //sleep(50);
+            usleep(50000);
         }
     }else if(tid == 1){ //other Particle updating
         while(true){
             particles->update();
-            //sleep(1);
+            usleep(50000);
+
         }
     }else{
 
@@ -51,18 +52,16 @@ void createThreads(){
     pthread_t threads[thread_num];
 	for(int tid=0;tid<thread_num;tid++){
         ////create threads, return 0 if the thread is correctly created
-        cout << tid << endl;
         
 		int rc=pthread_create(&threads[tid],NULL,threaded_update,(void*)tid);
 		if(rc){std::cerr<<"cannot create thread "<<tid<<std::endl;}
 	}
 
-    //cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
     GraphicsMainLoop();
+    
     for(int tid=0;tid<thread_num;tid++){
         pthread_join(threads[tid], NULL);
 	}
-    cout << "Reaching this point" << endl;
 }
 
 int main(int argc, char** argv) {
@@ -71,9 +70,5 @@ int main(int argc, char** argv) {
     torchParticles = new ParticleManager(3000);
     GraphicsInit(argc, argv);
     createThreads();
-    //GraphicsInit(argc, argv);
-    //cout << endl << endl << endl << endl << endl << endl << endl << endl << endl << endl;
-    //GraphicsMainLoop();
-    //GraphicsMainLoop();
 	return 0;
 }

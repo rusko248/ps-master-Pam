@@ -124,7 +124,6 @@ void setup(){
     vector3 dir = vector3(0,1,0);
     vector3 dirVar = vector3(.25,0,.25);
 
-
     fireCircleEmitter *f = new fireCircleEmitter(.12, &particles->particlePool, particles->nextId(), pos, dir, dirVar, .02, 0, 2000, 50, 20, 15, 5, fire);
     torchParticles->addEmitter(f);
     
@@ -341,7 +340,7 @@ void ReshapeCallback(int w, int h)
 }
 
 void drawParticles(){
-    //torchParticles->display();
+    torchParticles->display();
     static int frame = 0;
     frame++;
     glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION,2 + sinf(frame));
@@ -456,7 +455,6 @@ static void TimerJump(int value){
  */
 void KeyboardCallback(unsigned char key, int x, int y)
 {
-    cout<<"key:  "<<key<<std::endl;
     switch (key)
     {
         case 27:// exit program on escape press
