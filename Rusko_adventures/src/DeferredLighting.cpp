@@ -7,8 +7,6 @@ const string DeferredLighting::DIR_TARGET_FRAG_SHADER = "/deferred_direct_target
 const string DeferredLighting::DIR_AMB_LIGHT_FRAG_SHADER = "/dLight.frag";
 const string DeferredLighting::POINT_LIGHT_VERT_SHADER = "/pLight.vert";
 const string DeferredLighting::POINT_LIGHT_FRAG_SHADER = "/pLight.frag";
-const string DeferredLighting::SHADOW_VERT_SHADER = "/shadows.vert";
-const string DeferredLighting::SHADOW_FRAG_SHADER = "/shadows.frag";
 
 DeferredLighting::DeferredLighting(int p_width, int p_height)
 {
@@ -18,7 +16,6 @@ DeferredLighting::DeferredLighting(int p_width, int p_height)
 	pointLightShader = NULL;
 	dirAmbLightShader = NULL;
 	directTargetShader = NULL;
-	shadowShader = NULL;
 
 	CheckExtensions();
 }
@@ -81,6 +78,16 @@ DeferredLighting::PostDrawScene()
 }
 
 void
+DeferredLighting::SetMaterialTexture(int texture, bool useTexture)
+{
+	GLint loc = glGetUniformLocation(gatherShader->shaderProg, "texture");
+	glUniform1i(loc, texture);
+	loc = glGetUniformLocation(gatherShader->shaderProg, "useTexture");
+	if (useTexture)	glUniform1i(loc, 1);
+	else			glUniform1i(loc, 0);
+}
+
+void
 DeferredLighting::DrawDirectionalAndAmbient(int screenWidth, int screenHeight)
 {
 	dirAmbLightShader->attach();
@@ -90,10 +97,15 @@ DeferredLighting::DrawDirectionalAndAmbient(int screenWidth, int screenHeight)
 	glBindTexture(GL_TEXTURE_2D, textures[NORMALS]);								//  normals texture 0
 	glUniform1i(loc, 0);															// Pass 0 to denote texture unit 0
 
-	loc = glGetUniformLocation(dirAmbLightShader->shaderProg, "colors");			// Get uniform sampler location
+	loc = glGetUniformLocation(pointLightShader->shaderProg, "depths");				// Get uniform sampler location
 	glActiveTexture(GL_TEXTURE1);													// Bind to unit
-	glBindTexture(GL_TEXTURE_2D, textures[COLORS]);									//  colors texture 1
+	glBindTexture(GL_TEXTURE_2D, depthtexture);										//  depths texture 1
 	glUniform1i(loc, 1);															// Pass 1 to denote texture unit 1
+
+	loc = glGetUniformLocation(dirAmbLightShader->shaderProg, "colors");			// Get uniform sampler location
+	glActiveTexture(GL_TEXTURE2);													// Bind to unit
+	glBindTexture(GL_TEXTURE_2D, textures[COLORS]);									//  colors texture 2
+	glUniform1i(loc, 2);															// Pass 2 to denote texture unit 2
 
 	loc = glGetUniformLocation(dirAmbLightShader->shaderProg, "screenWidth");
 	glUniform1i(loc, screenWidth);
@@ -101,18 +113,19 @@ DeferredLighting::DrawDirectionalAndAmbient(int screenWidth, int screenHeight)
 	loc = glGetUniformLocation(dirAmbLightShader->shaderProg, "screenHeight");
 	glUniform1i(loc, screenHeight);
 
-	float lightDir[3] = {-2.0f, 2.0f, 6.0f};
-//	float lightDir[3] = {2.0f, -2.0f, -6.0f};
+//	float lightDir[3] = {-2.0f, 2.0f, 6.0f};
+	float lightDir[3] = {2.0f, -2.0f, 6.0f};
 	loc = glGetUniformLocation(dirAmbLightShader->shaderProg, "lightDirection");
 	glUniform3fv(loc, 1, lightDir);
 
 //	float lightColor[3] = {0.0f, 0.0f, 0.0f};
-//	float lightColor[3] = {0.6f, 0.6f, 0.6f};
-	float lightColor[3] = {1.0f, 1.0f, 1.0f};
+	float lightColor[3] = {0.1f, 0.1f, 0.1f};
+//	float lightColor[3] = {1.0f, 1.0f, 1.0f};
 	loc = glGetUniformLocation(dirAmbLightShader->shaderProg, "diffuseLightColor");
 	glUniform3fv(loc, 1, lightColor);
 
 	float ambientColor[3] = {0.3, 0.3, 0.3};
+//	float ambientColor[3] = {0.0, 0.0, 0.0};
 	loc = glGetUniformLocation(dirAmbLightShader->shaderProg, "ambientLightColor");
 	glUniform3fv(loc, 1, ambientColor);
 
@@ -169,7 +182,8 @@ DeferredLighting::PreDrawPointLights(int screenWidth, int screenHeight, int zNea
 }
 
 void
-DeferredLighting::SetPointLightColor(float r, float g, float b) {
+DeferredLighting::SetPointLightColor(float r, float g, float b)
+{
 	lightColor[0] = r;
 	lightColor[1] = g;
 	lightColor[2] = b;
@@ -178,6 +192,26 @@ DeferredLighting::SetPointLightColor(float r, float g, float b) {
 //	float testlight[3];
 //	glGetUniformfv(pointLightShader->shaderProg, loc, testlight);
 //	printf("testlight = ( %f, %f, %f )\n", testlight[0], testlight[1], testlight[2]);
+}
+
+void
+DeferredLighting::SetPointLightPosition(float x, float y, float z)
+{
+	lightPosition[0] = x;
+	lightPosition[1] = y;
+	lightPosition[2] = z;
+	GLint loc = glGetUniformLocation(pointLightShader->shaderProg, "LightPosition");
+	glUniform3fv(loc, 1, lightPosition);
+}
+
+void
+DeferredLighting::SetPointAttenuation(float constant, float linear, float quadratic)
+{
+	attVals[0] = constant;
+	attVals[1] = linear;
+	attVals[2] = quadratic;
+	GLint loc = glGetUniformLocation(pointLightShader->shaderProg, "LightAttenuation");
+	glUniform3fv(loc, 1, attVals);
 }
 
 void
@@ -196,29 +230,6 @@ DeferredLighting::PostDrawPointLights()
 	glFrontFace(GL_CCW);
 	pointLightShader->detach();
 }
-
-//ADT addition
-void
-DeferredLighting::DrawShadows() { /*
-	GLint loc = glGetUniformLocation(shadowShader->shaderProg, "DepthTexture");	
-	glActiveTexture(GL_TEXTURE0);												// Bind to unit
-	glBindTexture(GL_TEXTURE_2D, depthtexture);									//  depths texture 0
-	glUniform1i(loc, 0);
-
-	glEnable(GL_BLEND);
-	glDisable(GL_DEPTH_TEST);
-	glBlendFunc(GL_ONE, GL_SRC_ALPHA);
-	
-	//this is where the shadow work will go
-	//for some reason the shaders won't load
-	
-	glDisable(GL_BLEND);
-	glEnable(GL_DEPTH_TEST);
-	glFrontFace(GL_CCW);
-	shadowShader->detach();
-	*/
-}
-
 
 void
 DeferredLighting::DrawNormals(int screenWidth, int screenHeight)
@@ -323,21 +334,6 @@ DeferredLighting::InitShaders(const string shaderPath)
 		printf("\tPOINT_LIGHT_FRAG_SHADER '%s' failed\n", shaderName.c_str());
 	}
 	pointLightShader->build();
-	// SHADOW SHADER
-	shadowShader = new Shader();
-	shaderName = shaderPath + SHADOW_VERT_SHADER;
-	if (shadowShader->addVert(shaderName.c_str())) {
-		printf("\tSHADOW_VERT_SHADER '%s' added\n", shaderName.c_str());
-	} else {
-		printf("\tSHADOW_VERT_SHADER '%s' failed\n", shaderName.c_str());
-	}
-	shaderName = shaderPath + SHADOW_FRAG_SHADER;
-	if (shadowShader->addFrag(shaderName.c_str())) {
-		printf("\tSHADOW_FRAG_SHADER '%s' added\n", shaderName.c_str());
-	} else {
-		printf("\tSHADOW_FRAG_SHADER '%s' failed\n", shaderName.c_str());
-	}
-	shadowShader->build();
 }
 
 void

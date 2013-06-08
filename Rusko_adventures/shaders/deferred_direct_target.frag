@@ -1,6 +1,8 @@
 // DEFERRED RENDERING with G-BUFFER
 // --------------------------------
-
+// A. Tamplin
+// 5/26/13
+//---------------------------------
 
 uniform sampler2D bufferToDraw;
 uniform int screenWidth;
@@ -18,20 +20,9 @@ float DepthToLinearZ(float dVal)
 void main()
 {
    //normalize coord
-
-
-
-
-
-
-
-
-	float sw = float(screenWidth);
-	float sh = float(screenHeight);
-
 	vec2 coord = (gl_FragCoord).xy;
-	coord.x = coord.x / sw;
-	coord.y = coord.y / sh;
+	coord.x = coord.x / float(screenWidth);
+	coord.y = coord.y / float(screenHeight);
 	
 	//set color
 	if(doDepth) {
@@ -39,7 +30,6 @@ void main()
 	   gl_FragColor = vec4(depth/far, depth/far, depth/far, 1.0);
 	}
 	else {
-//	   gl_FragColor = texture2D(bufferToDraw, coord);
 	   gl_FragColor = texture2D(bufferToDraw, coord);
 	}
 }

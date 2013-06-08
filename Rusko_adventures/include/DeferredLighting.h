@@ -1,10 +1,8 @@
 #ifndef _DEFERREDLIGHTING_H
 #define _DEFERREDLIGHTING_H
 
-#include <Windows.h>
 #include "stglew.h"
-#include <GL/GL.h>
-#include <GL/GLU.h>
+#include <string>
 #include "Shader.h"
 
 using namespace std;
@@ -31,6 +29,7 @@ public:
 	 */
 	void PostDrawScene();
 
+	void SetMaterialTexture(int texture, bool useTexture);
 
 	/**
 	 * Draw the directional and ambient lighting.
@@ -42,6 +41,8 @@ public:
 	 */
 	void PreDrawPointLights(int screenWidth, int screenHeight, int zNear, int zFar);
 	void SetPointLightColor(float r, float g, float b);
+	void SetPointLightPosition(float x, float y, float z);
+	void SetPointAttenuation(float constant, float linear, float quadratic);
 	void SetRadius(float r);
 	void PostDrawPointLights();
 
@@ -72,12 +73,12 @@ private:
 	void DrawFullScreenQuad(int screenWidth, int screenHeight);
 	void DrawDirectTarget(GLuint bufferToDraw, int screenWidth, int screenHeight, float zNear=0.0, float zFar=0.0);
 
-	void DrawShadows(); //ADT added
-
 	//---------------------------------------------------------------------------
 	// VARIABLES
 	//---------------------------------------------------------------------------
-	float lightColor[3]; //TODO: remove this asap
+	float lightColor[3];
+	float lightPosition[3];
+	float attVals[3];							// Attenuation: 0 = constant, 1 = linear, 3 = quadratic
 	enum   MRT{NORMALS, COLORS, NUM_MRTS};		// NORMALS = 0 (texture for Normals); COLORS = 1 (texture for Color)
 	GLuint textures[NUM_MRTS];					// From above, NUM_MRTS = 2
 	GLuint fbo;
@@ -87,15 +88,12 @@ private:
 	Shader* pointLightShader;					// GLSL program for Point Light
 	Shader* directTargetShader;					// GLSL program for Final Rendering
 	Shader* gatherShader;						// GLSL program for Buffers Build
-	Shader* shadowShader;
 	static const string GATHER_VERT_SHADER;
 	static const string GATHER_FRAG_SHADER;
 	static const string DIR_TARGET_FRAG_SHADER;
 	static const string DIR_AMB_LIGHT_FRAG_SHADER;
 	static const string POINT_LIGHT_VERT_SHADER;
 	static const string POINT_LIGHT_FRAG_SHADER;
-	static const string SHADOW_VERT_SHADER;
-	static const string SHADOW_FRAG_SHADER;
 };
 
 #endif //_DEFERREDLIGHTING_H

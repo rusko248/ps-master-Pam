@@ -67,6 +67,19 @@ RuskoPhysics *ruskoPhys;
 RuskoBounds *ruskoBounds;
 RuskoCollisions *collisions;
 
+//Deferred Lighting
+DeferredLighting * dfe;
+std::string shaderPath = "../shaders"; //path to the shaders
+float zNear = .1f; //TODO: these need to be caluclated
+float zFar = 100.f; //TODO: these need to be caluclated
+enum RENDER_MODE{FIXED_FUNCTION, DIRECTIONAL, FULL_DEFERRED, POINTLIGHTS, NORMALS, DEPTH, COLORS, NUM_MODES};
+
+//Point Lights
+vector<PointLight> plights; //holds the info for the lights in room
+float fireLightColor [3] = {0.6, 0.1, 0.0}; //the color of fire light
+
+
+
 static int frame = 0;
 
 /**
@@ -104,8 +117,20 @@ void setup(){
     // Initialize OpenGL defaults
     glClearColor(1,1,1,1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_DEPTH_TEST);
 	glShadeModel(GL_SMOOTH);
+
+	//------------------------//
+	//DEFERRED LIGHTING SET-UP//
+	//------------------------//
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+	glEnable(GL_NORMALIZE);
+	//glEnable(GL_CULL_FACE);
+	//glCullFace(GL_BACK);
+	//------------------------//
+	//  END DEFERRED SET-UP   //
+	//------------------------//
     
     resetGameVariables();
     
@@ -128,12 +153,24 @@ void setup(){
     
     torchFire = new fireCircleEmitter(&particles->particlePool, particles->nextId(), "../Particles/fireRecording.txt");
     particles->addEmitter(torchFire);
+
+	//PLight
+	//Rusko's fire light
+	PointLight p;
+	p.SetColor(fireLightColor[0], fireLightColor[1], fireLightColor[2]);
+	p.SetPosition(xpos, ypos, zpos);
+	p.SetAttenuation(1.0, 0.05, 0.0);
+	p.SetRadius(1.0);
+	p.SetGrain(10);
+
+	plights.push_back(p);
+    
     
     //Jump stuff-CatmullRom file uploaded
     cr = new CatmullRom("models/rusko/jump_controlPoints.txt");
     
     // Enable global lights
-	glEnable(GL_LIGHTING);
+/*	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	float light0Position[4] = {camPos.x, camPos.y, camPos.z, 1.f};
 	glLightfv(GL_LIGHT0, GL_POSITION, light0Position);
@@ -150,7 +187,7 @@ void setup(){
     glLightfv(GL_LIGHT1, GL_POSITION, spotPosition);
     
     glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION,2);
-    
+ */   
 	// Enable texture
 	glEnable(GL_TEXTURE_2D);
     
@@ -311,6 +348,8 @@ void drawRusko(){
     xpos = torchPos.x;
     ypos = torchPos.y;
     zpos = torchPos.z;
+
+	plights[0].SetPosition(xpos, ypos, zpos); //update the torch light
     
 }
 
@@ -339,6 +378,20 @@ void ReshapeCallback(int w, int h)
     glLoadIdentity();
 }
 
+/**
+ * Sets up the point light color and position.
+ * ADT
+ */
+void DrawPointLights() {
+	glDisable(GL_LIGHTING);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	for(int i = 0; i < plights.size(); i++) {
+		plights[i].RenderPointLight(dfe);
+	}
+}
+
 
 /**
  * Display callback function
@@ -350,8 +403,29 @@ void DisplayCallback()
     gameLogic();
 
     if (gameState == GAME_RUNNING){
+		//BUILD G-BUFFER
+		dfe->PreDrawScene(); //lighting ADT
+
+		//DRAW OBJECTS AND EVIRONMENT
+		//GETS STORED IN G-BUFFER FOR RENDERING
         renderWorld(); //transforms and draws the world as Rusko moves around
         drawRusko();  //transforms and draws Rusko
+
+		//PREPARE FOR RENDING
+		dfe->PostDrawScene(); //lighting ADT
+
+		//-------------------------------//
+		// Render the scene with shaders //
+		//-------------------------------//
+		dfe->DrawDirectionalAndAmbient(windowWidth, windowHeight); //lighting ADT
+		dfe->PreDrawPointLights(windowWidth, windowHeight, zNear, zFar);
+		DrawPointLights();
+		dfe->PostDrawPointLights();
+		//-----------------------------//
+		//    End render the scene     //
+		//-----------------------------//
+
+		//FIRE RENDERED AFTER EVERYTHING ELSE
         torchParticles->display();
     }
     
@@ -452,6 +526,7 @@ void KeyboardCallback(unsigned char key, int x, int y)
     switch (key)
     {
         case 27:// exit program on escape press
+			delete dfe; //delete Deferred engine
             exit(0);
             break;
         case ' ':  //activates jumping
@@ -559,6 +634,15 @@ void GraphicsMainLoop()
     glutKeyboardFunc(KeyboardCallback);
     glutSpecialFunc(KeySpecial);
     glutSpecialUpFunc(KeySpecialUp);
+
+	//------------------------//
+	//DEFERRED LIGHTING ENGINE//
+	//------------------------//
+	dfe = new DeferredLighting(windowWidth, windowHeight);
+	dfe->Init(shaderPath);
+	//------------------------//
+	//  END DEFERRED ENGINE   //
+	//------------------------//
     
 	glutMainLoop();
 }

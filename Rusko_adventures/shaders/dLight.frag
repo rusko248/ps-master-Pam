@@ -2,10 +2,12 @@
 // -----------------------------------
 //  renders a directional light source
 // -----------------------------------
-
+// author: Ryan Schmitt
+// date: 3-7-11
 
 //G-Buffer data
 uniform sampler2D normals;
+uniform sampler2D depths;
 uniform sampler2D colors;
 
 //Util vars
@@ -20,15 +22,11 @@ uniform vec3 diffuseLightColor;
 void main()
 {
    //normalize coord
-
-	float sw = float (screenWidth);
-	float sh = float (screenHeight);
-
 	vec2 coord = (gl_FragCoord).xy;
+	coord.x = coord.x / float(screenWidth);
+	coord.y = coord.y / float(screenHeight);
 
-	coord.x = coord.x / sw;
-	coord.y = coord.y / sh;
-	
+        if (texture2D(depths, coord).r == 1.0) discard;	// Assume no object rendered
 
 	//Data lookups
 	vec4 n = (texture2D(normals, coord)*2.0)-1.0;
@@ -37,7 +35,7 @@ void main()
 	
 	//Lighting Calcs
 	vec4 ambient = c * vec4(ambientLightColor, 1.0);
-	float diffuseModifier = max(dot(n.xyz,normalize(lightDirection)*-1.0),0.0);
+	float diffuseModifier = max(dot(n.xyz, normalize(lightDirection)*(-1.0)), 0.0);
 	vec4 diffuse = c * diffuseModifier * vec4(diffuseLightColor, 1.0);
 	
 	//Set the color

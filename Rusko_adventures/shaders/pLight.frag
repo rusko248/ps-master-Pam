@@ -2,10 +2,17 @@
 // -----------------------------------
 //  renders a point light source
 // -----------------------------------
-
+// A. Tamplin
+// 6/4/13
+// -----------------------------------
 
 //from vert shader
-varying vec4 pos; //location of fragment in view space
+uniform vec3 LightPosition;
+uniform vec3 LightAttenuation;
+varying vec4 pos;  // location of fragment in view space
+varying vec4 lightPos; // light position in view space
+varying vec3 ecPosition;  // Eye Coordinate Position
+varying vec3 viewVec;
 
 //G-Buffer data
 uniform sampler2D normals;
@@ -15,50 +22,54 @@ uniform sampler2D colors;
 //Util vars
 uniform int screenWidth;
 uniform int screenHeight;
-
 uniform float near;
 uniform float far;
 
 //Lighting vars
 uniform float radius;
-varying vec4 lpos; //light position in view space
 uniform vec3 diffuseLightColor;
 
 //Makes depth values linear (i.e. inverse of the perpective projection)
 float DepthToLinearZ(float dVal)
 {
-	return (far*near) / (far-(dVal*(far-near)));
+	return float(far*near) / (float(far)-(dVal*float(far-near)));
 }
 
 void main()
 {
-   //normalize coord
-
-	float sw = float (screenWidth);
-	float sh = float (screenHeight);
-
-	vec2 coord = (gl_FragCoord).xy;
-
-	coord.x = coord.x / sw;
-	coord.y = coord.y / sh;
-
-
-	//Data lookups
-	vec4 n = (texture2D(normals, coord)*2.0)-1.0;
-	n.a = 1.0;
-	vec4 c = texture2D(colors, coord); 
-
-	//the above is just like the directional part  	
-
-	//vec3 p = normalize(pos.xyz)*DepthToLinearZ(texture2D(depths, coord).r); //position in view space of geometry
-	vec3 p = pos;
+    //normalize coord
+//   Vec2 coord = (gl_FragCoord).xy;
+    vec2 coord = (gl_FragCoord).xy;
+    coord.x = coord.x / float(screenWidth);
+    coord.y = coord.y / float(screenHeight);
 	
-	vec3 ltop = lpos.xyz-p;
+    //Data lookups
+    vec4 color = texture2D(colors, coord);
+    vec3 normal = normalize(vec3((texture2D(normals, coord) * 2.0) - 1.0));
 
-  	float diffuseModifier = max(dot(n.xyz,normalize(ltop)), 0.0);
+    // Compute vector from surface to light position
+    vec3 VP = vec3(LightPosition) - ecPosition;
 
+    // Compute distance between surface and light position
+    float d = length(VP);
+
+    // Normalize the vector from surface to light position
+    VP = normalize(VP);
+
+    vec3 halfVector = normalize(VP + viewVec);
+
+    float nDotVP = max(0.0, dot(normal, VP));
+    float nDotHV = max(0.0, dot(normal, halfVector));
+
+//    float attenuation = 1.0;
+
+    // Compute attenuation
+    float attenuation = 1.0 / (LightAttenuation[0] +
+                               LightAttenuation[1] * d +
+                               LightAttenuation[2] * d * d);
+
+    vec4 diffuse = vec4(diffuseLightColor, 1.0) * nDotVP * attenuation;
 	
-	vec4 diffuse = c * diffuseModifier * vec4(diffuseLightColor, 1.0);
-
-	gl_FragColor = diffuse;
+   //Set the color
+   gl_FragColor = diffuse;
 }
