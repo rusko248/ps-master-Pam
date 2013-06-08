@@ -6,6 +6,9 @@
 //
 //
 
+#define NOMINMAX
+#define _USE_MATH_DEFINES
+
 #include "RuskoBounds.h"
 
 RuskoBounds::RuskoBounds(){

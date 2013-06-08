@@ -67,6 +67,7 @@ public:
 	Floor *getFloor();
 	Wall **getWalls();
 	void getObList(std::vector<ObsBound> &o);
+	STPoint3 getPlayerPosition();
 	void render();
 
 	int dim[3];
@@ -81,11 +82,14 @@ private:
 	void generateTorches();
 	void generateObstacles();
 	void initRoom();
-	void updateBCir();
+	void updateOB();
 
 	Wall *walls[4]; // near, left, far, right
 	Floor *floor;
 	std::vector<ObsBound> obList;
+	std::vector<int> boxIndices;
+	std::vector<int> safeIndices;
+	STPoint3 playerStartPos;
 
 };
 
