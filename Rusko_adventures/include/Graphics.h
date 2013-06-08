@@ -23,6 +23,8 @@
 #include "RuskoPhysics.h"
 #include "RuskoBounds.h"
 #include "RuskoCollisions.h"
+#include "DeferredLighting.h"
+#include "PointLight.h"
 
 
 //Particles that must rotate as part of the world
