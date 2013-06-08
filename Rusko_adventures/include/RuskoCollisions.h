@@ -25,6 +25,8 @@ extern const int FLOOR_POS;
 extern STVector3 worldPos;
 extern float worldAngle;
 
+extern bool dead;
+
 extern fireCircleEmitter *torchFire;
 
 using namespace std;

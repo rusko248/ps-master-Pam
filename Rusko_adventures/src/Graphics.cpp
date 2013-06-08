@@ -66,6 +66,7 @@ Rusko* rusko;
 RuskoPhysics *ruskoPhys;
 RuskoBounds *ruskoBounds;
 RuskoCollisions *collisions;
+bool dead = false;
 
 //Deferred Lighting
 //DeferredLighting * dfe;
@@ -77,7 +78,6 @@ enum RENDER_MODE{FIXED_FUNCTION, DIRECTIONAL, FULL_DEFERRED, POINTLIGHTS, NORMAL
 //Point Lights
 //vector<PointLight> plights; //holds the info for the lights in room
 float fireLightColor [3] = {0.6, 0.1, 0.0}; //the color of fire light
-
 
 
 static int frame = 0;
@@ -93,6 +93,8 @@ void resetGameVariables(){
     worldPos.y = groundPos;
     worldPos.z = 2;
     worldAngle = 180;
+    
+    dead = false;
     
     //Camera
     camPos.x = 0;

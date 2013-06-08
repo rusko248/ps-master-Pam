@@ -66,7 +66,7 @@ Sound::Sound(){
     
     result = system->createSound("sounds/lightFire.mp3", FMOD_SOFTWARE | FMOD_2D, 0, &sound4);
     ERRCHECK(result);
-    result = sound4->setMode(FMOD_LOOP_NORMAL);
+    result = sound4->setMode(FMOD_LOOP_OFF);
     ERRCHECK(result);
     
     result = system->createSound("sounds/jump.mp3", FMOD_SOFTWARE | FMOD_2D, 0, &sound5);
@@ -76,7 +76,7 @@ Sound::Sound(){
     
     result = system->createSound("sounds/die.mp3", FMOD_SOFTWARE | FMOD_2D, 0, &sound6);
     ERRCHECK(result);
-    result = sound6->setMode(FMOD_LOOP_NORMAL);
+    result = sound6->setMode(FMOD_LOOP_OFF);
     ERRCHECK(result);
     
     result = system->createSound("sounds/loading.mp3", FMOD_SOFTWARE | FMOD_2D, 0, &sound7);
