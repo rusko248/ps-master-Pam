@@ -402,8 +402,8 @@ void Room::renderObjects() {
 void Room::renderPits() {
 	// draw pit
 	glBegin(GL_QUADS);
-	for (int v = 0; v < floor->length; ++v) {
-		for (int u = 0; u < floor->width; ++u) {
+	for (int v = 1; v < floor->length -1; ++v) {
+		for (int u = 1; u < floor->width - 1; ++u) {
 			if (floor->objPos[floor->getIndex(u, v)] == PIT) {
 				bool pitcenter = true;
 				for (int vt = -1; vt <= 1; ++vt) {

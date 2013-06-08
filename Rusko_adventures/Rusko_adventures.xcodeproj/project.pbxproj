@@ -21,11 +21,8 @@
 		090C28951754740A00F06D15 /* wind.frag in Sources */ = {isa = PBXBuildFile; fileRef = 090C28851754740A00F06D15 /* wind.frag */; };
 		0911EFCD175730C90072D538 /* libfmod.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0911EFC9175730980072D538 /* libfmod.dylib */; };
 		0911EFCE175730C90072D538 /* libfmodL.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0911EFCA175730990072D538 /* libfmodL.dylib */; };
-		0911EFD0175733DC0072D538 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0911EFCF175733DC0072D538 /* Cocoa.framework */; };
 		0911EFDB175835200072D538 /* libfmod.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0911EFC9175730980072D538 /* libfmod.dylib */; };
 		0911EFDC175835200072D538 /* libfmodL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0911EFCA175730990072D538 /* libfmodL.dylib */; };
-		0911EFE81758556F0072D538 /* common_platform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0911EFDE1758556E0072D538 /* common_platform.mm */; };
-		0911EFEC175855BC0072D538 /* common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0911EFEB175855BC0072D538 /* common.cpp */; };
 		0953C2EE175FF7CB00F97D85 /* RuskoCollisions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0953C2EC175FF7CB00F97D85 /* RuskoCollisions.cpp */; };
 		095BCED417597D7E00264620 /* turbulentCircleEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 095BCED317597D7E00264620 /* turbulentCircleEmitter.cpp */; };
 		09CDBB6F175F18A800B67D26 /* RuskoPhysics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 09CDBB6D175F18A700B67D26 /* RuskoPhysics.cpp */; };
@@ -100,9 +97,6 @@
 		0911EFC9175730980072D538 /* libfmod.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfmod.dylib; path = ../FMOD/lib/libfmod.dylib; sourceTree = "<group>"; };
 		0911EFCA175730990072D538 /* libfmodL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfmodL.dylib; path = ../FMOD/lib/libfmodL.dylib; sourceTree = "<group>"; };
 		0911EFCF175733DC0072D538 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
-		0911EFDD1758556E0072D538 /* common_platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = common_platform.h; path = ../../FMOD/inc/common_platform.h; sourceTree = "<group>"; };
-		0911EFDE1758556E0072D538 /* common_platform.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = common_platform.mm; path = ../../FMOD/inc/common_platform.mm; sourceTree = "<group>"; };
-		0911EFDF1758556E0072D538 /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = common.h; path = ../../FMOD/inc/common.h; sourceTree = "<group>"; };
 		0911EFE01758556E0072D538 /* fmod_codec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fmod_codec.h; path = ../../FMOD/inc/fmod_codec.h; sourceTree = "<group>"; };
 		0911EFE11758556F0072D538 /* fmod_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fmod_common.h; path = ../../FMOD/inc/fmod_common.h; sourceTree = "<group>"; };
 		0911EFE21758556F0072D538 /* fmod_dsp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fmod_dsp.h; path = ../../FMOD/inc/fmod_dsp.h; sourceTree = "<group>"; };
@@ -111,7 +105,6 @@
 		0911EFE51758556F0072D538 /* fmod_output.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fmod_output.h; path = ../../FMOD/inc/fmod_output.h; sourceTree = "<group>"; };
 		0911EFE61758556F0072D538 /* fmod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fmod.h; path = ../../FMOD/inc/fmod.h; sourceTree = "<group>"; };
 		0911EFE71758556F0072D538 /* fmod.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = fmod.hpp; path = ../../FMOD/inc/fmod.hpp; sourceTree = "<group>"; };
-		0911EFEB175855BC0072D538 /* common.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = common.cpp; path = ../../FMOD/inc/common.cpp; sourceTree = "<group>"; };
 		0911EFF317585F940072D538 /* Cave4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Cave4.mp3; path = sounds/Cave4.mp3; sourceTree = "<group>"; };
 		0911EFF417585F940072D538 /* constantFire.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = constantFire.mp3; path = sounds/constantFire.mp3; sourceTree = "<group>"; };
 		0911EFF517585F940072D538 /* Fire1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Fire1.mp3; path = sounds/Fire1.mp3; sourceTree = "<group>"; };
@@ -4196,7 +4189,6 @@
 			files = (
 				0911EFDB175835200072D538 /* libfmod.dylib in Frameworks */,
 				0911EFDC175835200072D538 /* libfmodL.dylib in Frameworks */,
-				0911EFD0175733DC0072D538 /* Cocoa.framework in Frameworks */,
 				3F4E4D4317499BE3001260C7 /* libOpenMeshCored.2.3.dylib in Frameworks */,
 				3F4E4D4417499BE3001260C7 /* libOpenMeshCored.a in Frameworks */,
 				3F4E4D4617499BE3001260C7 /* libOpenMeshToolsd.2.3.dylib in Frameworks */,
@@ -4239,17 +4231,6 @@
 				090C28851754740A00F06D15 /* wind.frag */,
 			);
 			path = kernels;
-			sourceTree = "<group>";
-		};
-		0911EFE91758557E0072D538 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				0911EFEB175855BC0072D538 /* common.cpp */,
-				0911EFDD1758556E0072D538 /* common_platform.h */,
-				0911EFDE1758556E0072D538 /* common_platform.mm */,
-				0911EFDF1758556E0072D538 /* common.h */,
-			);
-			name = Common;
 			sourceTree = "<group>";
 		};
 		0911EFEA175855910072D538 /* fmod */ = {
@@ -4347,7 +4328,6 @@
 				09CDBB6E175F18A700B67D26 /* RuskoPhysics.h */,
 				0953C2ED175FF7CB00F97D85 /* RuskoCollisions.h */,
 				3F1E67BE175EF14C00CD445D /* loadscreen.h */,
-				0911EFE91758557E0072D538 /* Common */,
 				0911EFEA175855910072D538 /* fmod */,
 				090C28B11754848B00F06D15 /* Sound.h */,
 				0911EFED175855E30072D538 /* Particles */,
@@ -9262,8 +9242,6 @@
 				09085423175582D500A7D82E /* Quaternion.cpp in Sources */,
 				09085424175582D500A7D82E /* Sound.cpp in Sources */,
 				09085425175582D500A7D82E /* windCircleEmitter.cpp in Sources */,
-				0911EFE81758556F0072D538 /* common_platform.mm in Sources */,
-				0911EFEC175855BC0072D538 /* common.cpp in Sources */,
 				095BCED417597D7E00264620 /* turbulentCircleEmitter.cpp in Sources */,
 				3F1E67BC175EF13E00CD445D /* loadscreen.cpp in Sources */,
 				09CDBB6F175F18A800B67D26 /* RuskoPhysics.cpp in Sources */,

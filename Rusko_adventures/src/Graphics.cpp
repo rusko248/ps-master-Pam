@@ -1,21 +1,15 @@
 #define NOMINMAX
 #define _USE_MATH_DEFINES
 
-#include <cmath>
-#include <vector>
-#include "Framework.h"
 #include "Graphics.h"
-#include "Renderable.h"
-#include "Room.h"
-#include "CatmullRom.h"
-#include "Rusko.h"
-#include "ParticleManager.h"
-#include "Sound.h"
-#include "loadscreen.h"
-#include "RuskoPhysics.h"
-#include "RuskoBounds.h"
-#include "RuskoCollisions.h"
-#include <pthread.h>
+
+
+fireCircleEmitter *torchFire;
+
+const int fps=50;
+int window_id=0;
+
+
 
 // PI def
 const float PI = 3.14159265;
@@ -55,7 +49,7 @@ float light0Position[4];
 #define GAME_LOADING 0
 #define GAME_RUNNING 1
 #define GAME_LSCREEN 2
-int gameState = GAME_LOADING;
+int gameState = -1;
 bool firstLoad = true;
 
 //Current Game Level
@@ -72,22 +66,6 @@ Rusko* rusko;
 RuskoPhysics *ruskoPhys;
 RuskoBounds *ruskoBounds;
 RuskoCollisions *collisions;
-
-//Particles that must rotate as part of the world
-ParticleManager *particles;
-fireCircleEmitter *torchFire;
-//windCircleEmitter;
-
-//Torch Fire
-ParticleManager *torchParticles;
-
-float xpos = 0.0f;
-float zpos = 0.0f;
-float ypos = 0.0f;
-
-const int fps=50;
-int window_id=0;
-
 
 /**
  * Makes sure every time new level starts
@@ -120,6 +98,7 @@ void resetGameVariables(){
  * Initializes variables, and does initial setup
  **/
 void setup(){
+    cout << "Setting up" << endl;
     // Initialize OpenGL defaults
     glClearColor(1,1,1,1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -127,9 +106,6 @@ void setup(){
 	glShadeModel(GL_SMOOTH);
     
     resetGameVariables();
-    
-    particles = new ParticleManager(20000);
-    torchParticles = new ParticleManager(3000);
     
     //Rusko model
     rusko = new Rusko();
@@ -144,9 +120,7 @@ void setup(){
     loadscreen = new Loadscreen();
     
     vector3 pos = vector3(xpos,ypos,zpos);
-    //vector3 fire = vector3(0,-.0001,0);
     vector3 fire = vector3(.0005,.0001,.0005);
-    vector3 wind = vector3(0,.0001,.0005);
     vector3 dir = vector3(0,1,0);
     vector3 dirVar = vector3(.25,0,.25);
 
@@ -181,12 +155,14 @@ void setup(){
     
 	// Enable texture
 	glEnable(GL_TEXTURE_2D);
+    
 }
 
 
 // Initializes the graphics system (i.e. Open GL)
 void GraphicsInit(int argc, char** argv)
 {
+    
 	// Initialize GLUT
 	glutInit(&argc, argv); 
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH | GLUT_ALPHA); 
@@ -216,15 +192,18 @@ void GraphicsInit(int argc, char** argv)
 
 
 void gameLogic() {
-	if (gameState == GAME_LOADING)
+    if (firstLoad){
+        loadscreen->render(-1, windowWidth, windowHeight);
+    }
+	else if (gameState == GAME_LOADING)
     {
-		room = Room();
-		room.setLevel(gameLevel);
+        cout << "loading" << endl;
+        room = Room();
+        room.setLevel(gameLevel);
         ruskoBounds->setRoom(&room);
         collisions = new RuskoCollisions(&room);
-        if (firstLoad){
-            loadscreen->render(-1, windowWidth, windowHeight);
-        } else gameState = GAME_LSCREEN;
+        //gameState = GAME_LSCREEN;
+        gameState = GAME_RUNNING;
     }
     else if (gameState == GAME_RUNNING)
     {
@@ -362,9 +341,7 @@ void ReshapeCallback(int w, int h)
 }
 
 void drawParticles(){
-    torchParticles->resetPos(0, vector3(xpos, ypos, zpos));
-    torchParticles->display();
-    torchParticles->update();
+    //torchParticles->display();
     static int frame = 0;
     frame++;
     glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION,2 + sinf(frame));
@@ -384,7 +361,6 @@ void DisplayCallback()
         renderWorld(); //transforms and draws the world as Rusko moves around
         drawRusko();  //transforms and draws Rusko
         drawParticles();
-        particles->update();
     }
     
     ReshapeCallback(windowWidth, windowHeight);
@@ -403,7 +379,6 @@ void DisplayCallback()
 static void Timer(int value)
 {
     if (gameState == GAME_RUNNING) {
-        
         STVector3 futurePos = STVector3(worldPos.x, worldPos.y, worldPos.z);
         
         if (upKeyPressed) {
@@ -464,7 +439,8 @@ static void TimerJump(int value){
         collisions->checkForCollisions();
         
         if (jumpOn) {
-            jump();
+            //jump();
+            //ruskoPhys->jump();
             if(systemSound->jumping == false) systemSound->jump();
             glutPostRedisplay();
         }else{
@@ -480,6 +456,7 @@ static void TimerJump(int value){
  */
 void KeyboardCallback(unsigned char key, int x, int y)
 {
+    cout<<"key:  "<<key<<std::endl;
     switch (key)
     {
         case 27:// exit program on escape press
@@ -488,6 +465,7 @@ void KeyboardCallback(unsigned char key, int x, int y)
         case ' ':  //activates jumping
             if (!jumpOn) {
                 jumpOn = true;
+                ruskoPhys->jump();
                 rusko_frameJump = 0;
             }
             glutPostRedisplay();
@@ -504,14 +482,19 @@ void KeyboardCallback(unsigned char key, int x, int y)
             glutPostRedisplay();
             break;
         case 13: //toggles from one level to the next
-            if (gameState == GAME_LSCREEN) gameState = GAME_RUNNING;
-            else if (firstLoad && gameState == GAME_LOADING) {
+            if(gameState == -1){
                 gameState = GAME_LSCREEN;
+                gameLevel = 1;
+                firstLoad = false;
+            }
+            if (gameState == GAME_LSCREEN) gameState = GAME_LOADING;
+            else if (firstLoad && gameState == GAME_LOADING) {
+                gameState = GAME_RUNNING;
                 firstLoad = false;
             }
             else {
-                gameState = GAME_LOADING;
                 gameLevel++;
+                gameState = GAME_LSCREEN;
                 printf("\n oooo new level: %i \n", gameLevel);
             }
             glutPostRedisplay();

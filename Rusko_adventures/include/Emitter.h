@@ -24,6 +24,7 @@
 #include <vector.h>
 #include <iostream>
 #include <fstream>
+#include <pthread.h>
 
 using namespace std;
 
@@ -62,6 +63,7 @@ protected:
     float readFloat(ifstream *infile);
     int readInt(ifstream *infile);
     vector<vector3> positions;
+    pthread_mutex_t mutex;
     
 };
 

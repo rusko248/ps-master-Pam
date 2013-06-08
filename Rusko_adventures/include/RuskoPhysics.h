@@ -12,8 +12,13 @@
 #include <iostream>
 #include "ParticleManager.h"
 #include "RuskoPhysics.h"
+#include "Sound.h"
+
+extern Sound *systemSound;
 
 extern ParticleManager *particles;
+
+extern bool jumpOn;
 
 using namespace std;
 

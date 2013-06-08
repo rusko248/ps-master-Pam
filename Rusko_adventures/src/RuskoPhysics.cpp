@@ -23,7 +23,7 @@ RuskoPhysics::~RuskoPhysics(){
 
 void RuskoPhysics::jump(){
     if(onGround || boxContact){
-    onGround = false;
+        onGround = false;
         yPos += .33;
         yVel += 10;
         cout << "Jumping" << endl;
@@ -50,6 +50,7 @@ void RuskoPhysics::update(float timeStep){
     if(onGround || boxContact){
         yVel = 0;
         yAccel = 0;
+        jumpOn = false;
     }else{
         yAccel = -9.8;
     }

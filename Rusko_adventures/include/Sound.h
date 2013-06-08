@@ -12,7 +12,7 @@
 
 #include <iostream>
 #include "fmod.hpp"
-#include "common.h"
+//#include "common.h"
 
 using namespace std;
 
@@ -29,6 +29,10 @@ public:
     void lightTorch();
     void jump();
     void die();
+    
+    void startLevel();
+    void loading();
+    
     ~Sound();
     bool walking;
     bool jumping;

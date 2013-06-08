@@ -19,6 +19,7 @@ circleEmitter::circleEmitter(particle **pool, int emitter_id, string filepath) :
 
 void circleEmitter::display(){
     if(!displaying) return;
+    pthread_mutex_lock(&mutex);
     if(!playFromFile){
         for(int newP = 0; newP < (e->emitsPerFrame + e->emitVar*randDist()); newP++){
             addParticle();
@@ -32,6 +33,7 @@ void circleEmitter::display(){
         curr = curr->next;
     }
     glEnd();
+    pthread_mutex_unlock(&mutex);
 }
 
 float circleEmitter::randomAngle(){

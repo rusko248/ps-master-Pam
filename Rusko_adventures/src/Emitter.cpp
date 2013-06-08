@@ -32,6 +32,8 @@ Emitter::Emitter(particle **pool, int emitter_id, vector3 pos, vector3 dir, vect
     recording = false;
     playFromFile = false;
     positions.push_back(e->pos);
+    
+    pthread_mutex_init(&mutex,0);
 }
 
 void Emitter::addDisplayPos(vector3 newPos){
@@ -162,6 +164,7 @@ bool Emitter::updateParticle(particle *p){
 
 void Emitter::display(){
     if(!displaying) return;
+    pthread_mutex_lock(&mutex);
     if(!playFromFile){
         for(int newP = 0; newP < (e->emitsPerFrame + e->emitVar*randDist()); newP++){
             addParticle();
@@ -175,6 +178,7 @@ void Emitter::display(){
         curr = curr->next;
     }
     glEnd();
+    pthread_mutex_unlock(&mutex);
 }
 
 Emitter::~Emitter(){
@@ -186,12 +190,15 @@ Emitter::~Emitter(){
     }
     delete e;
     if(recording) emitterInfo->close();
+    pthread_mutex_destroy(&mutex);
 }
 
 void Emitter::update(){
+    pthread_mutex_lock(&mutex);
     if(!displaying) return;
     if(playFromFile){
         updateFromFile();
+        pthread_mutex_unlock(&mutex);
         return;
     }
     particle *curr = e->particleList;
@@ -200,6 +207,7 @@ void Emitter::update(){
         curr = curr->next;
         updateParticle(toUpdate);
     }
+    pthread_mutex_unlock(&mutex);
 }
 
 void Emitter::resetPos(vector3 newPos){
@@ -262,6 +270,7 @@ Emitter::Emitter(particle **pool, int emitter_id, string filepath){
     
     if(filepath != "circle") loadEmission(filepath);
     playFromFile = true;
+    pthread_mutex_init(&mutex,0);
 }
 
 void Emitter::loadEmission(string filepath){

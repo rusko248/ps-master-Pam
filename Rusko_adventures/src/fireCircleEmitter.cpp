@@ -18,6 +18,7 @@ fireCircleEmitter::fireCircleEmitter(particle **pool, int emitter_id, string fil
 
 void fireCircleEmitter::display(){
     if(!displaying) return;
+    pthread_mutex_lock(&mutex);
     if(!playFromFile){
         for(int newP = 0; newP < (e->emitsPerFrame + e->emitVar*randDist()); newP++){
             addParticle();
@@ -99,4 +100,5 @@ void fireCircleEmitter::display(){
     delete fireImg;
     delete fireTex;
     delete shader;
+    pthread_mutex_unlock(&mutex);
 }

@@ -18,6 +18,7 @@ turbulentCircleEmitter::turbulentCircleEmitter(particle **pool, int emitter_id, 
 
 void turbulentCircleEmitter::display(){
     if(!displaying) return;
+    pthread_mutex_lock(&mutex);
     if(!playFromFile){
         for(int newP = 0; newP < (e->emitsPerFrame + e->emitVar*randDist()); newP++){
             addParticle();
@@ -98,6 +99,7 @@ void turbulentCircleEmitter::display(){
     delete windImg;
     delete windTex;
     delete shader;
+    pthread_mutex_unlock(&mutex);
 }
 
 bool turbulentCircleEmitter::addParticle(){
