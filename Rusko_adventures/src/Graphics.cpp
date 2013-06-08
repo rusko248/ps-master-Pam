@@ -67,6 +67,8 @@ RuskoPhysics *ruskoPhys;
 RuskoBounds *ruskoBounds;
 RuskoCollisions *collisions;
 
+static int frame = 0;
+
 /**
  * Makes sure every time new level starts
  * these variables are reset
@@ -341,9 +343,6 @@ void ReshapeCallback(int w, int h)
 
 void drawParticles(){
     torchParticles->display();
-    static int frame = 0;
-    frame++;
-    glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION,2 + sinf(frame));
 }
 
 
@@ -377,6 +376,8 @@ void DisplayCallback()
  */
 static void Timer(int value)
 {
+    frame++;
+    glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION,2 + sinf(frame));
     if (gameState == GAME_RUNNING) {
         STVector3 futurePos = STVector3(worldPos.x, worldPos.y, worldPos.z);
         
