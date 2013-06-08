@@ -16,9 +16,9 @@ ParticleManager *torchParticles;
 
 Sound *systemSound;
 
-float xpos = 0.0f;
-float zpos = 0.0f;
-float ypos = 0.0f;
+float xpos = -1.0f;
+float zpos = -1.0f;
+float ypos = -1.0f;
 
 pthread_mutex_t mutex;
 
