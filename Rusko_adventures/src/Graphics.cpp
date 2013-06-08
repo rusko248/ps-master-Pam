@@ -229,6 +229,7 @@ void GraphicsInit(int argc, char** argv)
 void gameLogic() {
     if (firstLoad){
         loadscreen->render(-1, windowWidth, windowHeight);
+        systemSound->endLevel();
     }
 	else if (gameState == GAME_LOADING)
     {
@@ -240,6 +241,7 @@ void gameLogic() {
         collisions = new RuskoCollisions(&room);
         //gameState = GAME_LSCREEN;
         gameState = GAME_RUNNING;
+        systemSound->startLevel();
     }
     else if (gameState == GAME_RUNNING)
     {
@@ -247,6 +249,7 @@ void gameLogic() {
     }
     else if (gameState == GAME_LSCREEN)
     {
+        systemSound->endLevel();
         resetGameVariables();
         loadscreen->render(gameLevel, windowWidth, windowHeight);
     }
@@ -555,7 +558,9 @@ void KeyboardCallback(unsigned char key, int x, int y)
                 gameLevel = 1;
                 firstLoad = false;
             }
-            if (gameState == GAME_LSCREEN) gameState = GAME_LOADING;
+            if (gameState == GAME_LSCREEN){
+                gameState = GAME_LOADING;
+            }
             else if (firstLoad && gameState == GAME_LOADING) {
                 gameState = GAME_RUNNING;
                 firstLoad = false;

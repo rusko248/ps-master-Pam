@@ -59,7 +59,7 @@ Sound::Sound(){
     result = sound2->setMode(FMOD_LOOP_NORMAL);
     ERRCHECK(result);
     
-    result = system->createSound("sounds/Step1.mp3", FMOD_SOFTWARE | FMOD_2D, 0, &sound3);
+    result = system->createSound("sounds/Step2.mp3", FMOD_SOFTWARE | FMOD_2D, 0, &sound3);
     ERRCHECK(result);
     result = sound3->setMode(FMOD_LOOP_NORMAL);
     ERRCHECK(result);
@@ -79,6 +79,11 @@ Sound::Sound(){
     result = sound6->setMode(FMOD_LOOP_NORMAL);
     ERRCHECK(result);
     
+    result = system->createSound("sounds/loading.mp3", FMOD_SOFTWARE | FMOD_2D, 0, &sound7);
+    ERRCHECK(result);
+    result = sound7->setMode(FMOD_LOOP_NORMAL);
+    ERRCHECK(result);
+    
 
 //     Start playing constant sounds
 
@@ -91,7 +96,7 @@ Sound::Sound(){
     ERRCHECK(result);
     result = channel1->set3DAttributes(&pos, &vel);
     ERRCHECK(result);
-    result = channel1->setPaused(false);
+    result = channel1->setPaused(true);
     ERRCHECK(result);
     
     //Channel 2 - rusko torch
@@ -100,7 +105,7 @@ Sound::Sound(){
     ERRCHECK(result);
     result = channel2->set3DAttributes(&pos, &vel);
     ERRCHECK(result);
-    result = channel2->setPaused(false);
+    result = channel2->setPaused(true);
     ERRCHECK(result);
     
     //Channel 3 - walking
@@ -122,6 +127,15 @@ Sound::Sound(){
     jumping = false;
     
     //Channel 6 - die
+    
+    //Channel 7 - loading music
+    
+    result = system->playSound(sound7, 0, false, &channel7);
+    ERRCHECK(result);
+    result = channel7->set3DAttributes(&pos, &vel);
+    ERRCHECK(result);
+    result = channel7->setPaused(false);
+    ERRCHECK(result);
     
 
 
@@ -191,4 +205,21 @@ void Sound::ruskoTorch(bool off){
     channel2->setPaused(!paused);
      */
     channel2->setPaused(off);
+}
+
+void Sound::startLevel(){
+    cout << "starting level" << endl;
+    channel1->setPaused(false);
+    channel2->setPaused(false);
+    channel3->setPaused(true);
+    
+    channel7->setPaused(true);
+}
+
+void Sound::endLevel(){
+    channel1->setPaused(true);
+    channel2->setPaused(true);
+    channel3->setPaused(true);
+    
+    channel7->setPaused(false);
 }
