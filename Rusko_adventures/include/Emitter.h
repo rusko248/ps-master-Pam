@@ -45,7 +45,8 @@ public:
     virtual void loadEmission(string filepath);
     void updateFromFile();
     emitter *e;
-    
+    vector<vector3> positions;
+
 protected:
     particle **managerParticleList;
     void rotationToDirection(float pitch, float yaw, vector3 *direction);
@@ -62,7 +63,6 @@ protected:
     string floatToString(float num);
     float readFloat(ifstream *infile);
     int readInt(ifstream *infile);
-    vector<vector3> positions;
     pthread_mutex_t mutex;
     
 };

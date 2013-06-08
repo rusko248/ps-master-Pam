@@ -199,6 +199,7 @@ void gameLogic() {
         room = Room();
         room.setLevel(gameLevel);
         ruskoBounds->setRoom(&room);
+        particles->reset();
         collisions = new RuskoCollisions(&room);
         //gameState = GAME_LSCREEN;
         gameState = GAME_RUNNING;

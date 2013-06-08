@@ -35,6 +35,37 @@ ParticleManager::~ParticleManager(){
     }
 }
 
+void ParticleManager::reset(){
+    emitters[0]->positions.clear();
+    emitters[0]->positions.push_back(vector3(0,0,0));
+    for(int e = 1; e < emitters.size(); e++){
+        
+        //Return emitter's particles to pool
+        particle *curr = emitters[e]->e->particleList;
+        while(curr){
+            particle *toMove = curr;
+            curr = curr->next;
+            //Move back to particlePool
+            
+            if(toMove->prev != NULL){
+                cout << "Returning Error" << endl;
+                toMove->prev->next = toMove->next;
+            }else{
+                emitters[e]->e->particleList = toMove->next;
+            }
+            if(toMove->next != NULL){
+                toMove->next->prev = toMove->prev;
+            }
+            toMove->next = particlePool;
+            toMove->prev = NULL;
+            particlePool = toMove;
+        }
+        
+        //Delete emitter
+        delete emitters[e];
+    }
+}
+
 ParticleManager::ParticleManager(int max){
     createParticleList(max);
 }

@@ -26,6 +26,7 @@ public:
     ~ParticleManager();
     void addEmitter(vector3 pos, vector3 dir, vector3 dirVar, float speed, float speedVar, int totalParticles, int emitsPerFrame, int emitVar, int life, int lifeVar, vector3 force);
     void addEmitter(Emitter *e);
+    void reset();
     void update();
     void display();
     int nextId();
