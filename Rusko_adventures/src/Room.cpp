@@ -48,9 +48,9 @@ int numHighTorches; // high torches 3-4 steps
 float minHeight = 1.0f, maxHeight = 10.0f, highHeight = 6.0f;
 
 Room::Room() {
-	dim[0] = 10;
+	dim[0] = 5;
 	dim[1] = 10;
-	dim[2] = 40;
+	dim[2] = 25;
 	scale = 2.0f;
 	
 	initRoom();
