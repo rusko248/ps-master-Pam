@@ -34,12 +34,12 @@ public:
     void reset();
     float yPos;
     float yVel;
+    float yAccel;
     bool movingDuringJump;
     float tStep;
     
 protected:
     float yInitial;
-    float yAccel;
     bool onGround;
     bool boxContact;
     

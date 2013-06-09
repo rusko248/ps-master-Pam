@@ -66,8 +66,13 @@ void fireCircleEmitter::display(){
     // Invoke the shader.  Now OpenGL will call our
     // shader programs on anything we draw.
     shader->Bind();
-    shader->SetUniform("pointRadius", 3.0f);
-    shader->SetUniform("point_size", 3.0f);
+    if(playFromFile){
+        shader->SetUniform("pointRadius", 8.0f);
+        shader->SetUniform("point_size", 8.0f);
+    }else{
+        shader->SetUniform("pointRadius", 3.0f);
+        shader->SetUniform("point_size", 3.0f);
+    }
     
 
 

@@ -182,15 +182,16 @@ void Emitter::display(){
 }
 
 Emitter::~Emitter(){
+    pthread_mutex_lock(&mutex);
     particle *curr = e->particleList;
     while(curr){
         particle *toDelete = curr;
         curr = curr->next;
         delete toDelete;
     }
-    delete e;
     if(recording) emitterInfo->close();
-    pthread_mutex_destroy(&mutex);
+    delete e;
+    pthread_mutex_unlock(&mutex);
 }
 
 void Emitter::update(){

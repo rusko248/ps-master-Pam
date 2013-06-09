@@ -18,6 +18,7 @@
 #include "fireCircleEmitter.h"
 #include "windCircleEmitter.h"
 #include "turbulentCircleEmitter.h"
+#include <pthread.h>
 
 class ParticleManager
 {
@@ -37,6 +38,7 @@ private:
     int maxParticles;
     void createParticleList(int max);
     std::vector<Emitter*> emitters;
+    pthread_mutex_t mutex;
 };
 
 #endif /* defined(__assignment2__ParticleManager__) */

@@ -30,6 +30,8 @@ Spikes spikes;
 // World position.  Rusko position rel to the room is negative this amount
 extern STVector3 worldPos;
 
+extern fireCircleEmitter *torchFire;
+
 // Smoke
 turbulentCircleEmitter *t;
 
@@ -102,8 +104,14 @@ void Room::initRoom() {
 
 void Room::setLevel(int lv) {
 	level = lv;
-
-	t = new turbulentCircleEmitter(&particles->particlePool, particles->nextId(), "../Particles/windRecording.txt");
+    
+    particles->reset();
+    
+    torchFire = new fireCircleEmitter(&particles->particlePool, particles->nextId(), "../Particles/fireRecording-250.txt");
+    
+    particles->addEmitter(torchFire);
+    
+	t = new turbulentCircleEmitter(&particles->particlePool, particles->nextId(), "../Particles/windRecording100.txt");
 
 	generateTorches();
 	generateObstacles();
@@ -440,19 +448,15 @@ void Room::renderObjects() {
 				break;
 			case PIT:
 				break;
-<<<<<<< HEAD
+
 			case SMOKE:
 				{
 				vector3 pos = vector3(pos.x+scale*floor->width-scale*((float)u+.5f), pos.y+scale*((float)v+.5f), pos.z);
 				if (j == 1) { pos = vector3(pos.x, pos.y+scale*((float)v+.5f), pos.z-scale*((float)u+.5f));}
 				else if (j == 2) { pos = vector3(pos.x+scale*((float)u+.5f), pos.y+scale*((float)v+.5f), pos.z-scale*floor->length);}
 				else if (j == 3) { pos = vector3(pos.x+scale*floor->width, pos.y+scale*((float)v+.5f), pos.z-scale*floor->length+scale*((float)u+.5f));}
-                    turbulentCircleEmitter *t = new turbulentCircleEmitter(&particles->particlePool, particles->nextId(), "../Particles/windRecording.txt");
-                    t->resetPos(pos);
-                    particles->addEmitter(t);
 				}
-=======
->>>>>>> 138b6673cddac64493531dcb7078cd8c1d9095a9
+
 			}
 
 			glPopMatrix();
@@ -772,6 +776,6 @@ void Room::generateObstacles() {
 		else if (j == 2) { pos = vector3(pos.x+scale*((float)basepos+.5f), pos.y+scale*(1.5f), pos.z-scale*floor->length);}
 		else if (j == 3) { pos = vector3(pos.x+scale*floor->width, pos.y+scale*(1.5f), pos.z-scale*floor->length+scale*((float)basepos+.5f));}
 		t->resetPos(pos);
-		particles->addEmitter(t);
+		if(particles->nextId() == 1) particles->addEmitter(t);
 	}
 }

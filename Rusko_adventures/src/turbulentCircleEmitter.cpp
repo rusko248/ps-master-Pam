@@ -68,8 +68,8 @@ void turbulentCircleEmitter::display(){
     // Invoke the shader.  Now OpenGL will call our
     // shader programs on anything we draw.
     shader->Bind();
-    shader->SetUniform("pointRadius", 10.0f);
-    shader->SetUniform("point_size", 10.0f);
+    shader->SetUniform("pointRadius", 25.0f);
+    shader->SetUniform("point_size", 25.0f);
     
     glPointSize(5);
     glBegin(GL_POINTS);

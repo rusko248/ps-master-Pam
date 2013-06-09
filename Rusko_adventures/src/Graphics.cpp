@@ -161,9 +161,6 @@ void setup(){
     fireCircleEmitter *f = new fireCircleEmitter(.12, &particles->particlePool, particles->nextId(), pos, dir, dirVar, .02, 0, 2000, 50, 20, 15, 5, fire);
     torchParticles->addEmitter(f);
     
-    torchFire = new fireCircleEmitter(&particles->particlePool, particles->nextId(), "../Particles/fireRecording.txt");
-
-    particles->addEmitter(torchFire);
     
 /*
 	//PLight
@@ -252,7 +249,6 @@ void gameLogic() {
         room = Room();
         room.setLevel(gameLevel);
         ruskoBounds->setRoom(&room);
-        particles->reset();
         collisions = new RuskoCollisions(&room);
         gameState = GAME_LSCREEN;
     }
@@ -599,16 +595,16 @@ void KeyboardCallback(unsigned char key, int x, int y)
             glutPostRedisplay();
             break;
         case 'r': //resets same level
-<<<<<<< HEAD
+
             dead = false;
             if (gameState == GAME_RUNNING) {
                 gameState = GAME_LSCREEN;
                 printf("\n same level again: %i \n", gameLevel);
             }
             glutPostRedisplay();
-=======
+
             resetLevel();
->>>>>>> 138b6673cddac64493531dcb7078cd8c1d9095a9
+
             break;
         case 13: //toggles from one level to the next
 

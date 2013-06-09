@@ -90,9 +90,16 @@ void RuskoCollisions::reactToCollision(ObsBound* offendingObject){
             float radiusSum = ruskoBound->bcir.radius + offendingObject->bcir.radius;
             
             float ruskoBottom = ruskoBound->bcir.y - ruskoBound->bcir.radius;
+            float boxTop = offendingObject->bcir.y + worldPos.y + offendingObject->bcir.radius;
+            float boxTop2 = boxTop + (ruskoPhys->yVel + ruskoPhys->yAccel*ruskoPhys->tStep)*ruskoPhys->tStep;
+        
             
-            
-            cout << ruskoBound->bcir.y - relativePos << endl;
+            if((ruskoBottom > boxTop2 || ruskoPhys->yVel == 0) && ruskoBottom < boxTop){
+                cout << "BOXXXX" << endl;
+                ruskoPhys->setOnBox(true);
+                return;
+            }
+            /*
              if((ruskoBound->bcir.y - (relativePos)) >= (radiusSum - boxEpsilon)){//above box
                  cout << "Above" << endl;
                  ruskoPhys->yVel = 0;
@@ -108,6 +115,7 @@ void RuskoCollisions::reactToCollision(ObsBound* offendingObject){
              else{//hitting the side of the box
                  lateralMovement = false;//Set can't move in x or z
              }
+             */
 			break;
         }
 		case SPIKES:

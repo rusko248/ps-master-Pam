@@ -64,8 +64,8 @@ void createThreads(){
 
 int main(int argc, char** argv) {
     
-    particles = new ParticleManager(20000);
-    torchParticles = new ParticleManager(3000);
+    particles = new ParticleManager(10000);
+    torchParticles = new ParticleManager(2500);
     //Sound
     systemSound = new Sound();
     
