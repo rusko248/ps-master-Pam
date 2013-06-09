@@ -154,7 +154,7 @@ void setup(){
     torchParticles->addEmitter(f);
     
     torchFire = new fireCircleEmitter(&particles->particlePool, particles->nextId(), "../Particles/fireRecording.txt");
-    
+
     particles->addEmitter(torchFire);
 /*
 	//PLight
