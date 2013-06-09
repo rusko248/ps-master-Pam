@@ -260,7 +260,7 @@ bool Room::isSpikes() {
 }
 
 void Room::render() {
-	//renderLayout();
+	renderLayout();
 	renderObjects();
 }
 

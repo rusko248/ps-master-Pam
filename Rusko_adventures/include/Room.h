@@ -64,7 +64,7 @@ public:
 	Room(int w, int h, int l, float s);
 	~Room();
 	
-	void setLevel(int lv, ParticleManager *p);
+	void setLevel(int lv);
 	Floor *getFloor();
 	Wall **getWalls();
 	int getNumTorches();
@@ -96,7 +96,6 @@ private:
 	std::vector<int> boxIndices;
 	std::vector<int> safeIndices;
 	STPoint3 playerStartPos;
-	ParticleManager *particles;
 
 };
 
