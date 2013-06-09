@@ -39,6 +39,7 @@ public:
     void checkForCollisions();
     void reset();
     bool lateralMovement;
+    bool torchesAllLit;
     
 protected:
     bool collisionOccuring;
@@ -48,6 +49,9 @@ protected:
     ObsBound *ruskoBound;
     vector<ObsBound> obsList;
     bool fallIntoPit;
+    
+    int numTorches;
+    int numTorchesLit;
     
 };
 

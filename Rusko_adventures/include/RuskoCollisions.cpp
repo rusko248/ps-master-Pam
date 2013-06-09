@@ -22,7 +22,9 @@ RuskoCollisions::RuskoCollisions(Room *room){
     ruskoBound->bcir.z = 0;
     
     room->getObList(obsList);
-
+    numTorches = room->getNumTorches();
+    numTorchesLit = 0;
+    printf("num of torches is %i \n", numTorches);
 }
 
 RuskoCollisions::~RuskoCollisions(){
@@ -61,6 +63,11 @@ void RuskoCollisions::reactToCollision(ObsBound* offendingObject){
 		case TORCH:{
             if(offendingObject->bcir.hit == false){
                 cout << "Torch identified" << endl;
+                numTorchesLit++; //one more torch has been lit
+                if (numTorchesLit == numTorches) {
+                    torchesAllLit = true;   
+                }
+                
                 //vector3 torchPos = vector3(offendingObject->bcir.x, offendingObject->bcir.y + offendingObject->bcir.radius, offendingObject->bcir.z);
                 vector3 torchPos = vector3(offendingObject->bcir.x, offendingObject->bcir.y + .7, offendingObject->bcir.z);
                 torchFire->addDisplayPos(torchPos);
