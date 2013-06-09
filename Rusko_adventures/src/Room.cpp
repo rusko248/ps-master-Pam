@@ -440,9 +440,9 @@ void Room::renderObjects() {
 				if (j == 1) { pos = vector3(pos.x, pos.y+scale*((float)v+.5f), pos.z-scale*((float)u+.5f));}
 				else if (j == 2) { pos = vector3(pos.x+scale*((float)u+.5f), pos.y+scale*((float)v+.5f), pos.z-scale*floor->length);}
 				else if (j == 3) { pos = vector3(pos.x+scale*floor->width, pos.y+scale*((float)v+.5f), pos.z-scale*floor->length+scale*((float)u+.5f));}
-				turbulentCircleEmitter *t = new turbulentCircleEmitter(&particles->particlePool, particles->nextId(), "../Particles/windRecording.txt");
-				t->resetPos(pos);
-				particles->addEmitter(t);
+                    turbulentCircleEmitter *t = new turbulentCircleEmitter(&particles->particlePool, particles->nextId(), "../Particles/windRecording.txt");
+                    t->resetPos(pos);
+                    particles->addEmitter(t);
 				}
 			}
 

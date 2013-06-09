@@ -38,9 +38,16 @@ bool RuskoCollisions::colliding(ObsBound *one, ObsBound *two){
 }
 
 void RuskoCollisions::checkForCollisions(){
-    if(dead) return;
+    //if(dead) return;
     lateralMovement = true;
     ruskoPhys->setOnBox(false);
+    if(room->isPit()){
+        cout << "pit" << endl;
+        dead = true;
+        fallIntoPit = true;
+        ruskoPhys->setOnGround(false);
+        systemSound->die();
+    }
     if(!fallIntoPit){//test to see if rusko is on the floor
         float nextYDelta = ruskoPhys->yVel*1/10;
         if(fabs(worldPos.y - nextYDelta - FLOOR_POS) < .33){
@@ -70,15 +77,22 @@ void RuskoCollisions::reactToCollision(ObsBound* offendingObject){
 			break;
         }
 		case BOX:{
-            float boxEpsilon = ruskoBound->bcir.radius * .2;
-
-             if(ruskoBound->bcir.y - (offendingObject->bcir.y + worldPos.y) >= (ruskoBound->bcir.radius + offendingObject->bcir.radius) - boxEpsilon){//above box
-                 cout << "Here" << endl;
+            float boxEpsilon = ruskoBound->bcir.radius * .5;
+            boxEpsilon = 1;
+            float relativePos = offendingObject->bcir.y + worldPos.y;
+            float radiusSum = ruskoBound->bcir.radius + offendingObject->bcir.radius;
+            cout << ruskoBound->bcir.y - relativePos << endl;
+             if((ruskoBound->bcir.y - (relativePos)) >= (radiusSum - boxEpsilon)){//above box
+                 cout << "Above" << endl;
+                 ruskoPhys->yVel = 0;
                  ruskoPhys->setOnBox(true);
-             }
-             if((offendingObject->bcir.y + worldPos.y) - ruskoBound->bcir.y >= (ruskoBound->bcir.radius + offendingObject->bcir.radius) - boxEpsilon){//below box
+             }else if((relativePos - ruskoBound->bcir.y) >= (radiusSum - boxEpsilon)){//below box
                 ruskoPhys->yVel = 0;
                  cout << "Below" << endl;
+             }else if((ruskoBound->bcir.y - (relativePos + ruskoPhys->yVel*ruskoPhys->tStep)) >= (radiusSum - boxEpsilon)){
+                 cout << "Above" << endl;
+                 ruskoPhys->yVel = 0;
+                 ruskoPhys->setOnBox(true);
              }
              else{//hitting the side of the box
                  lateralMovement = false;//Set can't move in x or z

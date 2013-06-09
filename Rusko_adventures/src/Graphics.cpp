@@ -158,6 +158,7 @@ void setup(){
     torchFire = new fireCircleEmitter(&particles->particlePool, particles->nextId(), "../Particles/fireRecording.txt");
 
     particles->addEmitter(torchFire);
+    
 /*
 	//PLight
 	//Rusko's fire light
@@ -483,7 +484,10 @@ static void Timer(int value)
         else if (downKeyPressed) {
             futurePos.x -= 1*sin(PI/180*worldAngle);
             futurePos.z += 1*cos(PI/180*worldAngle);
-            
+            if(jumpOn && ruskoPhys->movingDuringJump == false){
+                futurePos.x = worldPos.x;
+                futurePos.z = worldPos.z;
+            }
             if (ruskoBounds->inBounds(futurePos)){
                 worldPos.x = futurePos.x;
                 worldPos.z = futurePos.z;
@@ -515,9 +519,9 @@ static void TimerJump(int value){
     if (gameState == GAME_RUNNING){
         
 
-        ruskoPhys->update((float)5/fps);
+
         collisions->checkForCollisions();
-        
+                ruskoPhys->update((float)5/fps);
         if (jumpOn) {
             //jump();
             //ruskoPhys->jump();
@@ -551,6 +555,7 @@ void KeyboardCallback(unsigned char key, int x, int y)
             glutPostRedisplay();
             break;
         case 'r': //resets same level
+            dead = false;
             if (gameState == GAME_RUNNING) {
                 gameState = GAME_LSCREEN;
                 printf("\n same level again: %i \n", gameLevel);

@@ -35,6 +35,7 @@ public:
     float yPos;
     float yVel;
     bool movingDuringJump;
+    float tStep;
     
 protected:
     float yInitial;

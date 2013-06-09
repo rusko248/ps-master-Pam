@@ -15,6 +15,7 @@ RuskoPhysics::RuskoPhysics(float start){
     yVel = 0;
     yAccel = 0;
     onGround = true;
+    tStep = 0;
 }
 
 RuskoPhysics::~RuskoPhysics(){
@@ -25,7 +26,8 @@ void RuskoPhysics::jump(bool moving){
     movingDuringJump = moving;
     if(onGround || boxContact){
         onGround = false;
-        yPos += .33;
+        boxContact = false;
+        yPos += 1;
         yVel += 10;
         cout << "Jumping" << endl;
     }
@@ -38,6 +40,11 @@ void RuskoPhysics::setOnGround(bool groundContact){
 
 void RuskoPhysics::setOnBox(bool boxContact){
     this->boxContact = boxContact;
+    if(boxContact){
+        cout << "On Box" << endl;
+        yVel = 0;
+        yAccel = 0;
+    }
 }
 
 void RuskoPhysics::reset(){
@@ -48,6 +55,7 @@ void RuskoPhysics::reset(){
 }
 
 void RuskoPhysics::update(float timeStep){
+    tStep = timeStep;
     if(onGround || boxContact){
         yVel = 0;
         yAccel = 0;
@@ -58,4 +66,8 @@ void RuskoPhysics::update(float timeStep){
     yVel = yVel + yAccel*timeStep;
     float deltaY = yVel*timeStep;
     yPos = yPos + deltaY;
+    if(yPos < 1 && !boxContact){
+        cout << "setting ground" << endl;
+        setOnGround(true);
+    }
 }
