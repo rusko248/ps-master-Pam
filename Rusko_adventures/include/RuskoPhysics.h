@@ -27,13 +27,14 @@ class RuskoPhysics
 public:
     RuskoPhysics(float start);
     ~RuskoPhysics();
-    void jump();
+    void jump(bool moving);
     void update(float timeStep);
     void setOnGround(bool groundContact);
     void setOnBox(bool boxContact);
     void reset();
     float yPos;
     float yVel;
+    bool movingDuringJump;
     
 protected:
     float yInitial;

@@ -21,7 +21,8 @@ RuskoPhysics::~RuskoPhysics(){
     
 }
 
-void RuskoPhysics::jump(){
+void RuskoPhysics::jump(bool moving){
+    movingDuringJump = moving;
     if(onGround || boxContact){
         onGround = false;
         yPos += .33;

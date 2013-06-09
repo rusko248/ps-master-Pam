@@ -329,12 +329,12 @@ void drawRusko(){
     }
     
     //turning left
-    else if (leftKeyPressed){
+    else if (leftKeyPressed && !jumpOn){
         torchPos = rusko->renderStepLeft(rusko_frameWalk);
         rusko_frameWalk++;
     }
     //turning right
-    else if (rightKeyPressed){
+    else if (rightKeyPressed && !jumpOn){
         torchPos = rusko->renderStepRight(rusko_frameWalk);
         rusko_frameWalk++;
     }
@@ -458,6 +458,10 @@ static void Timer(int value)
         if (upKeyPressed) {
             futurePos.x = worldPos.x + 1*sin(PI/180*worldAngle);
             futurePos.z = worldPos.z - 1*cos(PI/180*worldAngle);
+            if(jumpOn && ruskoPhys->movingDuringJump == false){
+                futurePos.x = worldPos.x;
+                futurePos.z = worldPos.z;
+            }
             
             if (ruskoBounds->inBounds(futurePos) && collisions->lateralMovement){
                 worldPos.x = futurePos.x;
@@ -538,13 +542,9 @@ void KeyboardCallback(unsigned char key, int x, int y)
         case ' ':  //activates jumping
             if (!jumpOn) {
                 jumpOn = true;
-                ruskoPhys->jump();
+                ruskoPhys->jump(upKeyPressed);
                 rusko_frameJump = 0;
             }
-            glutPostRedisplay();
-            break;
-        case 'j':  //activates jumping
-            ruskoPhys->jump();
             glutPostRedisplay();
             break;
         case 'r': //resets same level

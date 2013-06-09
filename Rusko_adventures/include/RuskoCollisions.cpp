@@ -61,7 +61,8 @@ void RuskoCollisions::reactToCollision(ObsBound* offendingObject){
 		case TORCH:{
             if(offendingObject->bcir.hit == false){
                 cout << "Torch identified" << endl;
-                vector3 torchPos = vector3(offendingObject->bcir.x, offendingObject->bcir.y + offendingObject->bcir.radius, offendingObject->bcir.z);
+                //vector3 torchPos = vector3(offendingObject->bcir.x, offendingObject->bcir.y + offendingObject->bcir.radius, offendingObject->bcir.z);
+                vector3 torchPos = vector3(offendingObject->bcir.x, offendingObject->bcir.y + .7, offendingObject->bcir.z);
                 torchFire->addDisplayPos(torchPos);
                 systemSound->lightTorch();
             }
@@ -69,7 +70,6 @@ void RuskoCollisions::reactToCollision(ObsBound* offendingObject){
 			break;
         }
 		case BOX:{
-
             float boxEpsilon = ruskoBound->bcir.radius * .2;
 
              if(ruskoBound->bcir.y - (offendingObject->bcir.y + worldPos.y) >= (ruskoBound->bcir.radius + offendingObject->bcir.radius) - boxEpsilon){//above box
