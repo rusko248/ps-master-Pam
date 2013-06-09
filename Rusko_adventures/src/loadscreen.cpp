@@ -49,7 +49,7 @@ void Loadscreen::drawIntroScreen(){
 
     string welcome = "Welcome to Rusko's Aventures!";
     string instructions = "Press enter to start";
-    drawMessageAt(welcome, 0, 80, STColor4f(1, 1, 1, 1));
+    drawMessageAt(welcome, 0, 50, STColor4f(1, 1, 1, 1));
     drawMessageAt(instructions, 0, 30, STColor4f(1, 1, 1, 1));
     
     glBegin(GL_TRIANGLES);
@@ -63,7 +63,7 @@ void Loadscreen::drawIntroScreen(){
 }
 
 void Loadscreen::initScreen(){
-    font = new STFont("fonts/arial.ttf", 32);
+    font = new STFont("fonts/NanumScript.ttc", 32);
 }
 
 
@@ -75,14 +75,9 @@ void Loadscreen::drawMessageAt(string message, float xpos, float ypos, STColor4f
     glLoadIdentity();
     glOrtho(-windowWidth/2, windowWidth/2, -windowHeight/2, windowHeight/2, -1., 1.);
 
-    
-    float pixelsPerUnit = GLUT_WINDOW_WIDTH/(float)windowWidth;
-    
-    
     float temp = font->ComputeWidth(message);
     
     xpos = xpos - (float)temp/2;
-    //ypos = ypos - (float)font->GetAscender()/2;
     glTranslatef(xpos, ypos, 0);
     font->DrawString(message, color);  //Draws the string
 

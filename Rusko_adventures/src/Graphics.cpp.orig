@@ -1,20 +1,19 @@
 #define NOMINMAX
 #define _USE_MATH_DEFINES
 
-#include <cmath>
-#include <vector>
-#include "Framework.h"
 #include "Graphics.h"
-#include "Renderable.h"
-#include "Room.h"
-#include "CatmullRom.h"
-#include "Rusko.h"
-#include "ParticleManager.h"
-#include "Sound.h"
+
+
+fireCircleEmitter *torchFire;
+
+const int fps=50;
+int window_id=0;
+
 
 
 // PI def
 const float PI = 3.14159265;
+const int FLOOR_POS = -1;
 
 // OpenGL display
 int windowWidth  = 640;
@@ -24,12 +23,16 @@ int windowHeight = 640;
 bool upKeyPressed, downKeyPressed, rightKeyPressed, leftKeyPressed;
 
 //System sound
-Sound *systemSound;
+
+
+//Loadscreen
+Loadscreen* loadscreen;
+
 
 // Camera/world positions, initialized at setup
 STVector3 camPos, worldPos, lastJump;
 float worldAngle;
-int initialYPos = -1;
+int groundPos = FLOOR_POS;
 
 // CatmullRom Jump
 bool jumpOn;
@@ -45,78 +48,144 @@ float light0Position[4];
 // Game states
 #define GAME_LOADING 0
 #define GAME_RUNNING 1
-int gameState = GAME_LOADING;
+#define GAME_LSCREEN 2
+int gameState = 0;
+bool firstLoad = true;
+
+//Current Game Level
+int gameLevel = 1;
 
 // List of objects to render
 std::vector<Renderable *> renderList;
 
 // Models
 Room room;
+
+//Rusko
 Rusko* rusko;
+RuskoPhysics *ruskoPhys;
+RuskoBounds *ruskoBounds;
+RuskoCollisions *collisions;
+bool dead = false;
 
-//Fire
-ParticleManager *particles;
-float xpos = 0.0f;
-float zpos = 0.0f;
-float ypos = 0.0f;
+//Deferred Lighting
+//DeferredLighting * dfe;
+std::string shaderPath = "../shaders"; //path to the shaders
+float zNear = .1f; //TODO: these need to be caluclated
+float zFar = 100.f; //TODO: these need to be caluclated
+enum RENDER_MODE{FIXED_FUNCTION, DIRECTIONAL, FULL_DEFERRED, POINTLIGHTS, NORMALS, DEPTH, COLORS, NUM_MODES};
 
-const int fps=50;
-int window_id=0;
+//Point Lights
+//vector<PointLight> plights; //holds the info for the lights in room
+float fireLightColor [3] = {0.6, 0.1, 0.0}; //the color of fire light
+
+
+static int frame = 0;
+
+//temp **pam**
+Box tempbox;
+
+
+/**
+ * Makes sure every time new level starts
+ * these variables are reset
+ **/
+void resetGameVariables(){
+    //Initial world position
+    //how is the room positioned... DEPENDS ON ROOM
+    STPoint3 startPos = room.getPlayerPosition();
+    
+    worldPos.x = -startPos.x;
+    worldPos.y = groundPos;
+    worldPos.z = -startPos.z;
+    worldAngle = 180;
+    
+    dead = false;
+    
+    //Camera
+    camPos.x = 0;
+    camPos.y = 2;
+    camPos.z = -2;
+    
+    //Jump stuff
+    jumpOn = false;
+    rusko_frameJump = 0;
+    lastJump.x = lastJump.y = lastJump.z = 0;
+
+    //Interaction/keyboard
+    upKeyPressed = downKeyPressed = rightKeyPressed = leftKeyPressed = false;
+}
+
 
 /**
  * Initializes variables, and does initial setup
  **/
 void setup(){
+    cout << "Setting up" << endl;
     // Initialize OpenGL defaults
     glClearColor(1,1,1,1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_DEPTH_TEST);
 	glShadeModel(GL_SMOOTH);
+
+	//------------------------//
+	//DEFERRED LIGHTING SET-UP//
+	//------------------------//
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+	glEnable(GL_NORMALIZE);
+	//glEnable(GL_CULL_FACE);
+	//glCullFace(GL_BACK);
+	//------------------------//
+	//  END DEFERRED SET-UP   //
+	//------------------------//
     
-    //Initial world position
-    worldPos.x = 0;
-    worldPos.y = initialYPos; //how is the room positioned?
-    worldPos.z = 0;
-    worldAngle = -90;
+    resetGameVariables();
     
-    //Sound
-    systemSound = new Sound();
-    
-    //Rusko position
-    camPos.x = 0;
-    camPos.y = 2;
-    camPos.z = -2.5;
     //Rusko model
     rusko = new Rusko();
+    ruskoPhys = new RuskoPhysics(-groundPos);
+    //Rusko bounds
+    ruskoBounds = new RuskoBounds();
     
-    //Fire model
-    xpos = -.6;
-    ypos = .6;
-    zpos=.25;
-
+    //Loadscreen
+    loadscreen = new Loadscreen();
+    
     vector3 pos = vector3(xpos,ypos,zpos);
-    //vector3 fire = vector3(0,-.0001,0);
     vector3 fire = vector3(.0005,.0001,.0005);
-    vector3 wind = vector3(0,.0001,.0005);
     vector3 dir = vector3(0,1,0);
     vector3 dirVar = vector3(.25,0,.25);
-    particles = new ParticleManager(7000);
 
     fireCircleEmitter *f = new fireCircleEmitter(.12, &particles->particlePool, particles->nextId(), pos, dir, dirVar, .02, 0, 2000, 50, 20, 15, 5, fire);
-    particles->addEmitter(f);
+    torchParticles->addEmitter(f);
+    
+    torchFire = new fireCircleEmitter(&particles->particlePool, particles->nextId(), "../Particles/fireRecording.txt");
+
+    particles->addEmitter(torchFire);
+    
+/*
+	//PLight
+	//Rusko's fire light
+	PointLight p;
+	p.SetColor(fireLightColor[0], fireLightColor[1], fireLightColor[2]);
+	p.SetPosition(xpos, ypos, zpos);
+	p.SetAttenuation(1.0, 0.05, 0.0);
+	p.SetRadius(1.0);
+	p.SetGrain(10);
+
+	plights.push_back(p);
+    */
     
     //Jump stuff-CatmullRom file uploaded
-    jumpOn = false;
-    rusko_frameJump = 0;
-    lastJump.x = lastJump.y = lastJump.z = 0;
-
     cr = new CatmullRom("models/rusko/jump_controlPoints.txt");
     
-    //Interaction/keyboard
-    upKeyPressed = downKeyPressed = false;
+    //temp box **pam**
+    tempbox = Box(2);
+    tempbox.setMove(5);
+    
     
     // Enable global lights
-	glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	float light0Position[4] = {camPos.x, camPos.y, camPos.z, 1.f};
 	glLightfv(GL_LIGHT0, GL_POSITION, light0Position);
@@ -136,15 +205,17 @@ void setup(){
     
 	// Enable texture
 	glEnable(GL_TEXTURE_2D);
+    
 }
 
 
 // Initializes the graphics system (i.e. Open GL)
 void GraphicsInit(int argc, char** argv)
 {
+    
 	// Initialize GLUT
 	glutInit(&argc, argv); 
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH); 
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH | GLUT_ALPHA); 
 	glutInitWindowSize(windowWidth, windowHeight); 
 	glutCreateWindow("Rusko's Adventures");
 
@@ -169,18 +240,51 @@ void GraphicsInit(int argc, char** argv)
 
 }
 
+
 void gameLogic() {
-	if (gameState == GAME_LOADING) {
-<<<<<<< HEAD
-		room = Room(20,20,30,1);
-=======
-		room = Room();
->>>>>>> c6b8557adbd0e1ffe1edb52c696f8ae6511d420e
-		room.setLevel(5);
-        gameState = GAME_RUNNING;
-    } else if (gameState == GAME_RUNNING){
-		renderList.push_back((Renderable *)&room);
+
+    if (gameState == GAME_LOADING)
+    {
+        systemSound->endLevel();
+        cout << "loading" << endl;
+        room = Room();
+        room.setLevel(gameLevel);
+        ruskoBounds->setRoom(&room);
+        particles->reset();
+        collisions = new RuskoCollisions(&room);
+        gameState = GAME_LSCREEN;
     }
+    else if (gameState == GAME_RUNNING)
+    {
+		renderList.push_back((Renderable *)&room);
+        systemSound->startLevel();
+
+    }
+    else if (gameState == GAME_LSCREEN)
+    {
+        resetGameVariables();
+        if (firstLoad){
+            loadscreen->render(-1, windowWidth, windowHeight);
+        } else loadscreen->render(gameLevel, windowWidth, windowHeight);
+
+    }
+}
+
+
+/***temp *** temp should delete*** **pam**/
+void temp(){
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix ();
+    glLoadIdentity();
+    
+    glRotated(worldAngle, 0, 1, 0);  //rotates world with given angle
+    
+    worldPos.y = -ruskoPhys->yPos;
+    glTranslatef(worldPos.x+3, worldPos.y+2, worldPos.z-4);  //translates to new position
+    
+    tempbox.render(frame);
+    
+    glPopMatrix ();
 }
 
 /** Renders the world with applied transforms **/
@@ -190,12 +294,18 @@ void renderWorld(){
     glLoadIdentity();
     
     glRotated(worldAngle, 0, 1, 0);  //rotates world with given angle
+    
+    worldPos.y = -ruskoPhys->yPos;
     glTranslatef(worldPos.x, worldPos.y, worldPos.z);  //translates to new position
+    
 
  	// Draw
 	for(unsigned i = 0; i<renderList.size(); i++)
 		renderList[i]->render();
 	renderList.clear();
+
+    //Draw rotated particles
+    particles->display();
     
     glPopMatrix ();
 }
@@ -213,7 +323,7 @@ void jump()
     if (rusko_frameJump >= totPoints) {
         jumpOn = false;
         lastJump.x = lastJump.y = lastJump.z = 0;
-        worldPos.y = initialYPos;
+        worldPos.y = groundPos;
     }
     else {
         STPoint3 fu = cr->pointAt(rusko_frameJump);
@@ -249,12 +359,12 @@ void drawRusko(){
     }
     
     //turning left
-    else if (leftKeyPressed){
+    else if (leftKeyPressed && !jumpOn){
         torchPos = rusko->renderStepLeft(rusko_frameWalk);
         rusko_frameWalk++;
     }
     //turning right
-    else if (rightKeyPressed){
+    else if (rightKeyPressed && !jumpOn){
         torchPos = rusko->renderStepRight(rusko_frameWalk);
         rusko_frameWalk++;
     }
@@ -273,6 +383,8 @@ void drawRusko(){
     xpos = torchPos.x;
     ypos = torchPos.y;
     zpos = torchPos.z;
+
+	//plights[0].SetPosition(xpos, ypos, zpos); //update the torch light
     
 }
 
@@ -301,6 +413,21 @@ void ReshapeCallback(int w, int h)
     glLoadIdentity();
 }
 
+/**
+ * Sets up the point light color and position.
+ * ADT
+ */
+void DrawPointLights() {
+	glDisable(GL_LIGHTING);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+/*
+	for(int i = 0; i < plights.size(); i++) {
+		plights[i].RenderPointLight(dfe);
+	}
+ */
+}
+
 
 /**
  * Display callback function
@@ -311,17 +438,34 @@ void DisplayCallback()
     
     gameLogic();
 
-    renderWorld(); //transforms and draws the world as Rusko moves around
-    drawRusko();  //transforms and draws Rusko
-    
-    
-    particles->resetPos(0, vector3(xpos, ypos, zpos));
-    particles->display();
-    particles->update();
-    static int frame = 0;
-    frame++;
-    glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION,2 + sinf(frame));
-    
+    if (gameState == GAME_RUNNING){
+		//BUILD G-BUFFER
+	//	dfe->PreDrawScene(); //lighting ADT
+
+		//DRAW OBJECTS AND EVIRONMENT
+		//GETS STORED IN G-BUFFER FOR RENDERING
+        renderWorld(); //transforms and draws the world as Rusko moves around
+        drawRusko();  //transforms and draws Rusko
+        
+        temp(); //***pam***/ box trial
+/*
+		//PREPARE FOR RENDING
+		dfe->PostDrawScene(); //lighting ADT
+
+		//-------------------------------//
+		// Render the scene with shaders //
+		//-------------------------------//
+		dfe->DrawDirectionalAndAmbient(windowWidth, windowHeight); //lighting ADT
+		dfe->PreDrawPointLights(windowWidth, windowHeight, zNear, zFar);
+		DrawPointLights();
+		dfe->PostDrawPointLights();
+		//-----------------------------//
+		//    End render the scene     //
+		//-----------------------------//
+*/
+		//FIRE RENDERED AFTER EVERYTHING ELSE
+        torchParticles->display();
+    }
     
     ReshapeCallback(windowWidth, windowHeight);
     
@@ -338,32 +482,60 @@ void DisplayCallback()
  */
 static void Timer(int value)
 {
-    if (upKeyPressed) {
-        worldPos.x += 1*sin(PI/180*worldAngle);
-        worldPos.z -= 1*cos(PI/180*worldAngle);
-        if(systemSound->walking == false && systemSound->jumping != true){
-            systemSound->startWalking();
+    frame++;
+    glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION,2 + sinf(frame));
+    if (gameState == GAME_RUNNING) {
+        STVector3 futurePos = STVector3(worldPos.x, worldPos.y, worldPos.z);
+        
+        if (upKeyPressed) {
+            futurePos.x = worldPos.x + 1*sin(PI/180*worldAngle);
+            futurePos.z = worldPos.z - 1*cos(PI/180*worldAngle);
+            if(jumpOn && ruskoPhys->movingDuringJump == false){
+                futurePos.x = worldPos.x;
+                futurePos.z = worldPos.z;
+            }
+            
+            if (ruskoBounds->inBounds(futurePos) && collisions->lateralMovement){
+                worldPos.x = futurePos.x;
+                worldPos.z = futurePos.z;
+                
+                if(systemSound->walking == false && systemSound->jumping != true){
+                    systemSound->startWalking();
+                }
+                if(systemSound->jumping == true) systemSound->stopWalking();
+                }else{
+                
+            }
+            
         }
-        if(systemSound->jumping == true) systemSound->stopWalking();
-    }else{
-        systemSound->stopWalking();
+        
+        else if (downKeyPressed) {
+            futurePos.x -= 1*sin(PI/180*worldAngle);
+            futurePos.z += 1*cos(PI/180*worldAngle);
+            if(jumpOn && ruskoPhys->movingDuringJump == false){
+                futurePos.x = worldPos.x;
+                futurePos.z = worldPos.z;
+            }
+            if (ruskoBounds->inBounds(futurePos)){
+                worldPos.x = futurePos.x;
+                worldPos.z = futurePos.z;
+            }
+        }
+        
+        if (rightKeyPressed){
+            if (worldAngle == 360) worldAngle = 0;
+            worldAngle += 5;
+        }
+        if (leftKeyPressed){
+            if (worldAngle == 360) worldAngle = 0;
+            worldAngle -= 5;
+        }
+        if (upKeyPressed || downKeyPressed || rightKeyPressed || leftKeyPressed ){
+            glutPostRedisplay();
+        }
+        
     }
-    if (downKeyPressed) {
-        worldPos.x -= 1*sin(PI/180*worldAngle);
-        worldPos.z += 1*cos(PI/180*worldAngle);
-    }
-    if (rightKeyPressed){
-        if (worldAngle == 360) worldAngle = 0;
-        worldAngle += 5;
-    }
-    if (leftKeyPressed){
-        if (worldAngle == 360) worldAngle = 0;
-        worldAngle -= 5;
-    }
-    if (upKeyPressed || downKeyPressed || rightKeyPressed || leftKeyPressed ){
-      glutPostRedisplay();  
-    }
-    systemSound->update();
+    
     glutTimerFunc(2000/fps, Timer, 0); // 10 milliseconds
 }
 
@@ -372,17 +544,32 @@ static void Timer(int value)
  * Timer function for jumping, it moves faster than normal timer
  */
 static void TimerJump(int value){
-    if (jumpOn) {
-        jump();
-        if(systemSound->jumping == false) systemSound->jump();
-        glutPostRedisplay();
-    }else{
-        systemSound->jumping = false;
+    if (gameState == GAME_RUNNING){
+        
+
+
+        collisions->checkForCollisions();
+                ruskoPhys->update((float)5/fps);
+        if (jumpOn) {
+            //jump();
+            //ruskoPhys->jump();
+            if(systemSound->jumping == false) systemSound->jump();
+            glutPostRedisplay();
+        }else{
+            systemSound->jumping = false;
+        }
     }
-    
     glutTimerFunc(100/fps, TimerJump, 0); // 10 milliseconds
 }
 
+void resetLevel(){
+//    if (gameState == GAME_RUNNING) {
+//        gameState = GAME_LSCREEN;
+//        printf("\n same level again: %i \n", gameLevel);
+//    }
+    resetGameVariables();
+    glutPostRedisplay();
+}
 
 /**
  * Keyboard callback function
@@ -392,13 +579,44 @@ void KeyboardCallback(unsigned char key, int x, int y)
     switch (key)
     {
         case 27:// exit program on escape press
+			//delete dfe; //delete Deferred engine
             exit(0);
             break;
         case ' ':  //activates jumping
             if (!jumpOn) {
                 jumpOn = true;
+                ruskoPhys->jump(upKeyPressed);
                 rusko_frameJump = 0;
             }
+            glutPostRedisplay();
+            break;
+        case 'r': //resets same level
+<<<<<<< HEAD
+            dead = false;
+            if (gameState == GAME_RUNNING) {
+                gameState = GAME_LSCREEN;
+                printf("\n same level again: %i \n", gameLevel);
+            }
+            glutPostRedisplay();
+=======
+            resetLevel();
+>>>>>>> 138b6673cddac64493531dcb7078cd8c1d9095a9
+            break;
+        case 13: //toggles from one level to the next
+
+            if (firstLoad && gameState == GAME_LSCREEN){
+                gameState = GAME_LOADING;
+                firstLoad = false;
+            }
+            else if (gameState == GAME_LSCREEN){
+                gameState = GAME_RUNNING;
+            }
+            else if (gameState == GAME_RUNNING) {
+                gameLevel++;
+                gameState = GAME_LOADING;
+                printf("\n oooo new level: %i \n", gameLevel);
+            }
+
             glutPostRedisplay();
             break;
         default:
@@ -440,6 +658,7 @@ void KeySpecialUp(int key, int x, int y)
         rusko_frameWalk = 0;
     }if (key == GLUT_KEY_UP){
         upKeyPressed = false;
+        systemSound->stopWalking();
         rusko_frameWalk = 0;
         rusko_frameJump = 0;
     } else if (key == GLUT_KEY_DOWN){
@@ -468,6 +687,15 @@ void GraphicsMainLoop()
     glutKeyboardFunc(KeyboardCallback);
     glutSpecialFunc(KeySpecial);
     glutSpecialUpFunc(KeySpecialUp);
-    
+/*
+	//------------------------//
+	//DEFERRED LIGHTING ENGINE//
+	//------------------------//
+	dfe = new DeferredLighting(windowWidth, windowHeight);
+	dfe->Init(shaderPath);
+	//------------------------//
+	//  END DEFERRED ENGINE   //
+	//------------------------//
+  */  
 	glutMainLoop();
 }

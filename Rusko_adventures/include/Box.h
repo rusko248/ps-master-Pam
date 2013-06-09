@@ -21,6 +21,7 @@ public:
 
 private:
     CatmullRom* cr;
+    bool wasSetMove;
 
 };
 

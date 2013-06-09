@@ -49,7 +49,7 @@ float light0Position[4];
 #define GAME_LOADING 0
 #define GAME_RUNNING 1
 #define GAME_LSCREEN 2
-int gameState = -1;
+int gameState = 0;
 bool firstLoad = true;
 
 //Current Game Level
@@ -81,6 +81,10 @@ float fireLightColor [3] = {0.6, 0.1, 0.0}; //the color of fire light
 
 
 static int frame = 0;
+
+//temp **pam**
+Box tempbox;
+
 
 /**
  * Makes sure every time new level starts
@@ -175,6 +179,11 @@ void setup(){
     //Jump stuff-CatmullRom file uploaded
     cr = new CatmullRom("models/rusko/jump_controlPoints.txt");
     
+    //temp box **pam**
+    tempbox = Box(2);
+    tempbox.setMove(5);
+    
+    
     // Enable global lights
     glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
@@ -233,32 +242,49 @@ void GraphicsInit(int argc, char** argv)
 
 
 void gameLogic() {
-    if (firstLoad){
-        loadscreen->render(-1, windowWidth, windowHeight);
-        systemSound->endLevel();
-    }
-	else if (gameState == GAME_LOADING)
+
+    if (gameState == GAME_LOADING)
     {
+        systemSound->endLevel();
         cout << "loading" << endl;
         room = Room();
         room.setLevel(gameLevel);
         ruskoBounds->setRoom(&room);
         particles->reset();
         collisions = new RuskoCollisions(&room);
-        //gameState = GAME_LSCREEN;
-        gameState = GAME_RUNNING;
-        systemSound->startLevel();
+        gameState = GAME_LSCREEN;
     }
     else if (gameState == GAME_RUNNING)
     {
 		renderList.push_back((Renderable *)&room);
+        systemSound->startLevel();
+
     }
     else if (gameState == GAME_LSCREEN)
     {
-        systemSound->endLevel();
         resetGameVariables();
-        loadscreen->render(gameLevel, windowWidth, windowHeight);
+        if (firstLoad){
+            loadscreen->render(-1, windowWidth, windowHeight);
+        } else loadscreen->render(gameLevel, windowWidth, windowHeight);
+
     }
+}
+
+
+/***temp *** temp should delete*** **pam**/
+void temp(){
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix ();
+    glLoadIdentity();
+    
+    glRotated(worldAngle, 0, 1, 0);  //rotates world with given angle
+    
+    worldPos.y = -ruskoPhys->yPos;
+    glTranslatef(worldPos.x+3, worldPos.y+2, worldPos.z-4);  //translates to new position
+    
+    tempbox.render(frame);
+    
+    glPopMatrix ();
 }
 
 /** Renders the world with applied transforms **/
@@ -277,7 +303,7 @@ void renderWorld(){
 	for(unsigned i = 0; i<renderList.size(); i++)
 		renderList[i]->render();
 	renderList.clear();
-    
+
     //Draw rotated particles
     particles->display();
     
@@ -420,6 +446,8 @@ void DisplayCallback()
 		//GETS STORED IN G-BUFFER FOR RENDERING
         renderWorld(); //transforms and draws the world as Rusko moves around
         drawRusko();  //transforms and draws Rusko
+        
+        temp(); //***pam***/ box trial
 /*
 		//PREPARE FOR RENDING
 		dfe->PostDrawScene(); //lighting ADT
@@ -534,6 +562,14 @@ static void TimerJump(int value){
     glutTimerFunc(100/fps, TimerJump, 0); // 10 milliseconds
 }
 
+void resetLevel(){
+//    if (gameState == GAME_RUNNING) {
+//        gameState = GAME_LSCREEN;
+//        printf("\n same level again: %i \n", gameLevel);
+//    }
+    resetGameVariables();
+    glutPostRedisplay();
+}
 
 /**
  * Keyboard callback function
@@ -555,31 +591,32 @@ void KeyboardCallback(unsigned char key, int x, int y)
             glutPostRedisplay();
             break;
         case 'r': //resets same level
+<<<<<<< HEAD
             dead = false;
             if (gameState == GAME_RUNNING) {
                 gameState = GAME_LSCREEN;
                 printf("\n same level again: %i \n", gameLevel);
             }
             glutPostRedisplay();
+=======
+            resetLevel();
+>>>>>>> 138b6673cddac64493531dcb7078cd8c1d9095a9
             break;
         case 13: //toggles from one level to the next
-            if(gameState == -1){
-                gameState = GAME_LSCREEN;
-                gameLevel = 1;
-                firstLoad = false;
-            }
-            if (gameState == GAME_LSCREEN){
+
+            if (firstLoad && gameState == GAME_LSCREEN){
                 gameState = GAME_LOADING;
-            }
-            else if (firstLoad && gameState == GAME_LOADING) {
-                gameState = GAME_RUNNING;
                 firstLoad = false;
             }
-            else {
+            else if (gameState == GAME_LSCREEN){
+                gameState = GAME_RUNNING;
+            }
+            else if (gameState == GAME_RUNNING) {
                 gameLevel++;
-                gameState = GAME_LSCREEN;
+                gameState = GAME_LOADING;
                 printf("\n oooo new level: %i \n", gameLevel);
             }
+
             glutPostRedisplay();
             break;
         default:

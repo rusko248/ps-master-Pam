@@ -81,6 +81,10 @@ void RuskoCollisions::reactToCollision(ObsBound* offendingObject){
             boxEpsilon = 1;
             float relativePos = offendingObject->bcir.y + worldPos.y;
             float radiusSum = ruskoBound->bcir.radius + offendingObject->bcir.radius;
+            
+            float ruskoBottom = ruskoBound->bcir.y - ruskoBound->bcir.radius;
+            
+            
             cout << ruskoBound->bcir.y - relativePos << endl;
              if((ruskoBound->bcir.y - (relativePos)) >= (radiusSum - boxEpsilon)){//above box
                  cout << "Above" << endl;
