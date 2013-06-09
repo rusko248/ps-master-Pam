@@ -36,9 +36,9 @@ ParticleManager::~ParticleManager(){
 }
 
 void ParticleManager::reset(){
-    emitters[0]->positions.clear();
+    /*emitters[0]->positions.clear();
     emitters[0]->positions.push_back(vector3(0,0,0));
-    for(int e = 1; e < emitters.size(); e++){
+    for(int e = emitters.size() - 1; e > 0; e--){
         
         //Return emitter's particles to pool
         particle *curr = emitters[e]->e->particleList;
@@ -63,7 +63,8 @@ void ParticleManager::reset(){
         
         //Delete emitter
         delete emitters[e];
-    }
+		emitters.pop_back();
+	}*/
 }
 
 ParticleManager::ParticleManager(int max){

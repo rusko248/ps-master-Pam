@@ -2,7 +2,6 @@
 #define _USE_MATH_DEFINES
 
 #include "Room.h"
-#include "ParticleManager.h"
 #include <cmath>
 
 using namespace std;
@@ -16,6 +15,8 @@ using namespace std;
 #define PIT '4'
 #define SMOKE '5'
 #define SAFE '9'
+
+extern ParticleManager *particles;
 
 float torchScale = 0.5f;
 float boxScale = 0.8f;
@@ -99,11 +100,10 @@ void Room::initRoom() {
 	spikes = Spikes(spikesScale*scale);
 }
 
-void Room::setLevel(int lv, ParticleManager *p) {
+void Room::setLevel(int lv) {
 	level = lv;
 
-	/*particles = p;
-	t = new turbulentCircleEmitter(&p->particlePool, p->nextId(), "../Particles/windRecording.txt");*/
+	t = new turbulentCircleEmitter(&particles->particlePool, particles->nextId(), "../Particles/windRecording.txt");
 
 	generateTorches();
 	generateObstacles();
@@ -758,7 +758,7 @@ void Room::generateObstacles() {
 		if (j == 1) { pos = vector3(pos.x, pos.y+scale*(1.5f), pos.z-scale*((float)basepos+.5f));}
 		else if (j == 2) { pos = vector3(pos.x+scale*((float)basepos+.5f), pos.y+scale*(1.5f), pos.z-scale*floor->length);}
 		else if (j == 3) { pos = vector3(pos.x+scale*floor->width, pos.y+scale*(1.5f), pos.z-scale*floor->length+scale*((float)basepos+.5f));}
-		//t->resetPos(pos);
-		//particles->addEmitter(t);
+		t->resetPos(pos);
+		particles->addEmitter(t);
 	}
 }
