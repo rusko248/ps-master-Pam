@@ -8,18 +8,6 @@ Box::Box() : Model("models/WoodCrate_OBJ/WoodCrate_OBJ.obj") {
 	
 }
 
-Box::Box(float scale, float max) : Model("models/WoodCrate_OBJ/WoodCrate_OBJ.obj", scale) {
-	
-    cr = new CatmullRom();
-    cr->addControlPoint(0, 0, 0);
-    cr->addControlPoint(0, max/3, 0);
-    cr->addControlPoint(0, max/2, 0);
-    cr->addControlPoint(0, max-(max/3), 0);
-    cr->addControlPoint(0, max, 0);
-    
-    cr->done();
-}
-
 
 Box::Box(float scale) : Model("models/WoodCrate_OBJ/WoodCrate_OBJ.obj", scale) {
 
@@ -45,5 +33,16 @@ void Box::render(int frame) {
     Model::render();
 
     glPopMatrix ();
-    
+}
+
+void Box::setMove(float height){
+    cr = new CatmullRom();
+    cr->addControlPoint(0, 0, 0);
+    cr->addControlPoint(0, height/2, 0);
+    cr->addControlPoint(0, height-(height/3), 0);
+    cr->addControlPoint(0, height, 0);
+    cr->addControlPoint(0, height-(height/3), 0);
+    cr->addControlPoint(0, height/2, 0);
+    cr->addControlPoint(0, 0, 0);
+    cr->done();
 }

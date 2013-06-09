@@ -12,10 +12,10 @@ class Box : public Obstacle, public Model
 {
 public:
 	Box();
-    Box(float scale, float max); //moving box that moves a max height up
 	Box(float scale);
 	~Box();
 	
+    void setMove(float height);//makes a box to move up a certain height
 	void render();
     void render(int frame); //renders at a certain frame for moving boxes
 
