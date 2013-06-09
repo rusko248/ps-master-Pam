@@ -46,7 +46,7 @@ STTexture *floorTexture, *wallTexture;
 float minHeight = 1.0f, maxHeight = 10.0f, highHeight = 6.0f;
 
 Room::Room() {
-	dim[0] = 10;
+	dim[0] = 7;
 	dim[1] = 10;
 	dim[2] = 40;
 	scale = 2.0f;
