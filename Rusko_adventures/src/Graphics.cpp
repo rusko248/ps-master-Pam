@@ -51,6 +51,7 @@ float light0Position[4];
 #define GAME_LSCREEN 2
 int gameState = 0;
 bool firstLoad = true;
+bool levelComplete = false;
 
 //Current Game Level
 int gameLevel = 1;
@@ -101,6 +102,7 @@ void resetGameVariables(){
     worldAngle = 180;
     
     dead = false;
+    levelComplete = false; //makes sure always start with levelComplete is false
     
     //Camera
     camPos.x = 0;
@@ -257,7 +259,13 @@ void gameLogic() {
     else if (gameState == GAME_RUNNING)
     {
 		renderList.push_back((Renderable *)&room);
-        systemSound->startLevel();
+       // systemSound->startLevel();
+        if (collisions->torchesAllLit) {
+            levelComplete = true; //finished level!
+            //once gameplay works this should work
+//            gameLevel++;
+//            gameState = GAME_LOADING;
+        }
 
     }
     else if (gameState == GAME_LSCREEN)
@@ -605,11 +613,13 @@ void KeyboardCallback(unsigned char key, int x, int y)
         case 13: //toggles from one level to the next
 
             if (firstLoad && gameState == GAME_LSCREEN){
-                gameState = GAME_LOADING;
+                gameState = GAME_LSCREEN;
                 firstLoad = false;
             }
             else if (gameState == GAME_LSCREEN){
                 gameState = GAME_RUNNING;
+                systemSound->startLevel();
+
             }
             else if (gameState == GAME_RUNNING) {
                 gameLevel++;
