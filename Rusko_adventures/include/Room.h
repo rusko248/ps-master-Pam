@@ -16,6 +16,8 @@
 #define SMOKE '5'
 #define SAFE '9'
 
+
+
 // walls and floors are grids
 struct Wall {
 	int base, height;
