@@ -68,6 +68,9 @@ public:
 	Wall **getWalls();
 	void getObList(std::vector<ObsBound> &o);
 	STPoint3 getPlayerPosition();
+	bool isFree();
+	bool isPit();
+	bool isSpikes();
 	void render();
 
 	int dim[3];
