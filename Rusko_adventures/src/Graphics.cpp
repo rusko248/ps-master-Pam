@@ -244,7 +244,6 @@ void gameLogic() {
         ruskoBounds->setRoom(&room);
         particles->reset();
         collisions = new RuskoCollisions(&room);
-        //gameState = GAME_LSCREEN;
         gameState = GAME_RUNNING;
         systemSound->startLevel();
     }
@@ -530,6 +529,13 @@ static void TimerJump(int value){
     glutTimerFunc(100/fps, TimerJump, 0); // 10 milliseconds
 }
 
+void resetLevel(){
+    if (gameState == GAME_RUNNING) {
+        gameState = GAME_LSCREEN;
+        printf("\n same level again: %i \n", gameLevel);
+    }
+    glutPostRedisplay();
+}
 
 /**
  * Keyboard callback function
@@ -551,11 +557,7 @@ void KeyboardCallback(unsigned char key, int x, int y)
             glutPostRedisplay();
             break;
         case 'r': //resets same level
-            if (gameState == GAME_RUNNING) {
-                gameState = GAME_LSCREEN;
-                printf("\n same level again: %i \n", gameLevel);
-            }
-            glutPostRedisplay();
+            resetLevel();
             break;
         case 13: //toggles from one level to the next
             if(gameState == -1){
