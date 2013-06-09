@@ -41,46 +41,24 @@ ParticleManager::~ParticleManager(){
 
 void ParticleManager::reset(){
     pthread_mutex_lock(&mutex);
-
+    
+    int particlesLost = 0;
+    
     for(int e = 0; e < emitters.size(); e++){
+        particlesLost += emitters[e]->e->totalParticles;
         delete (Emitter*)emitters[e];
     }
     emitters.clear();
-
-    //createParticleList(maxParticles);
-
+    
+    for(int i = 0; i < particlesLost; i++){
+        particle *newParticle = new particle;
+        newParticle->prev = NULL;
+        newParticle->next = particlePool;
+        particlePool = newParticle;
+    }
     
     pthread_mutex_unlock(&mutex);
     
-    /*emitters[0]->positions.clear();
-    emitters[0]->positions.push_back(vector3(0,0,0));
-    for(int e = emitters.size() - 1; e > 0; e--){
-        
-        //Return emitter's particles to pool
-        particle *curr = emitters[e]->e->particleList;
-        while(curr){
-            particle *toMove = curr;
-            curr = curr->next;
-            //Move back to particlePool
-            
-            if(toMove->prev != NULL){
-                cout << "Returning Error" << endl;
-                toMove->prev->next = toMove->next;
-            }else{
-                emitters[e]->e->particleList = toMove->next;
-            }
-            if(toMove->next != NULL){
-                toMove->next->prev = toMove->prev;
-            }
-            toMove->next = particlePool;
-            toMove->prev = NULL;
-            particlePool = toMove;
-        }
-        
-        //Delete emitter
-        delete emitters[e];
-		emitters.pop_back();
-	}*/
 }
 
 ParticleManager::ParticleManager(int max){
