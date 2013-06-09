@@ -256,7 +256,7 @@ void gameLogic() {
     else if (gameState == GAME_RUNNING)
     {
 		renderList.push_back((Renderable *)&room);
-        systemSound->startLevel();
+       // systemSound->startLevel();
 
     }
     else if (gameState == GAME_LSCREEN)
@@ -597,6 +597,8 @@ void KeyboardCallback(unsigned char key, int x, int y)
             }
             else if (gameState == GAME_LSCREEN){
                 gameState = GAME_RUNNING;
+                systemSound->startLevel();
+
             }
             else if (gameState == GAME_RUNNING) {
                 gameLevel++;
