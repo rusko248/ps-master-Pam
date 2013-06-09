@@ -189,7 +189,7 @@ Emitter::~Emitter(){
         curr = curr->next;
         delete toDelete;
     }
-    if(recording) emitterInfo->close();
+    //if(recording) emitterInfo->close();
     delete e;
     pthread_mutex_unlock(&mutex);
 }

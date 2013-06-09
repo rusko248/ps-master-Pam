@@ -46,17 +46,9 @@ void ParticleManager::reset(){
         delete (Emitter*)emitters[e];
     }
     emitters.clear();
-/*
-     particle *curr = particlePool;
-     while(curr){
-         particle *toDelete = curr;
-         curr = curr->next;
-         delete toDelete;
-     }
 
+    //createParticleList(maxParticles);
 
-    createParticleList(maxParticles);
- */
     
     pthread_mutex_unlock(&mutex);
     
