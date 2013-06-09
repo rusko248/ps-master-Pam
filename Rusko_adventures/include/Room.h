@@ -6,6 +6,7 @@
 #include "Torch.h"
 #include "Box.h"
 #include "Spikes.h"
+#include "ParticleManager.h"
 
 #define FREE '0'
 #define TORCH '1'
@@ -63,9 +64,10 @@ public:
 	Room(int w, int h, int l, float s);
 	~Room();
 	
-	void setLevel(int lv);
+	void setLevel(int lv, ParticleManager *p);
 	Floor *getFloor();
 	Wall **getWalls();
+	int getNumTorches();
 	void getObList(std::vector<ObsBound> &o);
 	STPoint3 getPlayerPosition();
 	bool isFree();
@@ -89,10 +91,12 @@ private:
 
 	Wall *walls[4]; // near, left, far, right
 	Floor *floor;
+	int numTorches, numHighTorches;
 	std::vector<ObsBound> obList;
 	std::vector<int> boxIndices;
 	std::vector<int> safeIndices;
 	STPoint3 playerStartPos;
+	ParticleManager *particles;
 
 };
 

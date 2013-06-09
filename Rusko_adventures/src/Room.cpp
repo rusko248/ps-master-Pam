@@ -30,7 +30,7 @@ Spikes spikes;
 extern STVector3 worldPos;
 
 // Smoke
-extern ParticleManager *particles;
+turbulentCircleEmitter *t;
 
 // Material
 float materialAmbient[]  = { 0.2, 0.2, 0.2, 1.0 };
@@ -43,8 +43,6 @@ STImage *floorBrickImage, *wallBrickImage;
 STTexture *floorTexture, *wallTexture;
 
 // Torches related
-int numTorches;
-int numHighTorches; // high torches 3-4 steps
 float minHeight = 1.0f, maxHeight = 10.0f, highHeight = 6.0f;
 
 Room::Room() {
@@ -101,8 +99,12 @@ void Room::initRoom() {
 	spikes = Spikes(spikesScale*scale);
 }
 
-void Room::setLevel(int lv) {
+void Room::setLevel(int lv, ParticleManager *p) {
 	level = lv;
+
+	/*particles = p;
+	t = new turbulentCircleEmitter(&p->particlePool, p->nextId(), "../Particles/windRecording.txt");*/
+
 	generateTorches();
 	generateObstacles();
 	updateOB();
@@ -221,6 +223,10 @@ Wall **Room::getWalls() {
 	return this->walls;
 }
 
+int Room::getNumTorches() {
+	return numTorches;
+}
+
 void Room::getObList(std::vector<ObsBound> &o) {
 	for (unsigned int i = 0; i < obList.size(); ++i) {
 		ObsBound ob = obList[i];
@@ -254,7 +260,7 @@ bool Room::isSpikes() {
 }
 
 void Room::render() {
-	renderLayout();
+	//renderLayout();
 	renderObjects();
 }
 
@@ -271,7 +277,7 @@ void Room::renderLayout() {
 		// floor
 		for (int v = 0; v < floor->length; ++v) {
 			for (int u = 0; u < floor->width; ++u) {
-				if (floor->objPos[floor->getIndex(u, v)] == PIT || floor->objPos[floor->getIndex(u, v)] == SAFE) continue;
+				if (floor->objPos[floor->getIndex(u, v)] == PIT) continue;
 				glTexCoord2f(0,0);
 				glNormal3f(0,1,0);
 				glVertex3f(pos.x+scale*u,pos.y,pos.z-scale*v);
@@ -434,16 +440,6 @@ void Room::renderObjects() {
 				break;
 			case PIT:
 				break;
-			case SMOKE:
-				{
-				vector3 pos = vector3(pos.x+scale*floor->width-scale*((float)u+.5f), pos.y+scale*((float)v+.5f), pos.z);
-				if (j == 1) { pos = vector3(pos.x, pos.y+scale*((float)v+.5f), pos.z-scale*((float)u+.5f));}
-				else if (j == 2) { pos = vector3(pos.x+scale*((float)u+.5f), pos.y+scale*((float)v+.5f), pos.z-scale*floor->length);}
-				else if (j == 3) { pos = vector3(pos.x+scale*floor->width, pos.y+scale*((float)v+.5f), pos.z-scale*floor->length+scale*((float)u+.5f));}
-				turbulentCircleEmitter *t = new turbulentCircleEmitter(&particles->particlePool, particles->nextId(), "../Particles/windRecording.txt");
-				t->resetPos(pos);
-				particles->addEmitter(t);
-				}
 			}
 
 			glPopMatrix();
@@ -758,5 +754,11 @@ void Room::generateObstacles() {
 		while (walls[j]->objPos[walls[j]->getIndex(basepos, 1)] != FREE)
 			basepos = rand() % walls[j]->base;
 		walls[j]->objPos[walls[j]->getIndex(basepos, 1)] = SMOKE;
+		vector3 pos = vector3(pos.x+scale*floor->width-scale*((float)basepos+.5f), pos.y+scale*(1.5f), pos.z);
+		if (j == 1) { pos = vector3(pos.x, pos.y+scale*(1.5f), pos.z-scale*((float)basepos+.5f));}
+		else if (j == 2) { pos = vector3(pos.x+scale*((float)basepos+.5f), pos.y+scale*(1.5f), pos.z-scale*floor->length);}
+		else if (j == 3) { pos = vector3(pos.x+scale*floor->width, pos.y+scale*(1.5f), pos.z-scale*floor->length+scale*((float)basepos+.5f));}
+		//t->resetPos(pos);
+		//particles->addEmitter(t);
 	}
 }
