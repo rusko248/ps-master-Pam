@@ -89,9 +89,11 @@ static int frame = 0;
 void resetGameVariables(){
     //Initial world position
     //how is the room positioned... DEPENDS ON ROOM
-    worldPos.x = -5;
+    STPoint3 startPos = room.getPlayerPosition();
+    
+    worldPos.x = -startPos.x;
     worldPos.y = groundPos;
-    worldPos.z = 2;
+    worldPos.z = -startPos.z;
     worldAngle = 180;
     
     dead = false;

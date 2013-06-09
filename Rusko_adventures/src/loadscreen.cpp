@@ -63,7 +63,7 @@ void Loadscreen::drawIntroScreen(){
 }
 
 void Loadscreen::initScreen(){
-    font = new STFont("resources/arial.ttf", 32);
+    font = new STFont("fonts/arial.ttf", 32);
 }
 
 

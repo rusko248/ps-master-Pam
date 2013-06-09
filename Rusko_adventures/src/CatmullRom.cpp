@@ -16,6 +16,7 @@ CatmullRom::CatmullRom(){
     segmentNum = -1;
     numControlPoints = 0;
     controlPoints = new vector<STPoint3>();
+    allPoints = new vector<STPoint3>();
 }
 
 CatmullRom::CatmullRom(string filename){
@@ -24,6 +25,10 @@ CatmullRom::CatmullRom(string filename){
     controlPoints = new vector<STPoint3>();
     allPoints = new vector<STPoint3>();
     this->readFile(filename);
+    createAllPoints();
+}
+
+void CatmullRom::done(){
     createAllPoints();
 }
 

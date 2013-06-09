@@ -29,6 +29,8 @@ class CatmullRom
 public:
 	CatmullRom();
     CatmullRom(string filename); //automatically makes all points with increment of .1
+    void done();
+    
     void readFile(string filename);
     
     void addControlPoint(float x, float y, float z);
