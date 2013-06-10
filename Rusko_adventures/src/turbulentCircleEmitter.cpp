@@ -41,7 +41,7 @@ void turbulentCircleEmitter::display(){
     
     // File locations
     std::string vertexShader = "../Particles/kernels/default.vert";
-    std::string fragmentShader = "../Particles/kernels/fire.frag";
+    std::string fragmentShader = "../Particles/kernels/particle.frag";
     std::string windPic = "../Particles/wind.png";
     
     STImage   *windImg;

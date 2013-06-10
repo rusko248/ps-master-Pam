@@ -59,27 +59,27 @@ Sound::Sound(){
     result = sound2->setMode(FMOD_LOOP_NORMAL);
     ERRCHECK(result);
     
-    result = system->createSound("sounds/Step2.mp3", FMOD_SOFTWARE | FMOD_2D, 0, &sound3);
+    result = system->createSound("sounds/Step2.mp3", FMOD_SOFTWARE | FMOD_3D, 0, &sound3);
     ERRCHECK(result);
     result = sound3->setMode(FMOD_LOOP_NORMAL);
     ERRCHECK(result);
     
-    result = system->createSound("sounds/lightFire.mp3", FMOD_SOFTWARE | FMOD_2D, 0, &sound4);
+    result = system->createSound("sounds/lightFire.mp3", FMOD_SOFTWARE | FMOD_3D, 0, &sound4);
     ERRCHECK(result);
     result = sound4->setMode(FMOD_LOOP_OFF);
     ERRCHECK(result);
     
-    result = system->createSound("sounds/jump.mp3", FMOD_SOFTWARE | FMOD_2D, 0, &sound5);
+    result = system->createSound("sounds/jump.mp3", FMOD_SOFTWARE | FMOD_3D, 0, &sound5);
     ERRCHECK(result);
     result = sound5->setMode(FMOD_LOOP_OFF);
     ERRCHECK(result);
     
-    result = system->createSound("sounds/die.mp3", FMOD_SOFTWARE | FMOD_2D, 0, &sound6);
+    result = system->createSound("sounds/die.mp3", FMOD_SOFTWARE | FMOD_3D, 0, &sound6);
     ERRCHECK(result);
     result = sound6->setMode(FMOD_LOOP_OFF);
     ERRCHECK(result);
     
-    result = system->createSound("sounds/loading.mp3", FMOD_SOFTWARE | FMOD_2D, 0, &sound7);
+    result = system->createSound("sounds/loading.mp3", FMOD_SOFTWARE | FMOD_3D, 0, &sound7);
     ERRCHECK(result);
     result = sound7->setMode(FMOD_LOOP_NORMAL);
     ERRCHECK(result);

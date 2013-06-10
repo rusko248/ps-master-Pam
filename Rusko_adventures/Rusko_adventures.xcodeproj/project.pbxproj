@@ -16,9 +16,7 @@
 		09085424175582D500A7D82E /* Sound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0908541C175582D500A7D82E /* Sound.cpp */; };
 		09085425175582D500A7D82E /* windCircleEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0908541D175582D500A7D82E /* windCircleEmitter.cpp */; };
 		090C28921754740A00F06D15 /* default.vert in Sources */ = {isa = PBXBuildFile; fileRef = 090C28821754740A00F06D15 /* default.vert */; };
-		090C28931754740A00F06D15 /* displacement.vert in Sources */ = {isa = PBXBuildFile; fileRef = 090C28831754740A00F06D15 /* displacement.vert */; };
-		090C28941754740A00F06D15 /* fire.frag in Sources */ = {isa = PBXBuildFile; fileRef = 090C28841754740A00F06D15 /* fire.frag */; };
-		090C28951754740A00F06D15 /* wind.frag in Sources */ = {isa = PBXBuildFile; fileRef = 090C28851754740A00F06D15 /* wind.frag */; };
+		090C28941754740A00F06D15 /* particle.frag in Sources */ = {isa = PBXBuildFile; fileRef = 090C28841754740A00F06D15 /* particle.frag */; };
 		0911EFCD175730C90072D538 /* libfmod.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0911EFC9175730980072D538 /* libfmod.dylib */; };
 		0911EFCE175730C90072D538 /* libfmodL.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0911EFCA175730990072D538 /* libfmodL.dylib */; };
 		0911EFDB175835200072D538 /* libfmod.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0911EFC9175730980072D538 /* libfmod.dylib */; };
@@ -89,9 +87,7 @@
 		090C287E1754740A00F06D15 /* Emitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Emitter.h; sourceTree = "<group>"; };
 		090C28801754740A00F06D15 /* fireCircleEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fireCircleEmitter.h; sourceTree = "<group>"; };
 		090C28821754740A00F06D15 /* default.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = default.vert; sourceTree = "<group>"; };
-		090C28831754740A00F06D15 /* displacement.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = displacement.vert; sourceTree = "<group>"; };
-		090C28841754740A00F06D15 /* fire.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = fire.frag; sourceTree = "<group>"; };
-		090C28851754740A00F06D15 /* wind.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = wind.frag; sourceTree = "<group>"; };
+		090C28841754740A00F06D15 /* particle.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = particle.frag; sourceTree = "<group>"; };
 		090C28871754740A00F06D15 /* ParticleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleManager.h; sourceTree = "<group>"; };
 		090C28881754740A00F06D15 /* ParticleStructs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleStructs.h; sourceTree = "<group>"; };
 		090C288A1754740A00F06D15 /* pointEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pointEmitter.h; sourceTree = "<group>"; };
@@ -4238,9 +4234,7 @@
 			isa = PBXGroup;
 			children = (
 				090C28821754740A00F06D15 /* default.vert */,
-				090C28831754740A00F06D15 /* displacement.vert */,
-				090C28841754740A00F06D15 /* fire.frag */,
-				090C28851754740A00F06D15 /* wind.frag */,
+				090C28841754740A00F06D15 /* particle.frag */,
 			);
 			path = kernels;
 			sourceTree = "<group>";
@@ -9267,9 +9261,7 @@
 				3F124A171753164A00EB6E07 /* Torch.cpp in Sources */,
 				3F124A2917532AAF00EB6E07 /* Rusko.cpp in Sources */,
 				090C28921754740A00F06D15 /* default.vert in Sources */,
-				090C28931754740A00F06D15 /* displacement.vert in Sources */,
-				090C28941754740A00F06D15 /* fire.frag in Sources */,
-				090C28951754740A00F06D15 /* wind.frag in Sources */,
+				090C28941754740A00F06D15 /* particle.frag in Sources */,
 				0908541E175582D500A7D82E /* circleEmitter.cpp in Sources */,
 				0908541F175582D500A7D82E /* Emitter.cpp in Sources */,
 				09085420175582D500A7D82E /* fireCircleEmitter.cpp in Sources */,

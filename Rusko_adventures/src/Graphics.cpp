@@ -6,7 +6,7 @@
 
 fireCircleEmitter *torchFire;
 
-const int fps=50;
+const int fps=30;
 int window_id=0;
 
 
