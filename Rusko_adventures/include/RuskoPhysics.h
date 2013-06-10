@@ -19,6 +19,7 @@ extern Sound *systemSound;
 extern ParticleManager *particles;
 
 extern bool jumpOn;
+extern bool dead;
 
 using namespace std;
 

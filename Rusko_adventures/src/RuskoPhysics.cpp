@@ -74,4 +74,5 @@ void RuskoPhysics::update(float timeStep){
         cout << "setting ground" << endl;
         setOnGround(true);
     }
+    if(yPos < -10) dead = true;
 }

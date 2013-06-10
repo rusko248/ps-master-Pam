@@ -41,11 +41,11 @@ bool RuskoCollisions::colliding(ObsBound *one, ObsBound *two){
 
 void RuskoCollisions::checkForCollisions(){
     if(dead) return;
+    if(fallIntoPit) return;
     lateralMovement = true;
     ruskoPhys->setOnBox(false);
     if(room->isPit()){
         cout << "pit" << endl;
-        dead = true;
         fallIntoPit = true;
         ruskoPhys->setOnGround(false);
         ruskoPhys->setInPit(true);

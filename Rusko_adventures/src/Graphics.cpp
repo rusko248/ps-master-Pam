@@ -544,14 +544,33 @@ static void Timer(int value)
 }
 
 
+void resetLevel(){
+    //    if (gameState == GAME_RUNNING) {
+    //        gameState = GAME_LSCREEN;
+    //        printf("\n same level again: %i \n", gameLevel);
+    //    }
+    ruskoPhys->reset();
+    resetGameVariables();
+    glutPostRedisplay();
+}
+
+void respawn(){
+    dead = false;
+    if (gameState == GAME_RUNNING) {
+        gameState = GAME_LSCREEN;
+        printf("\n same level again: %i \n", gameLevel);
+    }
+    glutPostRedisplay();
+    
+    resetLevel();
+}
+
 /**
  * Timer function for jumping, it moves faster than normal timer
  */
 static void TimerJump(int value){
     if (gameState == GAME_RUNNING){
-        
-
-
+        if(dead) respawn();
         collisions->checkForCollisions();
         ruskoPhys->update((float)5/fps);
         if (jumpOn) {
@@ -566,14 +585,8 @@ static void TimerJump(int value){
     glutTimerFunc(100/fps, TimerJump, 0); // 10 milliseconds
 }
 
-void resetLevel(){
-//    if (gameState == GAME_RUNNING) {
-//        gameState = GAME_LSCREEN;
-//        printf("\n same level again: %i \n", gameLevel);
-//    }
-    resetGameVariables();
-    glutPostRedisplay();
-}
+
+
 
 /**
  * Keyboard callback function
