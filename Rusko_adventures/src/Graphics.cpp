@@ -565,6 +565,26 @@ void respawn(){
     resetLevel();
 }
 
+void nextLevel(){
+    ruskoPhys->reset();
+    if (firstLoad && gameState == GAME_LSCREEN){
+        gameState = GAME_LSCREEN;
+        firstLoad = false;
+    }
+    else if (gameState == GAME_LSCREEN){
+        gameState = GAME_RUNNING;
+        systemSound->startLevel();
+        
+    }
+    else if (gameState == GAME_RUNNING) {
+        gameLevel++;
+        gameState = GAME_LOADING;
+        printf("\n oooo new level: %i \n", gameLevel);
+    }
+    
+    glutPostRedisplay();
+}
+
 /**
  * Timer function for jumping, it moves faster than normal timer
  */
@@ -608,35 +628,10 @@ void KeyboardCallback(unsigned char key, int x, int y)
             glutPostRedisplay();
             break;
         case 'r': //resets same level
-
-            dead = false;
-            if (gameState == GAME_RUNNING) {
-                gameState = GAME_LSCREEN;
-                printf("\n same level again: %i \n", gameLevel);
-            }
-            glutPostRedisplay();
-
-            resetLevel();
-
+            respawn();
             break;
         case 13: //toggles from one level to the next
-
-            if (firstLoad && gameState == GAME_LSCREEN){
-                gameState = GAME_LSCREEN;
-                firstLoad = false;
-            }
-            else if (gameState == GAME_LSCREEN){
-                gameState = GAME_RUNNING;
-                systemSound->startLevel();
-
-            }
-            else if (gameState == GAME_RUNNING) {
-                gameLevel++;
-                gameState = GAME_LOADING;
-                printf("\n oooo new level: %i \n", gameLevel);
-            }
-
-            glutPostRedisplay();
+            nextLevel();
             break;
         default:
             break;
