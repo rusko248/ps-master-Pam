@@ -23,6 +23,10 @@
 		0911EFDC175835200072D538 /* libfmodL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0911EFCA175730990072D538 /* libfmodL.dylib */; };
 		0953C2EE175FF7CB00F97D85 /* RuskoCollisions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0953C2EC175FF7CB00F97D85 /* RuskoCollisions.cpp */; };
 		095BCED417597D7E00264620 /* turbulentCircleEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 095BCED317597D7E00264620 /* turbulentCircleEmitter.cpp */; };
+		099A7F1617659C490059252A /* DeferredLighting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 099A7F1217659C490059252A /* DeferredLighting.cpp */; };
+		099A7F1717659C490059252A /* PointLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 099A7F1317659C490059252A /* PointLight.cpp */; };
+		099A7F1817659C490059252A /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 099A7F1417659C490059252A /* Shader.cpp */; };
+		099A7F1917659C490059252A /* textfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 099A7F1517659C490059252A /* textfile.cpp */; };
 		09CDBB6F175F18A800B67D26 /* RuskoPhysics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 09CDBB6D175F18A700B67D26 /* RuskoPhysics.cpp */; };
 		3F124A0F1753164A00EB6E07 /* Box.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F124A061753164A00EB6E07 /* Box.cpp */; };
 		3F124A101753164A00EB6E07 /* CatmullRom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F124A071753164A00EB6E07 /* CatmullRom.cpp */; };
@@ -113,6 +117,14 @@
 		0953C2ED175FF7CB00F97D85 /* RuskoCollisions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuskoCollisions.h; sourceTree = "<group>"; };
 		095BCED217597D6E00264620 /* turbulentCircleEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = turbulentCircleEmitter.h; sourceTree = "<group>"; };
 		095BCED317597D7E00264620 /* turbulentCircleEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = turbulentCircleEmitter.cpp; sourceTree = "<group>"; };
+		099A7F0E17659C340059252A /* DeferredLighting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeferredLighting.h; sourceTree = "<group>"; };
+		099A7F0F17659C340059252A /* PointLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointLight.h; sourceTree = "<group>"; };
+		099A7F1017659C340059252A /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
+		099A7F1117659C340059252A /* textfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textfile.h; sourceTree = "<group>"; };
+		099A7F1217659C490059252A /* DeferredLighting.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DeferredLighting.cpp; sourceTree = "<group>"; };
+		099A7F1317659C490059252A /* PointLight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PointLight.cpp; sourceTree = "<group>"; };
+		099A7F1417659C490059252A /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
+		099A7F1517659C490059252A /* textfile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = textfile.cpp; sourceTree = "<group>"; };
 		09CDBB6D175F18A700B67D26 /* RuskoPhysics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RuskoPhysics.cpp; sourceTree = "<group>"; };
 		09CDBB6E175F18A700B67D26 /* RuskoPhysics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuskoPhysics.h; sourceTree = "<group>"; };
 		3F124A061753164A00EB6E07 /* Box.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Box.cpp; sourceTree = "<group>"; };
@@ -4306,6 +4318,10 @@
 		3F124A051753164A00EB6E07 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				099A7F1217659C490059252A /* DeferredLighting.cpp */,
+				099A7F1317659C490059252A /* PointLight.cpp */,
+				099A7F1417659C490059252A /* Shader.cpp */,
+				099A7F1517659C490059252A /* textfile.cpp */,
 				3FE1416B176540670006617A /* ruskoModel */,
 				09CDBB6D175F18A700B67D26 /* RuskoPhysics.cpp */,
 				0953C2EC175FF7CB00F97D85 /* RuskoCollisions.cpp */,
@@ -4331,6 +4347,10 @@
 		3F124A181753165D00EB6E07 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				099A7F0E17659C340059252A /* DeferredLighting.h */,
+				099A7F0F17659C340059252A /* PointLight.h */,
+				099A7F1017659C340059252A /* Shader.h */,
+				099A7F1117659C340059252A /* textfile.h */,
 				3FE1416A1765405B0006617A /* ruskoModel */,
 				3FA62A42175FEC3E00E7D8B7 /* RuskoBounds.h */,
 				09CDBB6E175F18A700B67D26 /* RuskoPhysics.h */,
@@ -9279,6 +9299,10 @@
 				3FE14172176548A50006617A /* material.cpp in Sources */,
 				3FE14173176548A50006617A /* mesh.cpp in Sources */,
 				3FE14174176548A50006617A /* obj.cpp in Sources */,
+				099A7F1617659C490059252A /* DeferredLighting.cpp in Sources */,
+				099A7F1717659C490059252A /* PointLight.cpp in Sources */,
+				099A7F1817659C490059252A /* Shader.cpp in Sources */,
+				099A7F1917659C490059252A /* textfile.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

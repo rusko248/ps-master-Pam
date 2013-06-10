@@ -87,6 +87,7 @@ void RuskoCollisions::reactToCollision(ObsBound* offendingObject){
                     vector3 torchPos = vector3(offendingObject->bcir.x, offendingObject->bcir.y + .7, offendingObject->bcir.z);
                     torchFire->addDisplayPos(torchPos);
                     systemSound->lightTorch();
+                    cout << "Torch lit" << endl;
                 }
             }
             offendingObject->bcir.hit = true;
