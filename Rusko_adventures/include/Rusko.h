@@ -4,7 +4,7 @@
 #include "Framework.h"
 #include "Renderable.h"
 #include "Obstacle.h"
-#include "Model.h"
+#include "ruskoModel.h"
 
 //Want the similar attributes to Obstacles for Rusko
 //such as colliding with objects/etc
@@ -24,18 +24,18 @@ public:
 
 private:
     // List of objects to render
-    std::vector<Model *> rusko_run;
-    std::vector<Model *> rusko_stand2run;
-    std::vector<Model *> rusko_run2stand;
-    std::vector<Model *> rusko_stepLeft;
-    std::vector<Model *> rusko_jump;
+    std::vector<ruskoModel *> rusko_run;
+    std::vector<ruskoModel *> rusko_stand2run;
+    std::vector<ruskoModel *> rusko_run2stand;
+    std::vector<ruskoModel *> rusko_stepLeft;
+    std::vector<ruskoModel *> rusko_jump;
 
 
-    std::vector<Model *> torch_run;
-    std::vector<Model *> torch_stand2run;
-    std::vector<Model *> torch_run2stand;
-    std::vector<Model *> torch_stepLeft;
-    std::vector<Model *> torch_jump;
+    std::vector<ruskoModel *> torch_run;
+    std::vector<ruskoModel *> torch_stand2run;
+    std::vector<ruskoModel *> torch_run2stand;
+    std::vector<ruskoModel *> torch_stepLeft;
+    std::vector<ruskoModel *> torch_jump;
 
     //last current frame
     int lastFrame;
