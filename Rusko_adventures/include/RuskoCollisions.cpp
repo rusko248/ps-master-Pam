@@ -40,7 +40,7 @@ bool RuskoCollisions::colliding(ObsBound *one, ObsBound *two){
 }
 
 void RuskoCollisions::checkForCollisions(){
-    //if(dead) return;
+    if(dead) return;
     lateralMovement = true;
     ruskoPhys->setOnBox(false);
     if(room->isPit()){
@@ -48,6 +48,7 @@ void RuskoCollisions::checkForCollisions(){
         dead = true;
         fallIntoPit = true;
         ruskoPhys->setOnGround(false);
+        ruskoPhys->setInPit(true);
         systemSound->die();
     }
     if(!fallIntoPit){//test to see if rusko is on the floor
@@ -93,9 +94,8 @@ void RuskoCollisions::reactToCollision(ObsBound* offendingObject){
             float boxTop = offendingObject->bcir.y + worldPos.y + offendingObject->bcir.radius;
             float boxTop2 = boxTop + (ruskoPhys->yVel + ruskoPhys->yAccel*ruskoPhys->tStep)*ruskoPhys->tStep;
         
-            
+
             if((ruskoBottom > boxTop2 || ruskoPhys->yVel == 0) && ruskoBottom < boxTop){
-                //cout << "BOXXXX" << endl;
                 ruskoPhys->setOnBox(true);
                 ruskoPhys->yPos = boxTop - worldPos.y + ruskoBound->bcir.radius;
                 cout << ruskoPhys->yPos << endl;

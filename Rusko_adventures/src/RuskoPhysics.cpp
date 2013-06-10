@@ -41,7 +41,6 @@ void RuskoPhysics::setOnGround(bool groundContact){
 void RuskoPhysics::setOnBox(bool boxContact){
     this->boxContact = boxContact;
     if(boxContact){
-        cout << "On Box" << endl;
         yVel = 0;
         yAccel = 0;
     }
@@ -52,6 +51,11 @@ void RuskoPhysics::reset(){
     yVel = 0;
     yAccel = 0;
     onGround = true;
+    inPit = false;
+}
+
+void RuskoPhysics::setInPit(bool pitContact){
+    inPit = pitContact;
 }
 
 void RuskoPhysics::update(float timeStep){
@@ -66,9 +70,8 @@ void RuskoPhysics::update(float timeStep){
     yVel = yVel + yAccel*timeStep;
     float deltaY = yVel*timeStep;
     yPos = yPos + deltaY;
-    if(yPos < 1 && !boxContact){
+    if(yPos < 1 && !boxContact && !inPit){
         cout << "setting ground" << endl;
         setOnGround(true);
     }
-    cout << yPos << " " << yVel << " " << yAccel << endl;
 }
