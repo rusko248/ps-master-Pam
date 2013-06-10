@@ -71,21 +71,107 @@ bool dead = false;
 bool torchOn = true;
 
 //Deferred Lighting
-//DeferredLighting * dfe;
+DeferredLighting * dfe;
 std::string shaderPath = "../shaders"; //path to the shaders
 float zNear = .1f; //TODO: these need to be caluclated
 float zFar = 100.f; //TODO: these need to be caluclated
 enum RENDER_MODE{FIXED_FUNCTION, DIRECTIONAL, FULL_DEFERRED, POINTLIGHTS, NORMALS, DEPTH, COLORS, NUM_MODES};
 
 //Point Lights
-//vector<PointLight> plights; //holds the info for the lights in room
+vector<PointLight> plights; //holds the info for the lights in room
 float fireLightColor [3] = {0.6, 0.1, 0.0}; //the color of fire light
+float ruskoTorchRadius = 0.8;
 
+bool useDeferred = false; //if true = deferred, false = gl lighting
 
 static int frame = 0;
 
 //temp **pam**
 Box tempbox;
+
+
+/**
+ * Set the characteristics of Rusko's torch light. 
+ * This will always be plight[0]
+ */
+
+void setTorchLight(float x, float y, float z, float radius) {
+	//PLight
+	PointLight p;
+	p.SetColor(fireLightColor[0], fireLightColor[1], fireLightColor[2]);
+	p.SetPosition(x, y, z);
+	p.SetAttenuation(0.01, 0.1, 0.1);
+	//p.SetAttenuation(1.0, 0.05, 0.0);
+	p.SetRadius(radius);
+	p.SetGrain(10);
+
+	plights.push_back(p);  
+}
+
+/**
+ * Draws the particles that are effected by the 
+ * world transformations.
+ */
+
+void drawRotatedParticles()
+{
+	glMatrixMode(GL_MODELVIEW);
+    glPushMatrix ();
+    glLoadIdentity();
+    
+    glRotated(worldAngle, 0, 1, 0);  //rotates world with given angle
+    
+    worldPos.y = -ruskoPhys->yPos;
+    glTranslatef(worldPos.x, worldPos.y, worldPos.z);  //translates to new position
+
+	//Draw rotated particles
+    particles->display();
+    
+    glPopMatrix ();
+}
+
+/**
+ * Adds point lights to the plight vector based on the positions
+ * in torchFire. plight[0] is saved for Rusko's torch and should
+ * not be altered here. torchfire[0] has a dummy light and thus
+ * is ignored.
+ */
+void addPointLights()
+{
+	int numFire = torchFire->positions.size();
+	int numLights = plights.size();
+
+	for(int i = numLights; i < numFire; i++) {
+		setTorchLight(torchFire->positions[i].x, torchFire->positions[i].y, torchFire->positions[i].z, 1.0);
+	}
+}
+
+/**
+ * Sets up the point light color and position.
+ * ADT
+ */
+void DrawPointLights() {
+	glDisable(GL_LIGHTING);
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+
+	plights[0].RenderPointLight(dfe);
+
+	glRotated(worldAngle, 0, 1, 0);  //rotates world with given angle
+    
+    worldPos.y = -ruskoPhys->yPos;
+
+	glTranslatef(worldPos.x, worldPos.y, worldPos.z);  //translates to new position
+
+	for(int i = 1; i < plights.size(); i++) {
+		plights[i].RenderPointLight(dfe);
+	}
+ 
+	 glPopMatrix ();
+}
+
+
 
 
 /**
@@ -117,6 +203,10 @@ void resetGameVariables(){
 
     //Interaction/keyboard
     upKeyPressed = downKeyPressed = rightKeyPressed = leftKeyPressed = false;
+
+	//reset plights
+	plights.clear();
+	setTorchLight(xpos, ypos, zpos, ruskoTorchRadius);
 }
 
 
@@ -131,17 +221,20 @@ void setup(){
 	//glEnable(GL_DEPTH_TEST);
 	glShadeModel(GL_SMOOTH);
 
-	//------------------------//
-	//DEFERRED LIGHTING SET-UP//
-	//------------------------//
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LESS);
-	glEnable(GL_NORMALIZE);
-	//glEnable(GL_CULL_FACE);
-	//glCullFace(GL_BACK);
-	//------------------------//
-	//  END DEFERRED SET-UP   //
-	//------------------------//
+
+	if(useDeferred) {
+		//------------------------//
+		//DEFERRED LIGHTING SET-UP//
+		//------------------------//
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LESS);
+		glEnable(GL_NORMALIZE);
+		//glEnable(GL_CULL_FACE);
+		//glCullFace(GL_BACK);
+		//------------------------//
+		//  END DEFERRED SET-UP   //
+		//------------------------//
+	}
     
     resetGameVariables();
     
@@ -162,20 +255,9 @@ void setup(){
     fireCircleEmitter *f = new fireCircleEmitter(.12, &particles->particlePool, particles->nextId(), pos, dir, dirVar, .02, 0, 2000, 50, 20, 15, 5, fire);
     torchParticles->addEmitter(f);
     
-    
-/*
-	//PLight
-	//Rusko's fire light
-	PointLight p;
-	p.SetColor(fireLightColor[0], fireLightColor[1], fireLightColor[2]);
-	p.SetPosition(xpos, ypos, zpos);
-	p.SetAttenuation(1.0, 0.05, 0.0);
-	p.SetRadius(1.0);
-	p.SetGrain(10);
-
-	plights.push_back(p);
-    */
-    
+    //sets the point light for the torch
+	setTorchLight(xpos, ypos, zpos, ruskoTorchRadius);
+     
     //Jump stuff-CatmullRom file uploaded
     cr = new CatmullRom("models/rusko/jump_controlPoints.txt");
     
@@ -183,26 +265,27 @@ void setup(){
     tempbox = Box(2);
     tempbox.setMove(5);
     
+    if(!useDeferred) {
+		// Enable global lights
+		glEnable(GL_LIGHTING);
+		glEnable(GL_LIGHT0);
+		float light0Position[4] = {camPos.x, camPos.y, camPos.z, 1.f};
+		glLightfv(GL_LIGHT0, GL_POSITION, light0Position);
     
-    // Enable global lights
-    glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-	float light0Position[4] = {camPos.x, camPos.y, camPos.z, 1.f};
-	glLightfv(GL_LIGHT0, GL_POSITION, light0Position);
+		//Enable fire light
+		glEnable(GL_LIGHT1);
+		GLfloat spotAmbientColor[] = {0.0, 0.0 , 0.0, 1.0};
+		GLfloat spotDiffuseColor[] = {1.0, 0.2, 0.0, 1.0};
+		GLfloat spotSpecularColor[] = {1.0, 0.2 , 0.0, 1.0};
+		GLfloat spotPosition[] = {xpos, ypos, zpos, 1};
+		glLightfv(GL_LIGHT1, GL_AMBIENT, spotAmbientColor);
+		glLightfv(GL_LIGHT1, GL_DIFFUSE, spotDiffuseColor);
+		glLightfv(GL_LIGHT1, GL_SPECULAR, spotSpecularColor);
+		glLightfv(GL_LIGHT1, GL_POSITION, spotPosition);
     
-    //Enable fire light
-    glEnable(GL_LIGHT1);
-    GLfloat spotAmbientColor[] = {0.0, 0.0 , 0.0, 1.0};
-    GLfloat spotDiffuseColor[] = {1.0, 0.2, 0.0, 1.0};
-    GLfloat spotSpecularColor[] = {1.0, 0.2 , 0.0, 1.0};
-    GLfloat spotPosition[] = {xpos, ypos, zpos, 1};
-    glLightfv(GL_LIGHT1, GL_AMBIENT, spotAmbientColor);
-    glLightfv(GL_LIGHT1, GL_DIFFUSE, spotDiffuseColor);
-    glLightfv(GL_LIGHT1, GL_SPECULAR, spotSpecularColor);
-    glLightfv(GL_LIGHT1, GL_POSITION, spotPosition);
-    
-    glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION,2);
-    
+		glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION,2);
+	}
+
 	// Enable texture
 	glEnable(GL_TEXTURE_2D);
     
@@ -251,6 +334,8 @@ void gameLogic() {
         room.setLevel(gameLevel);
         ruskoBounds->setRoom(&room);
         collisions = new RuskoCollisions(&room);
+		plights.clear();
+		setTorchLight(xpos, ypos, zpos, ruskoTorchRadius);
         gameState = GAME_LSCREEN;
     }
     else if (gameState == GAME_RUNNING)
@@ -303,14 +388,36 @@ void renderWorld(){
     worldPos.y = -ruskoPhys->yPos;
     glTranslatef(worldPos.x, worldPos.y, worldPos.z);  //translates to new position
     
+	//------------------------//
+	//    MATERIAL SET-UP     //
+	//------------------------//
+	
+	glActiveTexture(GL_TEXTURE0);
+	glEnable(GL_TEXTURE_2D);
+	dfe->SetMaterialTexture(0, true);
+
+	//------------------------//
+	//  END MATERIAL SET-UP   //
+	//------------------------//
 
  	// Draw
 	for(unsigned i = 0; i<renderList.size(); i++)
 		renderList[i]->render();
 	renderList.clear();
 
+	//------------------------//
+	//    RELEASE TEXTURE     //
+	//------------------------//
+
+	glDisable(GL_TEXTURE_2D);
+	dfe->SetMaterialTexture(0, false);
+
+	//------------------------//
+	//      TEXTURE FREED     //
+	//------------------------//
+
     //Draw rotated particles
-    particles->display();
+    //particles->display(); //not in right spot for deferred rendering
     
     glPopMatrix ();
 }
@@ -389,7 +496,7 @@ void drawRusko(){
     ypos = torchPos.y;
     zpos = torchPos.z;
 
-	//plights[0].SetPosition(xpos, ypos, zpos); //update the torch light
+	plights[0].SetPosition(xpos, ypos, zpos); //update the torch light
     
 }
 
@@ -419,22 +526,6 @@ void ReshapeCallback(int w, int h)
 }
 
 /**
- * Sets up the point light color and position.
- * ADT
- */
-void DrawPointLights() {
-	glDisable(GL_LIGHTING);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-/*
-	for(int i = 0; i < plights.size(); i++) {
-		plights[i].RenderPointLight(dfe);
-	}
- */
-}
-
-
-/**
  * Display callback function
  */
 void DisplayCallback()
@@ -444,31 +535,43 @@ void DisplayCallback()
     gameLogic();
 
     if (gameState == GAME_RUNNING){
-		//BUILD G-BUFFER
-	//	dfe->PreDrawScene(); //lighting ADT
+		if(useDeferred) {
+			//UPDATE PLIGHTS NEEDED
+			if(plights.size() < torchFire->positions.size()) {
+				addPointLights();
+			}
+			//BUILD G-BUFFER
+			dfe->PreDrawScene(); //lighting ADT
+		
+			//DRAW OBJECTS AND EVIRONMENT
+			//GETS STORED IN G-BUFFER FOR RENDERING
+			renderWorld(); //transforms and draws the world as Rusko moves around
+			drawRusko();  //transforms and draws Rusko
+		
+			temp(); //***pam***/ box trial
 
-		//DRAW OBJECTS AND EVIRONMENT
-		//GETS STORED IN G-BUFFER FOR RENDERING
-        renderWorld(); //transforms and draws the world as Rusko moves around
-        drawRusko();  //transforms and draws Rusko
+			//PREPARE FOR RENDING
+			dfe->PostDrawScene(); //lighting ADT
+
+			//-------------------------------//
+			// Render the scene with shaders //
+			//-------------------------------//
+			dfe->DrawDirectionalAndAmbient(windowWidth, windowHeight); //lighting ADT
+			dfe->PreDrawPointLights(windowWidth, windowHeight, zNear, zFar);
+			DrawPointLights();
+			dfe->PostDrawPointLights();
+			//-----------------------------//
+			//    End render the scene     //
+			//-----------------------------//
+
+		} else {
+			renderWorld(); //transforms and draws the world as Rusko moves around
+			drawRusko();  //transforms and draws Rusko
         
-        temp(); //***pam***/ box trial
-/*
-		//PREPARE FOR RENDING
-		dfe->PostDrawScene(); //lighting ADT
-
-		//-------------------------------//
-		// Render the scene with shaders //
-		//-------------------------------//
-		dfe->DrawDirectionalAndAmbient(windowWidth, windowHeight); //lighting ADT
-		dfe->PreDrawPointLights(windowWidth, windowHeight, zNear, zFar);
-		DrawPointLights();
-		dfe->PostDrawPointLights();
-		//-----------------------------//
-		//    End render the scene     //
-		//-----------------------------//
-*/
+			temp(); //***pam***/ box trial
+		}
 		//FIRE RENDERED AFTER EVERYTHING ELSE
+		drawRotatedParticles();
         torchParticles->display();
     }
     
@@ -617,7 +720,7 @@ void KeyboardCallback(unsigned char key, int x, int y)
     switch (key)
     {
         case 27:// exit program on escape press
-			//delete dfe; //delete Deferred engine
+			delete dfe; //delete Deferred engine
             exit(0);
             break;
         case ' ':  //activates jumping
@@ -702,7 +805,7 @@ void GraphicsMainLoop()
     glutKeyboardFunc(KeyboardCallback);
     glutSpecialFunc(KeySpecial);
     glutSpecialUpFunc(KeySpecialUp);
-/*
+
 	//------------------------//
 	//DEFERRED LIGHTING ENGINE//
 	//------------------------//
@@ -711,6 +814,6 @@ void GraphicsMainLoop()
 	//------------------------//
 	//  END DEFERRED ENGINE   //
 	//------------------------//
-  */  
+  
 	glutMainLoop();
 }

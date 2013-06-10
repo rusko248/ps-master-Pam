@@ -97,7 +97,7 @@ DeferredLighting::DrawDirectionalAndAmbient(int screenWidth, int screenHeight)
 	glBindTexture(GL_TEXTURE_2D, textures[NORMALS]);								//  normals texture 0
 	glUniform1i(loc, 0);															// Pass 0 to denote texture unit 0
 
-	loc = glGetUniformLocation(pointLightShader->shaderProg, "depths");				// Get uniform sampler location
+	loc = glGetUniformLocation(dirAmbLightShader->shaderProg, "depths");				// Get uniform sampler location
 	glActiveTexture(GL_TEXTURE1);													// Bind to unit
 	glBindTexture(GL_TEXTURE_2D, depthtexture);										//  depths texture 1
 	glUniform1i(loc, 1);															// Pass 1 to denote texture unit 1
@@ -118,13 +118,14 @@ DeferredLighting::DrawDirectionalAndAmbient(int screenWidth, int screenHeight)
 	loc = glGetUniformLocation(dirAmbLightShader->shaderProg, "lightDirection");
 	glUniform3fv(loc, 1, lightDir);
 
-//	float lightColor[3] = {0.0f, 0.0f, 0.0f};
-	float lightColor[3] = {0.1f, 0.1f, 0.1f};
+	float lightColor[3] = {0.0f, 0.0f, 0.0f};
+//	float lightColor[3] = {0.1f, 0.1f, 0.1f};
 //	float lightColor[3] = {1.0f, 1.0f, 1.0f};
 	loc = glGetUniformLocation(dirAmbLightShader->shaderProg, "diffuseLightColor");
 	glUniform3fv(loc, 1, lightColor);
 
-	float ambientColor[3] = {0.3, 0.3, 0.3};
+	float ambientColor[3] = {0.1, 0.1, 0.1};
+//	float ambientColor[3] = {0.01, 0.01, 0.01};
 //	float ambientColor[3] = {0.0, 0.0, 0.0};
 	loc = glGetUniformLocation(dirAmbLightShader->shaderProg, "ambientLightColor");
 	glUniform3fv(loc, 1, ambientColor);
