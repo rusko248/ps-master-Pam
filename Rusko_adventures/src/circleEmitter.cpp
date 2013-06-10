@@ -141,14 +141,14 @@ bool circleEmitter::updateParticle(particle *p){
 }
 
 bool circleEmitter::simpleDetectCollision(vector3 pos, float epsilon){
-    if(fabsf(pos.x - e->pos.x) - this->radius > epsilon) return false;
+    //if(fabsf(pos.x - e->pos.x) - this->radius > epsilon) return false;
     if(fabsf(pos.y - e->pos.y) - this->radius > epsilon) return false;
     if(fabsf(pos.z - e->pos.z) - this->radius > epsilon) return false;
     return true;
 }
 
 bool circleEmitter::particleDetectCollision(vector3 pos, float epsilon){
-    if(fabsf(pos.x - e->pos.x) - this->radius > epsilon) return false;
+    //if(fabsf(pos.x - e->pos.x) - this->radius > epsilon) return false;
     if(fabsf(pos.y - e->pos.y) - this->radius > epsilon) return false;
     if(fabsf(pos.z - e->pos.z) - this->radius > epsilon) return false;
     particle *curr = e->particleList;
