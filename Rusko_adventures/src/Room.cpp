@@ -33,7 +33,8 @@ extern ParticleManager *particles;
 extern fireCircleEmitter *torchFire;
 
 // Smoke
-turbulentCircleEmitter *t;
+turbulentCircleEmitter *t1, *t3;
+extern int groundPos;
 
 // Material
 float materialAmbient[]  = { 0.2, 0.2, 0.2, 1.0 };
@@ -111,7 +112,8 @@ void Room::setLevel(int lv) {
     
     particles->addEmitter(torchFire);
     
-	t = new turbulentCircleEmitter(&particles->particlePool, particles->nextId(), "../Particles/windRecording100.txt");
+	t1 = new turbulentCircleEmitter(&particles->particlePool, particles->nextId(), "../Particles/windRecording-100.txt");
+	t3 = new turbulentCircleEmitter(&particles->particlePool, particles->nextId(), "../Particles/windRecording100.txt");
 
 	generateTorches();
 	generateObstacles();
@@ -253,6 +255,31 @@ bool Room::isFree() {
 	return (floor->objPos[floor->getIndex(uRusko, vRusko)] == FREE);
 }
 
+bool Room::isTorch() {
+	int xRusko = (int)floorf(-worldPos.x/scale);
+	int yRusko = (int)floorf(-worldPos.y/scale);
+	int zRusko = (int)floorf(worldPos.z/scale);
+
+	if (zRusko == 0) {
+		if (walls[0]->objPos[walls[0]->getIndex(floor->width-1-xRusko, yRusko)] == TORCH)
+			return true;
+	}
+	if (xRusko == 0) {
+		if (walls[1]->objPos[walls[1]->getIndex(zRusko, yRusko)] == TORCH)
+			return true;
+	}
+	if (zRusko == floor->length-1) {
+		if (walls[2]->objPos[walls[2]->getIndex(xRusko, yRusko)] == TORCH)
+			return true;
+	}
+	if (xRusko == floor->width-1) {
+		if (walls[3]->objPos[walls[3]->getIndex(floor->length-1-zRusko, yRusko)] == TORCH)
+			return true;
+	}
+
+	return false;
+}
+
 bool Room::isPit() {
 	int uRusko = (int)floorf(-worldPos.x/scale);
 	int vRusko = (int)floorf(worldPos.z/scale);
@@ -285,7 +312,7 @@ void Room::renderLayout() {
 		// floor
 		for (int v = 0; v < floor->length; ++v) {
 			for (int u = 0; u < floor->width; ++u) {
-				if (floor->objPos[floor->getIndex(u, v)] == PIT) continue;
+				if (floor->objPos[floor->getIndex(u, v)] == PIT || floor->objPos[floor->getIndex(u, v)] == SAFE) continue;
 				glTexCoord2f(0,0);
 				glNormal3f(0,1,0);
 				glVertex3f(pos.x+scale*u,pos.y,pos.z-scale*v);
@@ -484,36 +511,52 @@ void Room::renderPits() {
 					for (int q = 0; q < 20; ++q) {
 						for (int p = 0; p < 3; ++p) {
 							glTexCoord2f(0,0);
+							glNormal3f(0,0,-1);
 							glVertex3f(pos.x+scale*(u-1+p),-q,pos.z-scale*(v-1));
 							glTexCoord2f(0,1);
+							glNormal3f(0,0,-1);
 							glVertex3f(pos.x+scale*(u+p),-q,pos.z-scale*(v-1));
 							glTexCoord2f(1,1);
+							glNormal3f(0,0,-1);
 							glVertex3f(pos.x+scale*(u+p),-q-1,pos.z-scale*(v-1));
 							glTexCoord2f(1,0);
+							glNormal3f(0,0,-1);
 							glVertex3f(pos.x+scale*(u-1+p),-q-1,pos.z-scale*(v-1));
 							glTexCoord2f(0,0);
+							glNormal3f(-1,0,0);
 							glVertex3f(pos.x+scale*(u+2),-q,pos.z-scale*(v-1+p));
 							glTexCoord2f(0,1);
+							glNormal3f(-1,0,0);
 							glVertex3f(pos.x+scale*(u+2),-q,pos.z-scale*(v+p));
 							glTexCoord2f(1,1);
+							glNormal3f(-1,0,0);
 							glVertex3f(pos.x+scale*(u+2),-q-1,pos.z-scale*(v+p));
 							glTexCoord2f(1,0);
+							glNormal3f(-1,0,0);
 							glVertex3f(pos.x+scale*(u+2),-q-1,pos.z-scale*(v-1+p));
 							glTexCoord2f(0,0);
+							glNormal3f(0,0,1);
 							glVertex3f(pos.x+scale*(u+2-p),-q,pos.z-scale*(v+2));
 							glTexCoord2f(0,1);
+							glNormal3f(0,0,1);
 							glVertex3f(pos.x+scale*(u+1-p),-q,pos.z-scale*(v+2));
 							glTexCoord2f(1,1);
+							glNormal3f(0,0,1);
 							glVertex3f(pos.x+scale*(u+1-p),-q-1,pos.z-scale*(v+2));
 							glTexCoord2f(1,0);
+							glNormal3f(0,0,1);
 							glVertex3f(pos.x+scale*(u+2-p),-q-1,pos.z-scale*(v+2));
 							glTexCoord2f(0,0);
+							glNormal3f(1,0,0);
 							glVertex3f(pos.x+scale*(u-1),-q,pos.z-scale*(v+2-p));
 							glTexCoord2f(0,1);
+							glNormal3f(1,0,0);
 							glVertex3f(pos.x+scale*(u-1),-q,pos.z-scale*(v+1-p));
 							glTexCoord2f(1,1);
+							glNormal3f(1,0,0);
 							glVertex3f(pos.x+scale*(u-1),-q-1,pos.z-scale*(v+1-p));
 							glTexCoord2f(1,0);
+							glNormal3f(1,0,0);
 							glVertex3f(pos.x+scale*(u-1),-q-1,pos.z-scale*(v+2-p));
 						}
 					}
@@ -771,11 +814,14 @@ void Room::generateObstacles() {
 		while (walls[j]->objPos[walls[j]->getIndex(basepos, 1)] != FREE)
 			basepos = rand() % walls[j]->base;
 		walls[j]->objPos[walls[j]->getIndex(basepos, 1)] = SMOKE;
-		vector3 pos = vector3(pos.x+worldPos.x+scale*floor->width-scale*((float)basepos+.5f), pos.y+worldPos.y+scale*(1.5f), pos.z+worldPos.z);
-		if (j == 1) { pos = vector3(pos.x+worldPos.x, pos.y+worldPos.y+scale*(1.5f), pos.z+worldPos.z-scale*((float)basepos+.5f));}
-		else if (j == 2) { pos = vector3(pos.x+worldPos.x+scale*((float)basepos+.5f), pos.y+worldPos.y+scale*(1.5f), pos.z+worldPos.z-scale*floor->length);}
-		else if (j == 3) { pos = vector3(pos.x+worldPos.x+scale*floor->width, pos.y+worldPos.y+scale*(1.5f), pos.z+worldPos.z-scale*floor->length+scale*((float)basepos+.5f));}
-		t->resetPos(pos);
-		if (particles->nextId() == 1) particles->addEmitter(t);
+		printf("%d\n", groundPos);
+		if (j == 0) { vector3 pos = vector3(playerStartPos.x+scale*floor->width-scale*((float)basepos+.5f), groundPos-.5f, playerStartPos.z); }
+		else if (j == 1) { vector3 pos = vector3(playerStartPos.x, groundPos-.5f, playerStartPos.z-scale*((float)basepos+.5f)); t1->resetPos(pos); }
+		else if (j == 2) { vector3 pos = vector3(playerStartPos.x+scale*((float)basepos+.5f), groundPos-.5f, playerStartPos.z-scale*floor->length); }
+		else if (j == 3) { vector3 pos = vector3(playerStartPos.x+scale*floor->width, groundPos-.5f, playerStartPos.z-scale*floor->length+scale*((float)basepos+.5f)); t3->resetPos(pos); }
+		if (j == 0) {}
+		else if (j == 1) { particles->addEmitter(t1); }
+		else if (j == 2) {}
+		else if (j == 3) { particles->addEmitter(t3); }
 	}
 }

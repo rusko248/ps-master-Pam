@@ -73,6 +73,7 @@ public:
 	void getObList(std::vector<ObsBound> &o);
 	STPoint3 getPlayerPosition();
 	bool isFree();
+	bool isTorch();
 	bool isPit();
 	bool isSpikes();
 	void render();
