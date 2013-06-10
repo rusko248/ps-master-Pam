@@ -175,6 +175,7 @@ void Room::updateOB() {
 			ob.type = walls[j]->objPos[i];
 			switch (walls[j]->objPos[i]) {
 			case TORCH:
+				{
 				if (j == 0) {
 					ob.bcir.x = scale*(float)floor->width-scale*((float)u+.5f);
 					ob.bcir.y = scale*((float)v+.5f);
@@ -194,6 +195,10 @@ void Room::updateOB() {
 				}
 				ob.bcir.radius = torch.bcir.radius;
 				obList.push_back(ob);
+				TorchPos tp = TorchPos();
+				tp.wallpos = j; tp.u = u; tp.v = v;
+				torchMap.insert(std::pair<TorchPos, int>(tp, obList.size()-1));
+				}
 				break;
 			case BOX:
 				if (j == 0) {
@@ -255,29 +260,38 @@ bool Room::isFree() {
 	return (floor->objPos[floor->getIndex(uRusko, vRusko)] == FREE);
 }
 
-bool Room::isTorch() {
+int Room::isTorch() {
 	int xRusko = (int)floorf(-worldPos.x/scale);
 	int yRusko = (int)floorf(-worldPos.y/scale);
 	int zRusko = (int)floorf(worldPos.z/scale);
 
+	TorchPos tp = TorchPos();
 	if (zRusko == 0) {
-		if (walls[0]->objPos[walls[0]->getIndex(floor->width-1-xRusko, yRusko)] == TORCH)
-			return true;
+		if (walls[0]->objPos[walls[0]->getIndex(floor->width-1-xRusko, yRusko)] == TORCH) {
+			tp.wallpos = 0; tp.u = floor->width-1-xRusko; tp.v = yRusko;
+			return torchMap[tp];
+		}
 	}
 	if (xRusko == 0) {
-		if (walls[1]->objPos[walls[1]->getIndex(zRusko, yRusko)] == TORCH)
-			return true;
+		if (walls[1]->objPos[walls[1]->getIndex(zRusko, yRusko)] == TORCH) {
+			tp.wallpos = 1; tp.u = zRusko; tp.v = yRusko;
+			return torchMap[tp];
+		}
 	}
 	if (zRusko == floor->length-1) {
-		if (walls[2]->objPos[walls[2]->getIndex(xRusko, yRusko)] == TORCH)
-			return true;
+		if (walls[2]->objPos[walls[2]->getIndex(xRusko, yRusko)] == TORCH) {
+			tp.wallpos = 2; tp.u = xRusko; tp.v = yRusko;
+			return torchMap[tp];
+		}
 	}
 	if (xRusko == floor->width-1) {
-		if (walls[3]->objPos[walls[3]->getIndex(floor->length-1-zRusko, yRusko)] == TORCH)
-			return true;
+		if (walls[3]->objPos[walls[3]->getIndex(floor->length-1-zRusko, yRusko)] == TORCH) {
+			tp.wallpos = 3; tp.u = floor->length-1-zRusko; tp.v = yRusko;
+			return torchMap[tp];
+		}
 	}
 
-	return false;
+	return -1;
 }
 
 bool Room::isPit() {

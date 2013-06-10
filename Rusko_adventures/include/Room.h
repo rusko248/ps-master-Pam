@@ -7,6 +7,7 @@
 #include "Box.h"
 #include "Spikes.h"
 #include "ParticleManager.h"
+#include <map>
 
 #define FREE '0'
 #define TORCH '1'
@@ -59,6 +60,26 @@ struct ObsBound {
 	BCir bcir;
 };
 
+struct TorchPos {
+	TorchPos() {
+		wallpos = u = v = 0;
+	}
+	
+	int wallpos, u, v;
+};
+
+struct TorchPosCompare {
+	bool operator() (const TorchPos& a, const TorchPos& b) {
+		if (a.wallpos < b.wallpos) return true;
+		else if (a.wallpos > b.wallpos) return false;
+		else {
+			if (a.u < b.u) return true;
+			else if (a.u > b.u) return false;
+			else return (a.v < b.v);
+		}
+	}
+};
+
 class Room : public Renderable
 {
 public:
@@ -73,7 +94,7 @@ public:
 	void getObList(std::vector<ObsBound> &o);
 	STPoint3 getPlayerPosition();
 	bool isFree();
-	bool isTorch();
+	int isTorch();
 	bool isPit();
 	bool isSpikes();
 	void render();
@@ -96,6 +117,7 @@ private:
 	Floor *floor;
 	int numTorches, numHighTorches;
 	std::vector<ObsBound> obList;
+	std::map<TorchPos, int, TorchPosCompare> torchMap;
 	std::vector<int> boxIndices;
 	std::vector<int> safeIndices;
 	STPoint3 playerStartPos;
