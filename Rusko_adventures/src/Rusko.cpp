@@ -14,7 +14,7 @@ Rusko::Rusko() {
         mod_name += (i/10 + '0');
         mod_name += ((i % 10) +'0');
         mod_name += ".obj";
-        Model* mod = new Model(mod_name);
+        ruskoModel* mod = new ruskoModel(mod_name);
         rusko_run.push_back(mod);
         
         float scaleLength = mod->getMaxLength();
@@ -24,7 +24,7 @@ Rusko::Rusko() {
         torch_name += (i/10 + '0');
         torch_name += ((i % 10) +'0');
         torch_name += ".obj";
-        Model* torch_mod = new Model(torch_name, centerMass, scaleLength);
+        ruskoModel* torch_mod = new ruskoModel(torch_name, centerMass, scaleLength);
         torch_run.push_back(torch_mod);
     }
     
@@ -34,7 +34,7 @@ Rusko::Rusko() {
         mod_name += (i/10 + '0');
         mod_name += ((i % 10) +'0');
         mod_name += ".obj";
-        Model* mod = new Model(mod_name);
+        ruskoModel* mod = new ruskoModel(mod_name);
         rusko_stand2run.push_back(mod);
         
         float scaleLength = mod->getMaxLength();
@@ -44,7 +44,7 @@ Rusko::Rusko() {
         torch_name += (i/10 + '0');
         torch_name += ((i % 10) +'0');
         torch_name += ".obj";
-        Model* torch_mod = new Model(torch_name, centerMass, scaleLength);
+        ruskoModel* torch_mod = new ruskoModel(torch_name, centerMass, scaleLength);
         torch_stand2run.push_back(torch_mod);
     }
     
@@ -55,7 +55,7 @@ Rusko::Rusko() {
         mod_name += (i/10 + '0');
         mod_name += ((i % 10) +'0');
         mod_name += ".obj";
-        Model* mod = new Model(mod_name);
+        ruskoModel* mod = new ruskoModel(mod_name);
         rusko_run2stand.push_back(mod);
         
         float scaleLength = mod->getMaxLength();
@@ -65,7 +65,7 @@ Rusko::Rusko() {
         torch_name += (i/10 + '0');
         torch_name += ((i % 10) +'0');
         torch_name += ".obj";
-        Model* torch_mod = new Model(torch_name, centerMass, scaleLength);
+        ruskoModel* torch_mod = new ruskoModel(torch_name, centerMass, scaleLength);
         torch_run2stand.push_back(torch_mod);
     }
 
@@ -75,7 +75,7 @@ Rusko::Rusko() {
         mod_name += (i/10 + '0');
         mod_name += ((i % 10) +'0');
         mod_name += ".obj";
-        Model* mod = new Model(mod_name);
+        ruskoModel* mod = new ruskoModel(mod_name);
         rusko_stepLeft.push_back(mod);
         
         float scaleLength = mod->getMaxLength();
@@ -85,7 +85,7 @@ Rusko::Rusko() {
         torch_name += (i/10 + '0');
         torch_name += ((i % 10) +'0');
         torch_name += ".obj";
-        Model* torch_mod = new Model(torch_name, centerMass, scaleLength);
+        ruskoModel* torch_mod = new ruskoModel(torch_name, centerMass, scaleLength);
         torch_stepLeft.push_back(torch_mod);
     }
 
@@ -95,7 +95,7 @@ Rusko::Rusko() {
         mod_name += (i/10 + '0');
         mod_name += ((i % 10) +'0');
         mod_name += ".obj";
-        Model* mod = new Model(mod_name);
+        ruskoModel* mod = new ruskoModel(mod_name);
         rusko_jump.push_back(mod);
         
         float scaleLength = mod->getMaxLength();
@@ -105,7 +105,7 @@ Rusko::Rusko() {
         torch_name += (i/10 + '0');
         torch_name += ((i % 10) +'0');
         torch_name += ".obj";
-        Model* torch_mod = new Model(torch_name, centerMass, scaleLength);
+        ruskoModel* torch_mod = new ruskoModel(torch_name, centerMass, scaleLength);
         torch_jump.push_back(torch_mod);
     }
 }
