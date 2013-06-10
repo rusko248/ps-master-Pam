@@ -5,7 +5,7 @@
 
 
 Box::Box() : Model("models/WoodCrate_OBJ/WoodCrate_OBJ.obj") {
-    wasSetMove = false;
+    movable = false;
 }
 
 
@@ -42,5 +42,5 @@ void Box::setMove(float height){
     cr->addControlPoint(0, height, 0);
     cr->addControlPoint(0, 0, 0);
     cr->done();
-    wasSetMove = true;
+    movable = true;
 }
