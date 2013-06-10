@@ -654,6 +654,7 @@ void resetLevel(){
     //        printf("\n same level again: %i \n", gameLevel);
     //    }
     ruskoPhys->reset();
+    collisions->reset();
     resetGameVariables();
     glutPostRedisplay();
 }

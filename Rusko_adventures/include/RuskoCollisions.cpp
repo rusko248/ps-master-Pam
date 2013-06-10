@@ -153,5 +153,5 @@ void RuskoCollisions::reactToCollision(ObsBound* offendingObject){
 }
 
 void RuskoCollisions:: reset(){
-    
+    fallIntoPit = false;
 }
