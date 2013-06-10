@@ -9,6 +9,10 @@ Box::Box() : Model("models/WoodCrate_OBJ/WoodCrate_OBJ.obj") {
 }
 
 
+//Box::Box(float scale) : Model("models/WoodCrate_OBJ/WoodCrate_OBJ.obj", scale) {
+//    wasSetMove = false;
+//}
+
 Box::Box(float scale) : Model("models/WoodCrate_OBJ/WoodCrate_OBJ.obj", scale) {
     wasSetMove = false;
 }

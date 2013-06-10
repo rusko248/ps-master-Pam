@@ -30,6 +30,8 @@ ruskoModel::ruskoModel(const std::string &path) {
     faces_vn = Mesh->getFaces_vn();
     matNames = Mesh->getMatNames();
     faces_mt = Mesh->getFaces_mt();
+    faces_vt = Mesh->getFaces_vt();
+    vertices_t = Mesh->getVertices_t();
     
     //fit into a sphere
 	fitSphere(1.0);
@@ -54,6 +56,9 @@ ruskoModel::ruskoModel(const std::string &path, float scale) {
     faces_vn = Mesh->getFaces_vn();
     matNames = Mesh->getMatNames();
     faces_mt = Mesh->getFaces_mt();
+    faces_vt = Mesh->getFaces_vt();
+    vertices_t = Mesh->getVertices_t();
+
 
     //fit into a sphere
 	fitSphere(scale);
@@ -107,6 +112,7 @@ void ruskoModel::render() {
 	for (int i=0; i < faces->size(); i++) {
         STPoint3 fac = faces->at(i);
         STPoint3 fac_vn = faces_vn->at(i);
+        STPoint3 fac_vt = faces_vt->at(i);
         
         STPoint3 v1 = vertices->at((int)fac.x);
         STPoint3 v2 = vertices->at((int)fac.y);
@@ -115,6 +121,16 @@ void ruskoModel::render() {
         STPoint3 vn1 = vertices_n->at((int)fac_vn.x);
         STPoint3 vn2 = vertices_n->at((int)fac_vn.y);
         STPoint3 vn3 = vertices_n->at((int)fac_vn.z);
+        
+        STPoint2 vt1 = STPoint2(0, 0);// = vertices_t->at((int)fac_vt.x);
+        STPoint2 vt2 = STPoint2(0, 0);// = vertices_t->at((int)fac_vt.y);
+        STPoint2 vt3 = STPoint2(0, 0);// = vertices_t->at((int)fac_vt.z);
+        if (vertices_t->size() > 0){
+            vt1 = vertices_t->at((int)fac_vt.x);
+            vt2 = vertices_t->at((int)fac_vt.y);
+            vt3 = vertices_t->at((int)fac_vt.z);
+        }
+
         
         if ( i == mt) {
             string matName = matNames->at(mt_count);
@@ -161,10 +177,15 @@ void ruskoModel::render() {
 
 		glBegin(GL_TRIANGLES);
         glNormal3f(vn1.x, vn1.y, vn1.z);
+        glTexCoord2f(vt1.x,vt1.y);
         glVertex3f(v1.x,v1.y,v1.z);
+        
         glNormal3f(vn2.x, vn2.y, vn2.z);
+        glTexCoord2f(vt2.x,vt2.y);
         glVertex3f(v2.x,v2.y,v2.z);
+
         glNormal3f(vn3.x, vn3.y, vn3.z);
+        glTexCoord2f(vt3.x,vt3.y);
         glVertex3f(v3.x,v3.y,v3.z);
 		glEnd();
 	}

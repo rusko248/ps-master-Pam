@@ -4181,13 +4181,13 @@
 		3FA62A41175FEC3E00E7D8B7 /* RuskoBounds.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RuskoBounds.cpp; sourceTree = "<group>"; };
 		3FA62A42175FEC3E00E7D8B7 /* RuskoBounds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuskoBounds.h; sourceTree = "<group>"; };
 		3FE1416617653E6F0006617A /* ruskoModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ruskoModel.cpp; path = ruskoModel/ruskoModel.cpp; sourceTree = SOURCE_ROOT; };
-		3FE1416717653E6F0006617A /* ruskoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ruskoModel.h; path = ruskoModel/ruskoModel.h; sourceTree = SOURCE_ROOT; };
 		3FE1416C176542D90006617A /* material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = material.h; path = ruskoModel/material.h; sourceTree = SOURCE_ROOT; };
 		3FE1416D176542D90006617A /* mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mesh.h; path = ruskoModel/mesh.h; sourceTree = SOURCE_ROOT; };
 		3FE1416E176542D90006617A /* obj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = obj.h; path = ruskoModel/obj.h; sourceTree = SOURCE_ROOT; };
 		3FE1416F176548A50006617A /* material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = material.cpp; path = ruskoModel/material.cpp; sourceTree = SOURCE_ROOT; };
 		3FE14170176548A50006617A /* mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mesh.cpp; path = ruskoModel/mesh.cpp; sourceTree = SOURCE_ROOT; };
 		3FE14171176548A50006617A /* obj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = obj.cpp; path = ruskoModel/obj.cpp; sourceTree = SOURCE_ROOT; };
+		3FE14176176564040006617A /* ruskoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ruskoModel.h; path = ruskoModel/ruskoModel.h; sourceTree = SOURCE_ROOT; };
 		8DD76FB20486AB0100D96B5E /* morph */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = morph; sourceTree = BUILT_PRODUCTS_DIR; };
 		C36025F7162E100B00AC8850 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../../../../../../System/Library/Frameworks/GLUT.framework; sourceTree = "<group>"; };
 		C36025F9162E100F00AC8850 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = ../../../../../../../../System/Library/Frameworks/OpenGL.framework; sourceTree = "<group>"; };
@@ -9156,7 +9156,7 @@
 				3FE1416C176542D90006617A /* material.h */,
 				3FE1416D176542D90006617A /* mesh.h */,
 				3FE1416E176542D90006617A /* obj.h */,
-				3FE1416717653E6F0006617A /* ruskoModel.h */,
+				3FE14176176564040006617A /* ruskoModel.h */,
 			);
 			name = ruskoModel;
 			sourceTree = "<group>";
