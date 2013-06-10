@@ -26,6 +26,7 @@ extern STVector3 worldPos;
 extern float worldAngle;
 
 extern bool dead;
+extern bool torchOn;
 
 extern fireCircleEmitter *torchFire;
 

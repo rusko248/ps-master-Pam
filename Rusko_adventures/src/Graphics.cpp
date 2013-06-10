@@ -68,6 +68,7 @@ RuskoPhysics *ruskoPhys;
 RuskoBounds *ruskoBounds;
 RuskoCollisions *collisions;
 bool dead = false;
+bool torchOn = true;
 
 //Deferred Lighting
 //DeferredLighting * dfe;

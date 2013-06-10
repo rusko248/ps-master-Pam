@@ -49,7 +49,6 @@ public:
 
 protected:
     particle **managerParticleList;
-    void rotationToDirection(float pitch, float yaw, vector3 *direction);
     virtual bool addParticle();
     virtual bool updateParticle(particle *p);
     inline float randDist();

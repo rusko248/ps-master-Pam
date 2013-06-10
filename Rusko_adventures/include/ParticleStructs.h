@@ -17,7 +17,8 @@
 #ifndef assignment2_ParticleStructs_h
 #define assignment2_ParticleStructs_h
 
-//Add textures, transparency, size, and shape, acceleration
+//Based on Jeff Lander's Graphic Content article
+
 struct particle {
     particle *prev, *next;
     vector3 pos;
@@ -29,14 +30,11 @@ struct particle {
     float rand;
 };
 
-//generation shapes
 struct emitter {
     int emitter_id;
     vector3 pos;
     vector3 dir;
     vector3 dirVar;
-    float yaw, yawVar;
-    float pitch, pitchVar;
     float speed, speedVar;
     particle *particleList;
     int totalParticles;

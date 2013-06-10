@@ -45,12 +45,6 @@ inline float Emitter::randDist(){
     return r;
 }
 
-void Emitter::rotationToDirection(float pitch, float yaw, vector3 *direction){
-    direction->x = -sin(yaw) * cos(pitch);
-    direction->y = sin(pitch);
-    direction->z = cos(pitch) * cos(yaw);
-}
-
 string Emitter::intToString(int num){
     char temp[20];
     sprintf(temp, "%d", num);
@@ -79,6 +73,8 @@ int Emitter::readInt(ifstream *infile){
     return value;
 }
 
+//Based on Jeff Lander's Graphic Content article
+
 bool Emitter::addParticle(){
     particle *newParticle;
     float speed;
@@ -101,10 +97,6 @@ bool Emitter::addParticle(){
         newParticle->prevPos.y = 0;
         newParticle->prevPos.z = 0;
         
-        //Calculate direction vector
-        //yaw = e->yaw + (e->yawVar*randDist());
-        //pitch = e->pitch + (e->pitchVar*randDist());
-        //rotationToDirection(pitch, yaw, &newParticle->dir);
         newParticle->dir = e->dir + (e->dirVar*randDist());
         
         speed = e->speed + (e->speed * randDist());
@@ -121,6 +113,8 @@ bool Emitter::addParticle(){
     }
     return false;
 }
+
+//Based on Jeff Lander's Graphic Content article
 
 bool Emitter::updateParticle(particle *p){
     if(p != NULL && p->life > 0){
@@ -358,10 +352,6 @@ void Emitter::updateFromFile(){
         
         vector3 pos = storedLocations[particleIndex][displayFrame];
         
-        //Translate to be relative to current emitter instead of origin
-        //pos.x += e->pos.x;
-        //pos.y += e->pos.y;
-        //pos.z += e->pos.z;
         toUpdate->pos = pos;
         particleIndex++;
     }
