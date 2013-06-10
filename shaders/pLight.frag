@@ -64,9 +64,11 @@ void main()
 //    float attenuation = 1.0;
 
     // Compute attenuation
-    float attenuation = 1.0 / (LightAttenuation[0] +
+   float attenuation = 1.0 / (LightAttenuation[0] +
                                LightAttenuation[1] * d +
                                LightAttenuation[2] * d * d);
+
+//float attenuation = (1.0 - (d / radius)) * (1.0 / (d * d));
 
     vec4 diffuse = vec4(diffuseLightColor, 1.0) * nDotVP * attenuation;
 	

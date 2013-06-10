@@ -2,8 +2,8 @@
 // -----------------------------------
 //  does some transformations for us!
 // -----------------------------------
-// author: Ryan Schmitt
-// date: 3-10-11
+// author: A. Tamplin
+// date: 6/4/13
 
 uniform vec3 LightPosition;
 varying vec4 lightPos;

@@ -2,8 +2,8 @@
 // -----------------------------------
 //  does some transformations for us!
 // -----------------------------------
-// author: Ryan Schmitt
-// date: 3-7-11
+// author: A. Tamplin
+// date: 6/7/13
 
 varying vec3 normal;
 varying vec2 texPos;

@@ -2,8 +2,8 @@
 // -----------------------------------
 //  stores G-Buffer values
 // -----------------------------------
-// author: Ryan Schmitt
-// date: 3-7-11
+// author: A. Tamplin
+// date: 6/7/13
 
 uniform sampler2D texture;
 uniform int useTexture;
