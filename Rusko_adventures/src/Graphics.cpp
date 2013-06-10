@@ -553,7 +553,7 @@ static void TimerJump(int value){
 
 
         collisions->checkForCollisions();
-                ruskoPhys->update((float)5/fps);
+        ruskoPhys->update((float)5/fps);
         if (jumpOn) {
             //jump();
             //ruskoPhys->jump();

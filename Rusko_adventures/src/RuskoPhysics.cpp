@@ -70,4 +70,5 @@ void RuskoPhysics::update(float timeStep){
         cout << "setting ground" << endl;
         setOnGround(true);
     }
+    cout << yPos << " " << yVel << " " << yAccel << endl;
 }

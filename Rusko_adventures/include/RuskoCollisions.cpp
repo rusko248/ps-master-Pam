@@ -95,8 +95,10 @@ void RuskoCollisions::reactToCollision(ObsBound* offendingObject){
         
             
             if((ruskoBottom > boxTop2 || ruskoPhys->yVel == 0) && ruskoBottom < boxTop){
-                cout << "BOXXXX" << endl;
+                //cout << "BOXXXX" << endl;
                 ruskoPhys->setOnBox(true);
+                ruskoPhys->yPos = boxTop - worldPos.y + ruskoBound->bcir.radius;
+                cout << ruskoPhys->yPos << endl;
                 return;
             }
             /*
