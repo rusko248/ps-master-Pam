@@ -16,10 +16,9 @@ Torch::~Torch() {
 }
 
 void Torch::render() {
-    
-    float materialAmbient[]  = { 0.0, 0.0, 0.0, 1.0 };
-    float materialDiffuse[]  = { 0.400000, 0.400000, 0.400000, 1.0 };
-    float materialSpecular[] = { 0.098461, 0.095218, 0.091337, 1.0 };
+    float materialAmbient[]  = {0.2, 0.2, 0.2, 1.0 };
+    float materialDiffuse[]  = { 0.319, 0.177, 0.005167, 1.0 };
+    float materialSpecular[] = { 0.500000, 0.500000, 0.500000, 1.0 };
     float shininess          = 8.0;
     
     glMaterialfv(GL_FRONT, GL_AMBIENT,   materialAmbient);

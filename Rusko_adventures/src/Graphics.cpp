@@ -345,9 +345,8 @@ void gameLogic() {
        // systemSound->startLevel();
         if (collisions->torchesAllLit) {
             levelComplete = true; //finished level!
-            //once gameplay works this should work
-//            gameLevel++;
-//            gameState = GAME_LOADING;
+            gameLevel++;
+            gameState = GAME_LOADING;
         }
 
     }

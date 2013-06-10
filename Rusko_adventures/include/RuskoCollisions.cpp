@@ -37,6 +37,7 @@ bool RuskoCollisions::colliding(ObsBound *one, ObsBound *two){
     float radiiSum = one->bcir.radius + two->bcir.radius;
     if(distance <= radiiSum) return true;
     return false;
+    
 }
 
 void RuskoCollisions::checkForCollisions(){
@@ -61,18 +62,16 @@ void RuskoCollisions::checkForCollisions(){
         ObsBound* offendingObject = &obsList.at(room->isTorch());
         cout << room->isTorch() << endl;
         if(offendingObject->bcir.hit == false){
-                        cout << "Torch identified" << endl;
-                        numTorchesLit++; //one more torch has been lit
-                        if (numTorchesLit == numTorches) {
-                            torchesAllLit = true;
-                        }
-                    //vector3 torchPos = vector3(offendingObject->bcir.x, offendingObject->bcir.y + offendingObject->bcir.radius, offendingObject->bcir.z);
-                        if(torchOn){
-                            vector3 torchPos = vector3(offendingObject->bcir.x, offendingObject->bcir.y + .7, offendingObject->bcir.z);
-                            torchFire->addDisplayPos(torchPos);
-                            systemSound->lightTorch();
-                            cout << "Torch lit" << endl;
-                        }
+            cout << "Torch identified" << endl;
+            //vector3 torchPos = vector3(offendingObject->bcir.x, offendingObject->bcir.y + offendingObject->bcir.radius, offendingObject->bcir.z);
+            if(torchOn){
+                numTorchesLit++; //one more torch has been lit
+                if (numTorchesLit == numTorches) torchesAllLit = true;
+                vector3 torchPos = vector3(offendingObject->bcir.x, offendingObject->bcir.y + .7, offendingObject->bcir.z);
+                torchFire->addDisplayPos(torchPos);
+                systemSound->lightTorch();
+                cout << "Torch lit" << endl;
+            }
         }
         offendingObject->bcir.hit = true;
     }

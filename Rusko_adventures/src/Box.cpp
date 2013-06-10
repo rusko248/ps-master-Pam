@@ -21,6 +21,15 @@ Box::~Box() {
 }
 
 void Box::render() {
+    float materialAmbient[]  = { 0.2, 0.2, 0.2, 1.0 };
+    float materialDiffuse[]  = { 0.2, 0.2, 0.2, 1.0 };
+    float materialSpecular[] = { 0.4, 0.4, 0.4, 1.0 };
+    float shininess          = 8.0;
+    
+    glMaterialfv(GL_FRONT, GL_AMBIENT,   materialAmbient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE,   materialDiffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR,  materialSpecular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, &shininess);
 	Model::render();
 }
 
@@ -31,6 +40,15 @@ void Box::render(int frame) {
         frame = frame % cr->totalPoints;
         STPoint3 fu = cr->pointAt(frame);
         glTranslatef(0, fu.y, 0);  //moves up/down new position
+        float materialAmbient[]  = { 0.2, 0.2, 0.2, 1.0 };
+        float materialDiffuse[]  = { 0.2, 0.2, 0.2, 1.0 };
+        float materialSpecular[] = { 0.4, 0.4, 0.4, 1.0 };
+        float shininess          = 8.0;
+        
+        glMaterialfv(GL_FRONT, GL_AMBIENT,   materialAmbient);
+        glMaterialfv(GL_FRONT, GL_DIFFUSE,   materialDiffuse);
+        glMaterialfv(GL_FRONT, GL_SPECULAR,  materialSpecular);
+        glMaterialfv(GL_FRONT, GL_SHININESS, &shininess);
         render();
         glPopMatrix ();
     }
