@@ -3,11 +3,11 @@
 
 #include "Spikes.h"
 
-Spikes::Spikes() : Model("models/Spikes/spikes.obj") {
+Spikes::Spikes() : Model("models/Spikes/spikesLight.obj") {
 	
 }
 
-Spikes::Spikes(float scale) : Model("models/Spikes/spikes.obj", scale) {
+Spikes::Spikes(float scale) : Model("models/Spikes/spikesLight.obj", scale) {
 	
 }
 

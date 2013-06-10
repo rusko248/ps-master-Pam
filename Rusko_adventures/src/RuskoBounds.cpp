@@ -12,7 +12,6 @@
 #include "RuskoBounds.h"
 
 RuskoBounds::RuskoBounds(){
-    obsList = new vector<ObsBound*>();
 }
 
 RuskoBounds::~RuskoBounds(){
@@ -24,13 +23,6 @@ void RuskoBounds::setRoom(Room* room){
     floorBounds = room->getFloor();
 }
 
-void RuskoBounds:: reset(){
-    
-}
-
-bool RuskoBounds::inBounds(){
-    
-}
 
 bool RuskoBounds::inBounds(STVector3 futurePos){
     float fwidth = floorBounds->fwidth;

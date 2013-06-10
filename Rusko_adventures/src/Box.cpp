@@ -14,7 +14,7 @@ Box::Box() : Model("models/WoodCrate_OBJ/WoodCrate_OBJ.obj") {
 //}
 
 Box::Box(float scale) : Model("models/WoodCrate_OBJ/WoodCrate_OBJ.obj", scale) {
-    wasSetMove = false;
+    movable = false;
 }
 
 Box::~Box() {
@@ -25,7 +25,7 @@ void Box::render() {
 }
 
 void Box::render(int frame) {
-    if (!wasSetMove) render();
+    if (!movable) render();
     else {
         glPushMatrix ();
         frame = frame % cr->totalPoints;

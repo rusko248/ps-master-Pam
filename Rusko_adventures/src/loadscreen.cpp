@@ -16,9 +16,8 @@ Loadscreen::~Loadscreen(){
     
 }
 
-void Loadscreen::render(int level, int windowWidth, int windowHeight){
-    this->windowWidth = windowWidth;
-    this->windowHeight = windowHeight;
+void Loadscreen::render(int level, int numTorches){
+    this->numTorches = numTorches;
     
     // Clear the window.
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -40,8 +39,15 @@ void Loadscreen::renderLevel(int level){
     string message = "Level ";
     message += (level + '0');
 
+    font = new STFont("fonts/NanumScript.ttc", 32);
     drawMessageAt(message, 0, 80, STColor4f(1, 1, 1, 1));
-
+    message = "Find ";
+    message += (numTorches+ '0');
+    if (numTorches == 1) message += (" torch");
+    else message += (" torches");
+    
+    font = new STFont("fonts/NanumScript.ttc", 28);
+    drawMessageAt(message, 0, 50, STColor4f(0.7, .7, .7, 1));
 }
 
 
@@ -49,8 +55,12 @@ void Loadscreen::drawIntroScreen(){
 
     string welcome = "Welcome to Rusko's Aventures!";
     string instructions = "Press enter to start";
-    drawMessageAt(welcome, 0, 50, STColor4f(1, 1, 1, 1));
-    drawMessageAt(instructions, 0, 30, STColor4f(1, 1, 1, 1));
+    
+    font = new STFont("fonts/NanumScript.ttc", 32);
+    drawMessageAt(welcome, 0, 70, STColor4f(1, 1, 1, 1));
+    
+    font = new STFont("fonts/NanumScript.ttc", 28);
+    drawMessageAt(instructions, 0, 30, STColor4f(.7, .7, .7, 1));
     
     glBegin(GL_TRIANGLES);
     glColor3f(1, 0, 1);
@@ -64,6 +74,7 @@ void Loadscreen::drawIntroScreen(){
 
 void Loadscreen::initScreen(){
     font = new STFont("fonts/NanumScript.ttc", 32);
+    numTorches = 0;
 }
 
 

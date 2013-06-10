@@ -13,6 +13,7 @@
 
 #include "Framework.h"
 #include "Renderable.h"
+extern int windowWidth, windowHeight;
 
 using namespace std;
 
@@ -20,7 +21,7 @@ class Loadscreen {
 public:
 	Loadscreen();
 	~Loadscreen();
-    void render(int level, int windowWidth, int windowHeight);
+    void render(int level, int numTorches);
     
 private:
     void renderLevel(int level);
@@ -28,9 +29,7 @@ private:
     void drawIntroScreen();
     void drawMessageAt(string message, float xpos, float ypos, STColor4f color);
     STFont* font;
-    
-    int windowWidth;
-    int windowHeight;
+    int numTorches;
 };
 
 #endif /* defined(__Rusko_adventures__loadscreen__) */

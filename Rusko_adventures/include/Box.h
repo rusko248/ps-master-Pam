@@ -19,9 +19,10 @@ public:
 	void render();
     void render(int frame); //renders at a certain frame for moving boxes
 
+    bool movable;
+
 private:
     CatmullRom* cr;
-    bool wasSetMove;
 
 };
 

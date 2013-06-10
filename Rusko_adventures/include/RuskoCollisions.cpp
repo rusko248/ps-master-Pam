@@ -57,6 +57,26 @@ void RuskoCollisions::checkForCollisions(){
         systemSound->die();
         return;
     }
+    if(room->isTorch() >= 0){
+        ObsBound* offendingObject = &obsList.at(room->isTorch());
+        cout << room->isTorch() << endl;
+        if(offendingObject->bcir.hit == false){
+                        cout << "Torch identified" << endl;
+                        numTorchesLit++; //one more torch has been lit
+                        if (numTorchesLit == numTorches) {
+                            torchesAllLit = true;
+                        }
+                    //vector3 torchPos = vector3(offendingObject->bcir.x, offendingObject->bcir.y + offendingObject->bcir.radius, offendingObject->bcir.z);
+                        if(torchOn){
+                            vector3 torchPos = vector3(offendingObject->bcir.x, offendingObject->bcir.y + .7, offendingObject->bcir.z);
+                            torchFire->addDisplayPos(torchPos);
+                            systemSound->lightTorch();
+                            cout << "Torch lit" << endl;
+                        }
+        }
+        offendingObject->bcir.hit = true;
+    }
+    
     if(!fallIntoPit){//test to see if rusko is on the floor
         float nextYDelta = ruskoPhys->yVel*1/10;
         if(fabs(worldPos.y - nextYDelta - FLOOR_POS) < .33){
@@ -75,22 +95,22 @@ void RuskoCollisions::reactToCollision(ObsBound* offendingObject){
     char type = offendingObject->type;
     switch (type) {
 		case TORCH:{
-            if(offendingObject->bcir.hit == false){
-                cout << "Torch identified" << endl;
-                numTorchesLit++; //one more torch has been lit
-                if (numTorchesLit == numTorches) {
-                    torchesAllLit = true;   
-                }
+            //if(offendingObject->bcir.hit == false){
+//                cout << "Torch identified" << endl;
+//                numTorchesLit++; //one more torch has been lit
+//                if (numTorchesLit == numTorches) {
+//                    torchesAllLit = true;   
+//                }
                 
                 //vector3 torchPos = vector3(offendingObject->bcir.x, offendingObject->bcir.y + offendingObject->bcir.radius, offendingObject->bcir.z);
-                if(torchOn){
-                    vector3 torchPos = vector3(offendingObject->bcir.x, offendingObject->bcir.y + .7, offendingObject->bcir.z);
-                    torchFire->addDisplayPos(torchPos);
-                    systemSound->lightTorch();
-                    cout << "Torch lit" << endl;
-                }
-            }
-            offendingObject->bcir.hit = true;
+//                if(torchOn){
+//                    vector3 torchPos = vector3(offendingObject->bcir.x, offendingObject->bcir.y + .7, offendingObject->bcir.z);
+//                    torchFire->addDisplayPos(torchPos);
+//                    systemSound->lightTorch();
+//                    cout << "Torch lit" << endl;
+//                }
+            //}
+            //offendingObject->bcir.hit = true;
 			break;
         }
 		case BOX:{

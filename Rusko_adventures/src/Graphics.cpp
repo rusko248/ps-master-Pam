@@ -33,6 +33,7 @@ Loadscreen* loadscreen;
 STVector3 camPos, worldPos, lastJump;
 float worldAngle;
 int groundPos = FLOOR_POS;
+STVector3 futurePos;
 
 // CatmullRom Jump
 bool jumpOn;
@@ -354,8 +355,8 @@ void gameLogic() {
     {
         resetGameVariables();
         if (firstLoad){
-            loadscreen->render(-1, windowWidth, windowHeight);
-        } else loadscreen->render(gameLevel, windowWidth, windowHeight);
+            loadscreen->render(-1, room.getNumTorches());
+        } else loadscreen->render(gameLevel, room.getNumTorches());
 
     }
 }
@@ -593,11 +594,13 @@ static void Timer(int value)
     frame++;
     glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION,2 + sinf(frame));
     if (gameState == GAME_RUNNING) {
-        STVector3 futurePos = STVector3(worldPos.x, worldPos.y, worldPos.z);
+        futurePos = STVector3(worldPos.x, worldPos.y, worldPos.z);
         
         if (upKeyPressed) {
+            
             futurePos.x = worldPos.x + 1*sin(PI/180*worldAngle);
             futurePos.z = worldPos.z - 1*cos(PI/180*worldAngle);
+            
             if(jumpOn && ruskoPhys->movingDuringJump == false){
                 futurePos.x = worldPos.x;
                 futurePos.z = worldPos.z;

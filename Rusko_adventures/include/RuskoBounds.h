@@ -21,16 +21,11 @@ public:
     RuskoBounds();
     ~RuskoBounds();
     void setRoom(Room* room);
-    bool inBounds();
     bool inBounds(STVector3 futurePos);
-    void reset();
     
 protected:
     Room* room;
     Floor* floorBounds;
-    ObsBound* obsBound;
-    vector<ObsBound*>* obsList;
-    
 };
 
 
