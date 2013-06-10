@@ -16,8 +16,6 @@ using namespace std;
 #define SMOKE '5'
 #define SAFE '9'
 
-extern ParticleManager *particles;
-
 float torchScale = 0.5f;
 float boxScale = 0.8f;
 float spikesScale = 0.5f;
@@ -30,6 +28,8 @@ Spikes spikes;
 // World position.  Rusko position rel to the room is negative this amount
 extern STVector3 worldPos;
 
+// Particles System
+extern ParticleManager *particles;
 extern fireCircleEmitter *torchFire;
 
 // Smoke
@@ -771,11 +771,11 @@ void Room::generateObstacles() {
 		while (walls[j]->objPos[walls[j]->getIndex(basepos, 1)] != FREE)
 			basepos = rand() % walls[j]->base;
 		walls[j]->objPos[walls[j]->getIndex(basepos, 1)] = SMOKE;
-		vector3 pos = vector3(pos.x+scale*floor->width-scale*((float)basepos+.5f), pos.y+scale*(1.5f), pos.z);
-		if (j == 1) { pos = vector3(pos.x, pos.y+scale*(1.5f), pos.z-scale*((float)basepos+.5f));}
-		else if (j == 2) { pos = vector3(pos.x+scale*((float)basepos+.5f), pos.y+scale*(1.5f), pos.z-scale*floor->length);}
-		else if (j == 3) { pos = vector3(pos.x+scale*floor->width, pos.y+scale*(1.5f), pos.z-scale*floor->length+scale*((float)basepos+.5f));}
+		vector3 pos = vector3(pos.x+worldPos.x+scale*floor->width-scale*((float)basepos+.5f), pos.y+worldPos.y+scale*(1.5f), pos.z+worldPos.z);
+		if (j == 1) { pos = vector3(pos.x+worldPos.x, pos.y+worldPos.y+scale*(1.5f), pos.z+worldPos.z-scale*((float)basepos+.5f));}
+		else if (j == 2) { pos = vector3(pos.x+worldPos.x+scale*((float)basepos+.5f), pos.y+worldPos.y+scale*(1.5f), pos.z+worldPos.z-scale*floor->length);}
+		else if (j == 3) { pos = vector3(pos.x+worldPos.x+scale*floor->width, pos.y+worldPos.y+scale*(1.5f), pos.z+worldPos.z-scale*floor->length+scale*((float)basepos+.5f));}
 		t->resetPos(pos);
-		if(particles->nextId() == 1) particles->addEmitter(t);
+		if (particles->nextId() == 1) particles->addEmitter(t);
 	}
 }
