@@ -27,6 +27,8 @@ Spikes spikes;
 
 // World position.  Rusko position rel to the room is negative this amount
 extern STVector3 worldPos;
+extern STVector3 futurePos;
+
 
 // Particles System
 extern ParticleManager *particles;
@@ -305,7 +307,36 @@ bool Room::isSpikes() {
 	int uRusko = (int)floorf(-worldPos.x/scale);
 	int vRusko = (int)floorf(worldPos.z/scale);
 
-	return (floor->objPos[floor->getIndex(uRusko, vRusko)] == SPIKES);
+	return (floor->objPos[floor->getIndex(uRusko, vRusko)] == SPIKES && worldPos.y >= -1.f);
+}
+
+bool Room::isWalkToBox() {
+    int xRusko = (int)floorf(-futurePos.x/scale);
+    int yRusko = (int)floorf(-futurePos.y/scale);
+    int zRusko = (int)floorf(futurePos.z/scale);
+    
+    if (zRusko == 0) {
+        if (walls[0]->objPos[walls[0]->getIndex(floor->width-1-xRusko, yRusko)] == BOX) {
+            return true;
+        }
+    }
+    if (xRusko == 0) {
+        if (walls[1]->objPos[walls[1]->getIndex(zRusko, yRusko)] == BOX) {
+            return true;
+        }
+    }
+    if (zRusko == floor->length-1) {
+        if (walls[2]->objPos[walls[2]->getIndex(xRusko, yRusko)] == BOX) {
+            return true;
+        }
+    }
+    if (xRusko == floor->width-1) {
+        if (walls[3]->objPos[walls[3]->getIndex(floor->length-1-zRusko, yRusko)] == BOX) {
+            return true;
+        }
+    }
+    
+    return false;
 }
 
 void Room::render() {

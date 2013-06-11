@@ -45,6 +45,8 @@ void RuskoCollisions::checkForCollisions(){
     if(fallIntoPit) return;
     lateralMovement = true;
     ruskoPhys->setOnBox(false);
+    
+    //if Rusko is on a pit
     if(room->isPit()){
         cout << "pit" << endl;
         fallIntoPit = true;
@@ -53,11 +55,23 @@ void RuskoCollisions::checkForCollisions(){
         systemSound->die();
         return;
     }
+    
+    //if Rusko is on spikes
     if(room->isSpikes()){
         dead = true;
         systemSound->die();
         return;
     }
+    
+    //if Rusko falls in a pit
+    if(!fallIntoPit){//test to see if rusko is on the floor
+        float nextYDelta = ruskoPhys->yVel*1/10;
+        if(fabs(worldPos.y - nextYDelta - FLOOR_POS) < .33){
+            ruskoPhys->setOnGround(true);
+        }
+    }
+    
+    //if Rusko is in front of torch
     if(room->isTorch() >= 0){
         ObsBound* offendingObject = &obsList.at(room->isTorch());
         cout << room->isTorch() << endl;
@@ -76,15 +90,16 @@ void RuskoCollisions::checkForCollisions(){
         offendingObject->bcir.hit = true;
     }
     
-    if(!fallIntoPit){//test to see if rusko is on the floor
-        float nextYDelta = ruskoPhys->yVel*1/10;
-        if(fabs(worldPos.y - nextYDelta - FLOOR_POS) < .33){
-            ruskoPhys->setOnGround(true);
-        }
-    }
+    //if Rusko is about to walk into box
+    if (room->isWalkToBox()){
+        cout << "in front of box" << endl;
+        lateralMovement = false;
+    } else lateralMovement = true;
+    
+    
     for(int obj = 0; obj < obsList.size(); obj++){
         if(colliding(ruskoBound, &obsList.at(obj))){
-            reactToCollision(&obsList.at(obj));
+            //reactToCollision(&obsList.at(obj));
             return;//???
         }
     }

@@ -97,6 +97,8 @@ public:
 	int isTorch();
 	bool isPit();
 	bool isSpikes();
+    bool isWalkToBox();
+    
 	void render();
 
 	int dim[3];

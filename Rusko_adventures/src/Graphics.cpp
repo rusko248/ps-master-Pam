@@ -30,15 +30,17 @@ Loadscreen* loadscreen;
 
 
 // Camera/world positions, initialized at setup
-STVector3 camPos, worldPos, lastJump;
+STVector3 camPos, worldPos, futurePos;
 float worldAngle;
 int groundPos = FLOOR_POS;
-STVector3 futurePos;
+
+
+//Box frame -- to keep track of moving boxes
+int boxFrame;
 
 // CatmullRom Jump
 bool jumpOn;
 int rusko_frameJump;
-CatmullRom* cr;
 
 //Walk/Jump frame counters
 int rusko_frameWalk = 0;
@@ -52,7 +54,6 @@ float light0Position[4];
 #define GAME_LSCREEN 2
 int gameState = 0;
 bool firstLoad = true;
-bool levelComplete = false;
 
 //Current Game Level
 int gameLevel = 1;
@@ -190,7 +191,6 @@ void resetGameVariables(){
     worldAngle = 180;
     
     dead = false;
-    levelComplete = false; //makes sure always start with levelComplete is false
     
     //Camera
     camPos.x = 0;
@@ -200,7 +200,6 @@ void resetGameVariables(){
     //Jump stuff
     jumpOn = false;
     rusko_frameJump = 0;
-    lastJump.x = lastJump.y = lastJump.z = 0;
 
     //Interaction/keyboard
     upKeyPressed = downKeyPressed = rightKeyPressed = leftKeyPressed = false;
@@ -208,6 +207,8 @@ void resetGameVariables(){
 	//reset plights
 	plights.clear();
 	setTorchLight(xpos, ypos, zpos, ruskoTorchRadius);
+    
+    boxFrame = 0;
 }
 
 
@@ -258,9 +259,6 @@ void setup(){
     
     //sets the point light for the torch
 	setTorchLight(xpos, ypos, zpos, ruskoTorchRadius);
-     
-    //Jump stuff-CatmullRom file uploaded
-    cr = new CatmullRom("models/rusko/jump_controlPoints.txt");
     
     //temp box **pam**
     tempbox = Box(2);
@@ -344,7 +342,6 @@ void gameLogic() {
 		renderList.push_back((Renderable *)&room);
        // systemSound->startLevel();
         if (collisions->torchesAllLit) {
-            levelComplete = true; //finished level!
             gameLevel++;
             gameState = GAME_LOADING;
         }
@@ -422,33 +419,6 @@ void renderWorld(){
     glPopMatrix ();
 }
 
-
-/**
- * Jump function
- * Uses catmull rom to simulate jump
- */
-void jump()
-{
-    rusko_frameJump += 3;
-    int totPoints = cr->totalPoints;
-
-    if (rusko_frameJump >= totPoints) {
-        jumpOn = false;
-        lastJump.x = lastJump.y = lastJump.z = 0;
-        worldPos.y = groundPos;
-    }
-    else {
-        STPoint3 fu = cr->pointAt(rusko_frameJump);
-        
-        //calculates where the world needs to be after a jump
-        worldPos.y -= (fu.y - lastJump.y);
-        worldPos.z -= (fu.z - lastJump.z)*cos(PI/180*worldAngle);
-        worldPos.x += (fu.z - lastJump.z)*sin(PI/180*worldAngle);
-        
-        lastJump.y = fu.y;
-        lastJump.z = fu.z; //makes sure to record lastJump.z position
-    }
-}
 
 
 /** Rends the main character, who should remain at origin**/
@@ -591,12 +561,12 @@ void DisplayCallback()
 static void Timer(int value)
 {
     frame++;
+    boxFrame++;
     glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION,2 + sinf(frame));
     if (gameState == GAME_RUNNING) {
         futurePos = STVector3(worldPos.x, worldPos.y, worldPos.z);
         
         if (upKeyPressed) {
-            
             futurePos.x = worldPos.x + 1*sin(PI/180*worldAngle);
             futurePos.z = worldPos.z - 1*cos(PI/180*worldAngle);
             
@@ -622,6 +592,7 @@ static void Timer(int value)
         else if (downKeyPressed) {
             futurePos.x -= 1*sin(PI/180*worldAngle);
             futurePos.z += 1*cos(PI/180*worldAngle);
+            
             if(jumpOn && ruskoPhys->movingDuringJump == false){
                 futurePos.x = worldPos.x;
                 futurePos.z = worldPos.z;
@@ -701,8 +672,6 @@ static void TimerJump(int value){
         collisions->checkForCollisions();
         ruskoPhys->update((float)5/fps);
         if (jumpOn) {
-            //jump();
-            //ruskoPhys->jump();
             if(systemSound->jumping == false) systemSound->jump();
             glutPostRedisplay();
         }else{

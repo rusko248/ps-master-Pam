@@ -1,6 +1,5 @@
 # Blender3D v249 OBJ File: Torch_LOw_Poly.blend
 # www.blender3d.org
-mtllib Torch_LOw_Poly.mtl
 o Torch__Torch
 v -0.123215 0.315639 -0.205498
 v -0.123215 -0.070514 -0.205498
@@ -342,7 +341,7 @@ vt 0.093277 0.245065
 vt 0.000000 0.101057
 vt 0.005109 0.164918
 vt 0.024988 0.042828
-usemtl Torch__Torch_Diffuse.tga
+
 s off
 f 1/1 5/2 6/3 2/4
 f 2/4 6/3 7/5 3/6
