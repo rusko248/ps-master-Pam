@@ -75,6 +75,8 @@ float shininess          = 8.0;
 STImage *floorBrickImage, *wallBrickImage;
 STTexture *floorTexture, *wallTexture;
 
+std::vector<std::vector<float> > floorHeight;
+
 // Torches related
 float minHeight = 1.0f, maxHeight = 10.0f, highHeight = 6.0f;
 
@@ -130,6 +132,15 @@ void Room::initRoom() {
 	torch = Torch(torchScale*scale);
 	box = Box(boxScale*scale);
 	spikes = Spikes(spikesScale*scale);
+
+	floorHeight.clear();
+	for (int v = 0; v <= floor->length; ++v) {
+		std::vector<float> h;
+		for (int u = 0; u <= floor->width; ++u) {
+			h.push_back(noisef(pos.x+scale*u,pos.y,pos.z-scale*v));
+		}
+		floorHeight.push_back(h);
+	}
 }
 
 void Room::setLevel(int lv) {
@@ -294,6 +305,7 @@ int Room::getNumTorches() {
 }
 
 void Room::getObList(std::vector<ObsBound> &o) {
+	o.clear();
 	for (unsigned int i = 0; i < obList.size(); ++i) {
 		ObsBound ob = obList[i];
 		o.push_back(ob);
@@ -416,16 +428,16 @@ void Room::renderLayout() {
 				if (floor->objPos[floor->getIndex(u, v)] == PIT) continue;
 				glTexCoord2f(0,0);
 				glNormal3f(0,1,0);
-				glVertex3f(pos.x+scale*u,pos.y,pos.z-scale*v);
+				glVertex3f(pos.x+scale*u,pos.y+floorHeight[v][u],pos.z-scale*v);
 				glTexCoord2f(0,1);
 				glNormal3f(0,1,0);
-				glVertex3f(pos.x+scale*(u+1),pos.y,pos.z-scale*v);
+				glVertex3f(pos.x+scale*(u+1),pos.y+floorHeight[v][u+1],pos.z-scale*v);
 				glTexCoord2f(1,1);
 				glNormal3f(0,1,0);
-				glVertex3f(pos.x+scale*(u+1),pos.y,pos.z-scale*(v+1));
+				glVertex3f(pos.x+scale*(u+1),pos.y+floorHeight[v+1][u+1],pos.z-scale*(v+1));
 				glTexCoord2f(1,0);
 				glNormal3f(0,1,0);
-				glVertex3f(pos.x+scale*u,pos.y,pos.z-scale*(v+1));
+				glVertex3f(pos.x+scale*u,pos.y+floorHeight[v+1][u],pos.z-scale*(v+1));
 			}
 		}
 	glEnd();
@@ -858,15 +870,15 @@ void Room::generateObstacles() {
 	int numSpikes = 0;
 	for (int i = 0; i < floor->width; ++i) {
 		if (floor->objPos[floor->getIndex(i, 0)] == FREE)
-			if (rand() % 3 != 0) floor->objPos[floor->getIndex(i, 0)] = SPIKES;
+			if (rand() % 3 != 0) { floor->objPos[floor->getIndex(i, 0)] = SPIKES; numSpikes++; }
 		if (floor->objPos[floor->getIndex(i, floor->length-1)] == FREE)
-			if (rand() % 3 != 0) floor->objPos[floor->getIndex(i, floor->length-1)] = SPIKES;
+			if (rand() % 3 != 0) { floor->objPos[floor->getIndex(i, floor->length-1)] = SPIKES; numSpikes++; }
 	}
 	for (int j = 0; j < floor->length; ++j) {
 		if (floor->objPos[floor->getIndex(0, j)] == FREE)
-			if (rand() % 3 != 0) floor->objPos[floor->getIndex(0, j)] = SPIKES;
+			if (rand() % 3 != 0) { floor->objPos[floor->getIndex(0, j)] = SPIKES; numSpikes++; }
 		if (floor->objPos[floor->getIndex(floor->width-1, j)] == FREE)
-			if (rand() % 3 != 0) floor->objPos[floor->getIndex(floor->width-1, j)] = SPIKES;
+			if (rand() % 3 != 0) { floor->objPos[floor->getIndex(floor->width-1, j)] = SPIKES; numSpikes++; }
 	}
 
 	// find safe paths to ensure to game can be beaten

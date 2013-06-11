@@ -130,7 +130,8 @@ void RuskoCollisions::checkForCollisions(){
 void RuskoCollisions::reactToCollision(ObsBound* offendingObject){
     char type = offendingObject->type;
     switch (type) {
-		case BOX:{
+		case BOX:
+		case MOVABLEBOX:{
             
             //using future position
             float boxEpsilon = ruskoBound->bcir.radius * .5;

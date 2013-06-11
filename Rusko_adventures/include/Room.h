@@ -7,6 +7,7 @@
 #include "Box.h"
 #include "Spikes.h"
 #include "ParticleManager.h"
+#include "perlin.h"
 #include <map>
 
 #define FREE '0'
@@ -15,6 +16,7 @@
 #define SPIKES '3'
 #define PIT '4'
 #define SMOKE '5'
+#define MOVABLEBOX '6'
 #define SAFE '9'
 
 
