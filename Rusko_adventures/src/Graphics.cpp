@@ -84,7 +84,7 @@ vector<PointLight> plights; //holds the info for the lights in room
 float fireLightColor [3] = {0.9, 0.6, 0.0}; //the color of fire light
 float ruskoTorchRadius = 1.0;
 
-bool useDeferred = true; //if true = deferred, false = gl lighting
+bool useDeferred = false; //if true = deferred, false = gl lighting
 
 static int frame = 0;
 
