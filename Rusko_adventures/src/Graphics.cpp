@@ -88,8 +88,7 @@ bool useDeferred = false; //if true = deferred, false = gl lighting
 
 static int frame = 0;
 
-//temp **pam**
-Box tempbox;
+
 
 
 /**
@@ -260,9 +259,6 @@ void setup(){
     //sets the point light for the torch
 	setTorchLight(xpos, ypos, zpos, ruskoTorchRadius);
     
-    //temp box **pam**
-    tempbox = Box(2);
-    tempbox.setMove(5);
     
     if(!useDeferred) {
 		// Enable global lights
@@ -359,22 +355,6 @@ void gameLogic() {
     }
 }
 
-
-/***temp *** temp should delete*** **pam**/
-void temp(){
-    glMatrixMode(GL_MODELVIEW);
-    glPushMatrix ();
-    glLoadIdentity();
-    
-    glRotated(worldAngle, 0, 1, 0);  //rotates world with given angle
-    
-    worldPos.y = -ruskoPhys->yPos;
-    glTranslatef(worldPos.x+3, worldPos.y+2, worldPos.z-4);  //translates to new position
-    
-    tempbox.render(frame);
-    
-    glPopMatrix ();
-}
 
 /** Renders the world with applied transforms **/
 void renderWorld(){
@@ -520,8 +500,6 @@ void DisplayCallback()
 			renderWorld(); //transforms and draws the world as Rusko moves around
 			drawRusko();  //transforms and draws Rusko
 		
-			temp(); //***pam***/ box trial
-
 			//PREPARE FOR RENDING
 			dfe->PostDrawScene(); //lighting ADT
 
@@ -539,8 +517,6 @@ void DisplayCallback()
 		} else {
 			renderWorld(); //transforms and draws the world as Rusko moves around
 			drawRusko();  //transforms and draws Rusko
-        
-			temp(); //***pam***/ box trial
 		}
 		//FIRE RENDERED AFTER EVERYTHING ELSE
 		drawRotatedParticles();
