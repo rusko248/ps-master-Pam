@@ -7,6 +7,9 @@
 //
 
 #include "loadscreen.h"
+#define FONT_SMALL 0
+#define FONT_MEDIUM 1
+#define FONT_LARGE 2
 
 Loadscreen::Loadscreen(){
     initScreen();
@@ -54,15 +57,23 @@ void Loadscreen::renderLevel(int level){
     string message = "Level ";
     message += (level + '0');
 
-    //font = new STFont("fonts/NanumScript.ttc", 32);
-    drawMessageAt(message, 0, 80, STColor4f(1, 1, 1, 1));
+    drawMessageAt(message, 0, 80, STColor4f(1, 1, 1, 1), FONT_LARGE);
     message = "Find ";
     message += (numTorches+ '0');
-    if (numTorches == 1) message += (" torch");
-    else message += (" torches");
+    if (numTorches == 1) message += (" total torch");
+    else message += (" total torches");
     
-    //font = new STFont("fonts/NanumScript.ttc", 28);
-    drawMessageAt(message, 0, 50, STColor4f(0.7, .7, .7, 1));
+    drawMessageAt(message, 0, 30, STColor4f(0.7, .7, .7, 1), FONT_SMALL);
+    
+    message = livesLeft + '0';
+    if (livesLeft == 1) {
+        message += " life left";
+        drawMessageAt(message, 0, (float)-windowHeight/3, STColor4f(1., .4, .4, 1), FONT_SMALL);
+    }
+    else {
+        message += " lives left";
+        drawMessageAt(message, 0, (float)-windowHeight/3, STColor4f(1., 1., .6, 1), FONT_SMALL);
+    }
 }
 
 
@@ -71,9 +82,33 @@ void Loadscreen::drawIntroScreen(){
     string welcome = "Welcome to Rusko's Aventures!";
     string instructions = "Press enter to start";
     
-    drawMessageAt(welcome, 0, 70, STColor4f(1, 1, 1, 1));
+    drawMessageAt(welcome, 0, 70, STColor4f(1, 1, 1, 1), FONT_MEDIUM);
+    drawMessageAt(instructions, 0, 30, STColor4f(.7, .7, .7, 1), FONT_SMALL);
     
-    drawMessageAt(instructions, 0, 30, STColor4f(.7, .7, .7, 1));
+    instructions = "Use SPACEBAR to jump";
+    drawMessageAt(instructions, 0, (float)-windowHeight/3, STColor4f(1., 1., .6, 1), FONT_SMALL);
+
+    instructions = "UP/DOWN/RIGHT/LEFT keys to move";
+    drawMessageAt(instructions, 0, (float)-windowHeight/3 - 30, STColor4f(1., 1., .6, 1), FONT_SMALL);
+    
+    glBegin(GL_TRIANGLES);
+    glColor3f(1, 0, 1);
+    glVertex2d(0, 0);
+    glColor3f(1, 0, 1);
+    glVertex2d(0, 1);
+    glColor3f(1, 0, 1);
+    glVertex2d(1, 1);
+    glEnd();
+}
+
+void Loadscreen::renderGameOver(){
+    
+    string welcome = "GAME OVER";
+    string instructions = "Press enter to play again";
+    
+    drawMessageAt(welcome, 0, 70, STColor4f(1., .4, .4, 1), FONT_LARGE);
+    
+    drawMessageAt(instructions, 0, 30, STColor4f(.7, .7, .7, 1), FONT_SMALL);
     
     glBegin(GL_TRIANGLES);
     glColor3f(1, 0, 1);
@@ -86,7 +121,6 @@ void Loadscreen::drawIntroScreen(){
 }
 
 void Loadscreen::initScreen(){
-    string fontName; 
     
     #ifdef __APPLE__
     fontName = "fonts/NanumScript.ttc"; 
@@ -94,19 +128,27 @@ void Loadscreen::initScreen(){
     fontName = "fonts/Gabriola.ttf.ttc";
     #endif
 
-    font = new STFont(fontName, 32);
+    fontLarge = new STFont(fontName, 64);
+    fontMed = new STFont(fontName, 40);
+    fontSmall = new STFont(fontName, 32);
     
     numTorches = 0;
 }
 
 
 
-void Loadscreen::drawMessageAt(string message, float xpos, float ypos, STColor4f color){
+void Loadscreen::drawMessageAt(string message, float xpos, float ypos, STColor4f color, int fontsize){
     
     glViewport(0, 0, windowWidth, windowHeight);
     glMatrixMode( GL_PROJECTION );
     glLoadIdentity();
     glOrtho(-windowWidth/2, windowWidth/2, -windowHeight/2, windowHeight/2, -1., 1.);
+
+    
+    STFont* font;
+    if (fontsize == FONT_SMALL) font = fontSmall;
+    else if (fontsize == FONT_MEDIUM) font = fontMed;
+    else if (fontsize == FONT_LARGE) font = fontLarge;
 
     float temp = font->ComputeWidth(message);
     
@@ -114,8 +156,6 @@ void Loadscreen::drawMessageAt(string message, float xpos, float ypos, STColor4f
     glTranslatef(xpos, ypos, 0);
     font->DrawString(message, color);  //Draws the string
 
-    
-    
     glPopMatrix ();
 }
 

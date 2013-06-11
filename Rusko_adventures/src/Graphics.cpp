@@ -3,17 +3,11 @@
 
 #include "Graphics.h"
 
-
+//fire emitter
 fireCircleEmitter *torchFire;
-
-const int fps=30;
-int window_id=0;
-
-
 
 // PI def
 const float PI = 3.14159265;
-const int FLOOR_POS = -1;
 
 // OpenGL display
 int windowWidth  = 640;
@@ -22,28 +16,28 @@ int windowHeight = 640;
 // Interaction bools
 bool upKeyPressed, downKeyPressed, rightKeyPressed, leftKeyPressed;
 
-//System sound
-
-
 //Loadscreen
 Loadscreen* loadscreen;
-
 
 // Camera/world positions, initialized at setup
 STVector3 camPos, worldPos, futurePos;
 float worldAngle;
+const int FLOOR_POS = -1;
 int groundPos = FLOOR_POS;
 
 
 //Box frame -- to keep track of moving boxes
 int boxFrame1, boxFrame2, boxFrame3;
 
-// CatmullRom Jump
+// Jump
 bool jumpOn;
 int rusko_frameJump;
 
-//Walk/Jump frame counters
+//frame counters
 int rusko_frameWalk = 0;
+static int frame = 0;
+const int fps=30;
+int window_id=0;
 
 // Lights
 float light0Position[4];
@@ -54,6 +48,8 @@ float light0Position[4];
 #define GAME_LSCREEN 2
 int gameState = 0;
 bool firstLoad = true;
+const int TOTAL_LIVES = 3;
+int livesLeft;
 
 //Current Game Level
 int gameLevel = 1;
@@ -86,7 +82,6 @@ float ruskoTorchRadius = 1.0;
 
 bool useDeferred = false; //if true = deferred, false = gl lighting
 
-static int frame = 0;
 
 /**function declarations**/
 void respawn();
@@ -219,7 +214,9 @@ void resetGameVariables(){
     worldPos.z = -startPos.z;
     worldAngle = 180;
     
+    //dying variables
     dead = false;
+    if (firstLoad) livesLeft = TOTAL_LIVES;
     
     //Camera
     camPos.x = 0;
@@ -368,11 +365,13 @@ void gameLogic() {
     }
     else if (gameState == GAME_RUNNING)
     {
-        if(dead) respawn();
+        if(dead) {
+            livesLeft--;
+            respawn();
+        }
         collisions->checkForCollisions();
         
 		renderList.push_back((Renderable *)&room);
-       // systemSound->startLevel();
         if (collisions->torchesAllLit) {
             gameLevel++;
             gameState = GAME_LOADING;
@@ -383,7 +382,11 @@ void gameLogic() {
     {
         if (firstLoad){
             loadscreen->renderWelcomeScreen();
-        } else {
+        }
+        else if (livesLeft == 0) {
+            loadscreen->renderGameOver();
+        }
+        else {
             resetGameVariables();
             loadscreen->render(gameLevel, room.getNumTorches());
         }
@@ -649,6 +652,7 @@ void resetLevel(){
 
 void respawn(){
     dead = false;
+    
     if (gameState == GAME_RUNNING) {
         gameState = GAME_LSCREEN;
     }
@@ -662,6 +666,12 @@ void nextLevel(){
     if (firstLoad && gameState == GAME_LSCREEN){
         gameState = GAME_LSCREEN;
         firstLoad = false;
+    }
+    else if (livesLeft == 0) {
+             firstLoad = true;
+             gameLevel = 1;
+             livesLeft = TOTAL_LIVES;
+             gameState = GAME_LOADING;
     }
     else if (gameState == GAME_LSCREEN){
         gameState = GAME_RUNNING;
