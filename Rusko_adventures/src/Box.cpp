@@ -33,8 +33,11 @@ void Box::render() {
 	Model::render();
 }
 
-void Box::render(int frame) {
-    if (!movable) render();
+float Box::render(int frame) {
+    if (!movable) {
+        render();
+        return 0;
+    }
     else {
         glPushMatrix ();
         frame = frame % cr->totalPoints;
@@ -51,6 +54,7 @@ void Box::render(int frame) {
         glMaterialfv(GL_FRONT, GL_SHININESS, &shininess);
         render();
         glPopMatrix ();
+        return fu.y;
     }
 }
 

@@ -17,7 +17,7 @@ public:
 	
     void setMove(float height);//makes a box to move up a certain height
 	void render();
-    void render(int frame); //renders at a certain frame for moving boxes
+    float render(int frame); //renders at a certain frame for moving boxes, returns y_position
 
     bool movable;
 

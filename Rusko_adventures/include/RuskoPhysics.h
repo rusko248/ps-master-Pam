@@ -39,11 +39,13 @@ public:
     float yAccel;
     bool movingDuringJump;
     float tStep;
+    bool boxContact; //moved here to access for collisions
+
     
 protected:
     float yInitial;
     bool onGround;
-    bool boxContact;
+    //bool boxContact;
     bool inPit;
     
 };

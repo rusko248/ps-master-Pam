@@ -88,6 +88,8 @@ bool useDeferred = false; //if true = deferred, false = gl lighting
 
 static int frame = 0;
 
+/**function declarations**/
+void respawn();
 
 
 
@@ -335,6 +337,9 @@ void gameLogic() {
     }
     else if (gameState == GAME_RUNNING)
     {
+        if(dead) respawn();
+        collisions->checkForCollisions();
+        
 		renderList.push_back((Renderable *)&room);
        // systemSound->startLevel();
         if (collisions->torchesAllLit) {
@@ -646,8 +651,8 @@ void nextLevel(){
  */
 static void TimerJump(int value){
     if (gameState == GAME_RUNNING){
-        if(dead) respawn();
-        collisions->checkForCollisions();
+//        if(dead) respawn();
+//        collisions->checkForCollisions();
         ruskoPhys->update((float)5/fps);
         if (jumpOn) {
             if(systemSound->jumping == false) systemSound->jump();

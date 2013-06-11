@@ -23,6 +23,8 @@ extern Sound *systemSound;
 
 extern const int FLOOR_POS;
 extern STVector3 worldPos;
+extern STVector3 futurePos;
+
 extern float worldAngle;
 
 extern bool dead;

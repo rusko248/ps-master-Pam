@@ -25,6 +25,7 @@ RuskoCollisions::RuskoCollisions(Room *room){
     numTorches = room->getNumTorches();
     numTorchesLit = 0;
     torchesAllLit = false;
+    ruskoPhys->setOnBox(false);
 
     printf("num of torches is %i \n", numTorches);
 }
@@ -35,7 +36,7 @@ RuskoCollisions::~RuskoCollisions(){
 
 bool RuskoCollisions::colliding(ObsBound *one, ObsBound *two){
     //Collision occurs if distance between centers is less than or equal to sum of radii
-    float distance = sqrtf(powf((one->bcir.x - (two->bcir.x + worldPos.x)), 2) + powf((one->bcir.y - (two->bcir.y + worldPos.y)), 2) + powf((one->bcir.z - (two->bcir.z + worldPos.z)), 2));
+    float distance = sqrtf(powf((one->bcir.x - (two->bcir.x + futurePos.x)), 2) + powf((one->bcir.y - (two->bcir.y + futurePos.y)), 2) + powf((one->bcir.z - (two->bcir.z + futurePos.z)), 2));
     float radiiSum = one->bcir.radius + two->bcir.radius;
     if(distance <= radiiSum) return true;
     return false;
@@ -46,7 +47,7 @@ void RuskoCollisions::checkForCollisions(){
     if(dead) return;
     if(fallIntoPit) return;
     lateralMovement = true;
-    ruskoPhys->setOnBox(false);
+    //ruskoPhys->setOnBox(false);
     
     //if Rusko is on a pit
     if(room->isPit()){
@@ -93,16 +94,27 @@ void RuskoCollisions::checkForCollisions(){
     }
     
     //if Rusko is about to walk into box
-    if (room->isWalkToBox()){
-        cout << "in front of box" << endl;
-        lateralMovement = false;
-    } else lateralMovement = true;
+//    if (room->isWalkToBox()){
+//        cout << "in front of box" << endl;
+//        for(int obj = 0; obj < obsList.size(); obj++){
+//            if(colliding(ruskoBound, &obsList.at(obj))){
+//                reactToCollision(&obsList.at(obj));
+//                return;//???
+//            }
+//        }
+////        lateralMovement = false;
+//    } else lateralMovement = true;
     
     
+    //use this to check boxes
     for(int obj = 0; obj < obsList.size(); obj++){
         if(colliding(ruskoBound, &obsList.at(obj))){
-            //reactToCollision(&obsList.at(obj));
+            reactToCollision(&obsList.at(obj));
             return;//???
+        } else if (ruskoPhys->boxContact){
+            //ruskoPhys->setOnBox(false);
+            //ruskoPhys->setOnGround(-FLOOR_POS);
+           // ruskoPhys->setOnBox(false);
         }
     }
 }
@@ -110,48 +122,67 @@ void RuskoCollisions::checkForCollisions(){
 void RuskoCollisions::reactToCollision(ObsBound* offendingObject){
     char type = offendingObject->type;
     switch (type) {
-		case TORCH:{
-            //if(offendingObject->bcir.hit == false){
-//                cout << "Torch identified" << endl;
-//                numTorchesLit++; //one more torch has been lit
-//                if (numTorchesLit == numTorches) {
-//                    torchesAllLit = true;   
-//                }
-                
-                //vector3 torchPos = vector3(offendingObject->bcir.x, offendingObject->bcir.y + offendingObject->bcir.radius, offendingObject->bcir.z);
-//                if(torchOn){
-//                    vector3 torchPos = vector3(offendingObject->bcir.x, offendingObject->bcir.y + .7, offendingObject->bcir.z);
-//                    torchFire->addDisplayPos(torchPos);
-//                    systemSound->lightTorch();
-//                    cout << "Torch lit" << endl;
-//                }
-            //}
-            //offendingObject->bcir.hit = true;
-			break;
-        }
 		case BOX:{
+            
+            //using future position
             float boxEpsilon = ruskoBound->bcir.radius * .5;
             boxEpsilon = 1;
-            float relativePos = offendingObject->bcir.y + worldPos.y;
-            float radiusSum = ruskoBound->bcir.radius + offendingObject->bcir.radius;
             
             float ruskoBottom = ruskoBound->bcir.y - ruskoBound->bcir.radius;
-            float boxTop = offendingObject->bcir.y + worldPos.y + offendingObject->bcir.radius;
+            
+            float boxTop = offendingObject->bcir.y + futurePos.y + offendingObject->bcir.radius;
             float boxTop2 = boxTop + (ruskoPhys->yVel + ruskoPhys->yAccel*ruskoPhys->tStep)*ruskoPhys->tStep;
-        
+            
+            
+            
             float ruskoTop = ruskoBound->bcir.y + ruskoBound->bcir.radius;
-            float boxBottom = offendingObject->bcir.y + worldPos.y - offendingObject->bcir.radius;
+            float boxBottom = offendingObject->bcir.y + futurePos.y - offendingObject->bcir.radius;
             float boxBottom2 = boxBottom + (ruskoPhys->yVel + ruskoPhys->yAccel*ruskoPhys->tStep)*ruskoPhys->tStep;
             
+            
+            //whether or not it's falling onto a box
             if(ruskoBottom > boxTop2 && ruskoBottom < boxTop){
                 ruskoPhys->setOnBox(true);
-                ruskoPhys->yPos = boxTop - worldPos.y + ruskoBound->bcir.radius;
+                ruskoPhys->yPos = boxTop - futurePos.y + ruskoBound->bcir.radius;
                 return;
+            
             }else if(ruskoTop > boxBottom2 && ruskoTop < boxBottom){
                 ruskoPhys->yVel = 0;
+            
             }else{
                 lateralMovement = false;//Set can't move in x or z
             }
+            break;
+        }
+    }
+
+            
+            
+//            float boxEpsilon = ruskoBound->bcir.radius * .5;
+//            boxEpsilon = 1;
+//            float relativePos = offendingObject->bcir.y + worldPos.y;
+//            float radiusSum = ruskoBound->bcir.radius + offendingObject->bcir.radius;
+//            
+//            float ruskoBottom = ruskoBound->bcir.y - ruskoBound->bcir.radius;
+//            float boxTop = offendingObject->bcir.y + worldPos.y + offendingObject->bcir.radius;
+//            float boxTop2 = boxTop + (ruskoPhys->yVel + ruskoPhys->yAccel*ruskoPhys->tStep)*ruskoPhys->tStep;
+//        
+//            float ruskoTop = ruskoBound->bcir.y + ruskoBound->bcir.radius;
+//            float boxBottom = offendingObject->bcir.y + worldPos.y - offendingObject->bcir.radius;
+//            float boxBottom2 = boxBottom + (ruskoPhys->yVel + ruskoPhys->yAccel*ruskoPhys->tStep)*ruskoPhys->tStep;
+//            
+//            if(ruskoBottom > boxTop2 && ruskoBottom < boxTop){
+//                ruskoPhys->setOnBox(true);
+//                ruskoPhys->yPos = boxTop - worldPos.y + ruskoBound->bcir.radius;
+//                return;
+//            }else if(ruskoTop > boxBottom2 && ruskoTop < boxBottom){
+//                ruskoPhys->yVel = 0;
+//            }else{
+//                lateralMovement = false;//Set can't move in x or z
+//            }
+            
+            
+            
             /*
              if((ruskoBound->bcir.y - (relativePos)) >= (radiusSum - boxEpsilon)){//above box
                  cout << "Above" << endl;
@@ -169,8 +200,7 @@ void RuskoCollisions::reactToCollision(ObsBound* offendingObject){
                  lateralMovement = false;//Set can't move in x or z
              }
              */
-			break;
-        }
+
             /*
 		case SPIKES:
             cout << "spikes" << endl;
@@ -185,7 +215,6 @@ void RuskoCollisions::reactToCollision(ObsBound* offendingObject){
             systemSound->die();
 			break;
              */
-    }
 }
 
 void RuskoCollisions:: reset(){
