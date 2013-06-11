@@ -294,6 +294,7 @@ int Room::getNumTorches() {
 }
 
 void Room::getObList(std::vector<ObsBound> &o) {
+	o.clear();
 	for (unsigned int i = 0; i < obList.size(); ++i) {
 		ObsBound ob = obList[i];
 		o.push_back(ob);
