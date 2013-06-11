@@ -44,6 +44,7 @@
 		3F4E4D4617499BE3001260C7 /* libOpenMeshToolsd.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F4E4D4017499BCA001260C7 /* libOpenMeshToolsd.2.3.dylib */; };
 		3F4E4D4717499BE3001260C7 /* libOpenMeshToolsd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F4E4D4117499BCA001260C7 /* libOpenMeshToolsd.a */; };
 		3FA62A43175FEC3E00E7D8B7 /* RuskoBounds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FA62A41175FEC3E00E7D8B7 /* RuskoBounds.cpp */; };
+		3FD2D2FB17679C1B00E31FA5 /* perlin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FD2D2FA17679C1B00E31FA5 /* perlin.cpp */; };
 		3FE1416817653E6F0006617A /* ruskoModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FE1416617653E6F0006617A /* ruskoModel.cpp */; };
 		3FE14172176548A50006617A /* material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FE1416F176548A50006617A /* material.cpp */; };
 		3FE14173176548A50006617A /* mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FE14170176548A50006617A /* mesh.cpp */; };
@@ -4188,6 +4189,8 @@
 		3F4E4D4217499BCA001260C7 /* libOpenMeshToolsd.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libOpenMeshToolsd.2.3.dylib; path = "../OpenMesh-2.3.1/buildDebug/src/OpenMesh/Tools/libOpenMeshToolsd.2.3.dylib"; sourceTree = "<group>"; };
 		3FA62A41175FEC3E00E7D8B7 /* RuskoBounds.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RuskoBounds.cpp; sourceTree = "<group>"; };
 		3FA62A42175FEC3E00E7D8B7 /* RuskoBounds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuskoBounds.h; sourceTree = "<group>"; };
+		3FD2D2FA17679C1B00E31FA5 /* perlin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = perlin.cpp; sourceTree = "<group>"; };
+		3FD2D2FD17679C2800E31FA5 /* perlin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = perlin.h; path = include/perlin.h; sourceTree = SOURCE_ROOT; };
 		3FE1416617653E6F0006617A /* ruskoModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ruskoModel.cpp; path = ruskoModel/ruskoModel.cpp; sourceTree = SOURCE_ROOT; };
 		3FE1416C176542D90006617A /* material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = material.h; path = ruskoModel/material.h; sourceTree = SOURCE_ROOT; };
 		3FE1416D176542D90006617A /* mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mesh.h; path = ruskoModel/mesh.h; sourceTree = SOURCE_ROOT; };
@@ -4336,6 +4339,8 @@
 				3F1E67BB175EF13E00CD445D /* loadscreen.cpp */,
 				3F124A091753164A00EB6E07 /* main.cpp */,
 				3F124A0A1753164A00EB6E07 /* Model.cpp */,
+				3FD2D2FD17679C2800E31FA5 /* perlin.h */,
+				3FD2D2FA17679C1B00E31FA5 /* perlin.cpp */,
 				3F124A0B1753164A00EB6E07 /* Obstacle.cpp */,
 				3F124A0C1753164A00EB6E07 /* Room.cpp */,
 				3F124A0D1753164A00EB6E07 /* Spikes.cpp */,
@@ -9303,6 +9308,7 @@
 				099A7F1717659C490059252A /* PointLight.cpp in Sources */,
 				099A7F1817659C490059252A /* Shader.cpp in Sources */,
 				099A7F1917659C490059252A /* textfile.cpp in Sources */,
+				3FD2D2FB17679C1B00E31FA5 /* perlin.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
