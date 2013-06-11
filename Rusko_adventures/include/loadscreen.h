@@ -22,11 +22,12 @@ public:
 	Loadscreen();
 	~Loadscreen();
     void render(int level, int numTorches);
+    void renderWelcomeScreen();
     
 private:
+    void drawIntroScreen();
     void renderLevel(int level);
 	void initScreen();
-    void drawIntroScreen();
     void drawMessageAt(string message, float xpos, float ypos, STColor4f color);
     STFont* font;
     int numTorches;

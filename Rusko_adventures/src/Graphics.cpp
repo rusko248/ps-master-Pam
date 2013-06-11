@@ -349,10 +349,12 @@ void gameLogic() {
     }
     else if (gameState == GAME_LSCREEN)
     {
-        resetGameVariables();
         if (firstLoad){
-            loadscreen->render(-1, room.getNumTorches());
-        } else loadscreen->render(gameLevel, room.getNumTorches());
+            loadscreen->renderWelcomeScreen();
+        } else {
+            resetGameVariables();
+            loadscreen->render(gameLevel, room.getNumTorches());
+        }
 
     }
 }
