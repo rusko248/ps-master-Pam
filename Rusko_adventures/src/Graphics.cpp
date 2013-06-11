@@ -287,6 +287,7 @@ void setup(){
     torchParticles->addEmitter(f);
     
     //sets the point light for the torch
+    plights.clear();
 	setTorchLight(xpos, ypos, zpos, ruskoTorchRadius);
     
     
@@ -370,6 +371,8 @@ void gameLogic() {
             respawn();
         }
         collisions->checkForCollisions();
+        
+        
         
 		renderList.push_back((Renderable *)&room);
         if (collisions->torchesAllLit) {
@@ -623,11 +626,11 @@ static void Timer(int value)
         
         if (rightKeyPressed){
             if (worldAngle == 360) worldAngle = 0;
-            worldAngle += 5;
+            worldAngle += 10;
         }
         if (leftKeyPressed){
             if (worldAngle == 360) worldAngle = 0;
-            worldAngle -= 5;
+            worldAngle -= 10;
         }
         if (upKeyPressed || downKeyPressed || rightKeyPressed || leftKeyPressed ){
             glutPostRedisplay();

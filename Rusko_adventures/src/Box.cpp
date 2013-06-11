@@ -20,7 +20,7 @@ Box::~Box() {
 
 void Box::render() {
     float materialAmbient[]  = { 0.2, 0.2, 0.2, 1.0 };
-    float materialDiffuse[]  = { 0.2, 0.2, 0.2, 1.0 };
+    float materialDiffuse[]  = { 0.3, 0.2, 0.15, 1.0 };
     float materialSpecular[] = { 0.4, 0.4, 0.4, 1.0 };
     float shininess          = 8.0;
     
@@ -42,7 +42,7 @@ float Box::render(int frame) {
         STPoint3 fu = cr->pointAt(frame);
         glTranslatef(0, fu.y, 0);  //moves up/down new position
         float materialAmbient[]  = { 0.2, 0.2, 0.2, 1.0 };
-        float materialDiffuse[]  = { 0.2, 0.2, 0.2, 1.0 };
+        float materialDiffuse[]  = { 0.4, 0.2, 0.15, 1.0 };
         float materialSpecular[] = { 0.4, 0.4, 0.4, 1.0 };
         float shininess          = 8.0;
         
