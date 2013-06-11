@@ -153,7 +153,7 @@ void Room::setLevel(int lv) {
     particles->addEmitter(torchFire);
     
 	t1 = new turbulentCircleEmitter(&particles->particlePool, particles->nextId(), "../Particles/windRecording-100.txt");
-	t3 = new turbulentCircleEmitter(&particles->particlePool, particles->nextId(), "../Particles/windRecording100.txt");
+	t3 = new turbulentCircleEmitter(&particles->particlePool, particles->nextId() + 1, "../Particles/windRecording100.txt");
 
 	generateTorches();
 	generateObstacles();
@@ -955,7 +955,7 @@ void Room::generateObstacles() {
 
 	int numSafe = boxIndices.size() + safeIndices.size();
 	int numDanger = 9*countPits + numSpikes;
-	if (numDanger/(floor->width*floor->length) < 0.3 + .03*(float)level) {
+	if (numDanger/(floor->width*floor->length) < 0.15 + .03*(float)level) {
 		for (unsigned int i = 0; i < floor->objPos.length(); ++i) {
 			if (floor->objPos[i] == FREE) {
 				if (rand() % 3 > 0) floor->objPos[i] = SPIKES;

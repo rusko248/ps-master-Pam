@@ -63,6 +63,7 @@ float Box::render(int frame) {
 void Box::setMove(float height){
     cr = new CatmullRom();
     cr->addControlPoint(0, 0, 0);
+    cr->addControlPoint(0, height/2, 0);
     cr->addControlPoint(0, height, 0);
     cr->addControlPoint(0, 0, 0);
     cr->done();

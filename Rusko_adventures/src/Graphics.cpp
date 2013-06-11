@@ -213,6 +213,11 @@ void resetGameVariables(){
     //how is the room positioned... DEPENDS ON ROOM
     STPoint3 startPos = room.getPlayerPosition();
     
+    srand(time(NULL));
+    boxFrame1 = rand() % 10;
+    boxFrame2 = rand() % 10;
+    boxFrame3 = rand() % 10;
+    
     worldPos.x = -startPos.x;
     worldPos.y = groundPos;
     worldPos.z = -startPos.z;
@@ -694,6 +699,8 @@ void nextLevel(){
  * Timer function for jumping, it moves faster than normal timer
  */
 static void TimerJump(int value){
+//    boxFrame1++; boxFrame2++; boxFrame3++;
+
     if (gameState == GAME_RUNNING){
         ruskoPhys->update((float)5/fps);
         if (jumpOn) {
@@ -783,9 +790,17 @@ void KeySpecialUp(int key, int x, int y)
     }
 }
 
-void timer(int value)
+void boxtimer(int value)
 {
     boxFrame1++; boxFrame2++; boxFrame3++;
+
+    glutTimerFunc(10/fps,boxtimer,window_id);
+
+}
+
+void timer(int value)
+{
+//    boxFrame1++; boxFrame2++; boxFrame3++;
 
 	glutPostRedisplay();
 	glutTimerFunc(1000/fps,timer,window_id);
@@ -800,7 +815,8 @@ void GraphicsMainLoop()
     glutTimerFunc(2000/fps, Timer, 0); //timer for moving up/down/turning
     glutTimerFunc(100/fps, TimerJump, 0); //timer for jumping
     glutTimerFunc(1000/fps,timer,window_id);
-    
+    glutTimerFunc(10/fps,boxtimer,window_id);
+
     glutKeyboardFunc(KeyboardCallback);
     glutSpecialFunc(KeySpecial);
     glutSpecialUpFunc(KeySpecialUp);
