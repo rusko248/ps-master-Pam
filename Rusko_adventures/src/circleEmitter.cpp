@@ -230,7 +230,7 @@ void circleEmitter::loadEmission(string filepath){
         e->speedVar = readFloat(infile);
         
         e->totalParticles = readInt(infile);
-        
+        e->particleCount = 0;
         e->emitsPerFrame = readInt(infile);
         e->emitVar = readInt(infile);
         e->life = readInt(infile);

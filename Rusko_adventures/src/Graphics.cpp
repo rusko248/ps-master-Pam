@@ -107,6 +107,7 @@ void Lights() {
 	GLfloat globalAmbient[] = {0.3, 0.3, 0.3, 0.0};
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
     
+    
     //Point light
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambientComp);
