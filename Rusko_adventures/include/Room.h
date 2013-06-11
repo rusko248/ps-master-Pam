@@ -26,8 +26,8 @@ struct Wall {
 	std::string objPos;
 
 	int getIndex(int u, int v) {
-	//	assert(u >= 0 && u < base);
-	//	assert(v >= 0 && v < height);
+		assert(u >= 0 && u < base);
+		assert(v >= 0 && v < height);
 		return u + base*v;
 	}
 };
