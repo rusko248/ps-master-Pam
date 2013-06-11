@@ -17,12 +17,13 @@ public:
 	
     void setMove(float height);//makes a box to move up a certain height
 	void render();
-    float render(int frame); //renders at a certain frame for moving boxes, returns y_position
+    float render(int frame); //renders at a certain frame for moving boxes, returns delta y_position
 
     bool movable;
 
 private:
     CatmullRom* cr;
+    float lastYPos;
 
 };
 

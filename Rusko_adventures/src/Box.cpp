@@ -6,15 +6,13 @@
 
 Box::Box() : Model("models/WoodCrate_OBJ/WoodCrate_OBJ.obj") {
     movable = false;
+    lastYPos = 0;
 }
 
 
-//Box::Box(float scale) : Model("models/WoodCrate_OBJ/WoodCrate_OBJ.obj", scale) {
-//    wasSetMove = false;
-//}
-
 Box::Box(float scale) : Model("models/WoodCrate_OBJ/WoodCrate_OBJ.obj", scale) {
     movable = false;
+    lastYPos = 0;
 }
 
 Box::~Box() {
@@ -54,7 +52,11 @@ float Box::render(int frame) {
         glMaterialfv(GL_FRONT, GL_SHININESS, &shininess);
         render();
         glPopMatrix ();
-        return fu.y;
+        
+        //variables that need to be returned
+        float deltay = fu.y - lastYPos;
+        lastYPos = fu.y; //saves this position as lastYpos
+        return deltay;
     }
 }
 
