@@ -28,7 +28,7 @@ void RuskoPhysics::jump(bool moving){
         onGround = false;
         boxContact = false;
         yPos += 1;
-        yVel += 6;
+        yVel += 6.5;
         //yVel += 7;
 
     }

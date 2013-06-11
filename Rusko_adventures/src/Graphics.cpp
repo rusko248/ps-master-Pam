@@ -619,7 +619,6 @@ void respawn(){
     dead = false;
     if (gameState == GAME_RUNNING) {
         gameState = GAME_LSCREEN;
-        printf("\n same level again: %i \n", gameLevel);
     }
     glutPostRedisplay();
     
@@ -640,7 +639,6 @@ void nextLevel(){
     else if (gameState == GAME_RUNNING) {
         gameLevel++;
         gameState = GAME_LOADING;
-        printf("\n oooo new level: %i \n", gameLevel);
     }
     
     glutPostRedisplay();
@@ -651,8 +649,6 @@ void nextLevel(){
  */
 static void TimerJump(int value){
     if (gameState == GAME_RUNNING){
-//        if(dead) respawn();
-//        collisions->checkForCollisions();
         ruskoPhys->update((float)5/fps);
         if (jumpOn) {
             if(systemSound->jumping == false) systemSound->jump();

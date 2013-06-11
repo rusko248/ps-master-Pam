@@ -39,6 +39,7 @@ public:
     float yAccel;
     bool movingDuringJump;
     float tStep;
+    
     bool boxContact; //moved here to access for collisions
 
     

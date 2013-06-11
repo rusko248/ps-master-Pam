@@ -107,15 +107,18 @@ void RuskoCollisions::checkForCollisions(){
     
     
     //use this to check boxes
+    bool aroundBox = false;
+    
     for(int obj = 0; obj < obsList.size(); obj++){
         if(colliding(ruskoBound, &obsList.at(obj))){
+            aroundBox = true;
             reactToCollision(&obsList.at(obj));
             return;//???
-        } else if (ruskoPhys->boxContact){
-            //ruskoPhys->setOnBox(false);
-            //ruskoPhys->setOnGround(-FLOOR_POS);
-           // ruskoPhys->setOnBox(false);
         }
+    }
+    if (!aroundBox) {
+        ruskoPhys->setOnBox(false);
+        cout << "not colliding with box" << endl;
     }
 }
 
@@ -126,7 +129,7 @@ void RuskoCollisions::reactToCollision(ObsBound* offendingObject){
             
             //using future position
             float boxEpsilon = ruskoBound->bcir.radius * .5;
-            boxEpsilon = 1;
+            boxEpsilon = .2;
             
             float ruskoBottom = ruskoBound->bcir.y - ruskoBound->bcir.radius;
             
@@ -143,9 +146,10 @@ void RuskoCollisions::reactToCollision(ObsBound* offendingObject){
             //whether or not it's falling onto a box
             if(ruskoBottom > boxTop2 && ruskoBottom < boxTop){
                 ruskoPhys->setOnBox(true);
-                ruskoPhys->yPos = boxTop - futurePos.y + ruskoBound->bcir.radius;
+                ruskoPhys->yPos = boxTop - futurePos.y - boxEpsilon+ ruskoBound->bcir.radius;
+                //return;
+                futurePos = ruskoPhys->yPos;
                 return;
-            
             }else if(ruskoTop > boxBottom2 && ruskoTop < boxBottom){
                 ruskoPhys->yVel = 0;
             
