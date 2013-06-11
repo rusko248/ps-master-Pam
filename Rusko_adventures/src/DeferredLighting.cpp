@@ -438,12 +438,12 @@ DeferredLighting::CheckExtensions()
 	printf("***DeferredLighting EXTENSION CHECK START***\n\n");
 
 	//Check for OpenGL 2.0 for shaders and stuff
-	if (!glewIsSupported("GL_VERSION_2_0")) {
-		printf("\tERROR: OpenGL 2.0 not supported.\n");
-		printf("\t%s\n", (char*)glGetString( GL_VERSION ) );
-		exit(-1);
-	}
-	printf("\tOpenGL 2.0 supported.  OpenGL Version = %s  GLEW Version = %s\n", (char*)glGetString(GL_VERSION), glewGetString(GLEW_VERSION));
+//	if (!glewIsSupported("GL_VERSION_2_0")) {
+//		printf("\tERROR: OpenGL 2.0 not supported.\n");
+//		printf("\t%s\n", (char*)glGetString( GL_VERSION ) );
+//		exit(-1);
+//	}
+//	printf("\tOpenGL 2.0 supported.  OpenGL Version = %s  GLEW Version = %s\n", (char*)glGetString(GL_VERSION), glewGetString(GLEW_VERSION));
 
 	//Check for number of available buffers
 	GLint maxbuffers;

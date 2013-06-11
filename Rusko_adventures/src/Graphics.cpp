@@ -36,7 +36,7 @@ int groundPos = FLOOR_POS;
 
 
 //Box frame -- to keep track of moving boxes
-int boxFrame;
+int boxFrame1, boxFrame2, boxFrame3;
 
 // CatmullRom Jump
 bool jumpOn;
@@ -77,14 +77,14 @@ DeferredLighting * dfe;
 std::string shaderPath = "../shaders"; //path to the shaders
 float zNear = .1f; //TODO: these need to be caluclated
 float zFar = 100.f; //TODO: these need to be caluclated
-enum RENDER_MODE{FIXED_FUNCTION, DIRECTIONAL, FULL_DEFERRED, POINTLIGHTS, NORMALS, DEPTH, COLORS, NUM_MODES};
+enum RENDER_MODE{FIXED_FUNCTION, FULL_DEFERRED, POINTLIGHTS, NORMALS, DEPTH, COLORS, NUM_MODES};
 
 //Point Lights
 vector<PointLight> plights; //holds the info for the lights in room
-float fireLightColor [3] = {0.6, 0.1, 0.0}; //the color of fire light
-float ruskoTorchRadius = 0.8;
+float fireLightColor [3] = {0.9, 0.6, 0.0}; //the color of fire light
+float ruskoTorchRadius = 1.0;
 
-bool useDeferred = false; //if true = deferred, false = gl lighting
+bool useDeferred = true; //if true = deferred, false = gl lighting
 
 static int frame = 0;
 
@@ -92,6 +92,34 @@ static int frame = 0;
 void respawn();
 
 
+/**
+ * Ambient and directional lighting
+ */
+
+void Lights() {
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    //point light pos
+    GLfloat lightPos[] = {camPos.x, camPos.y, camPos.z, 0.0};
+    GLfloat ambientComp[] = {0.0, 0.0, 0.0, 1.0};
+    
+    //diffuse comp
+    GLfloat diffuseComp[] = {0.1, 0.1, 0.1, 1.0};
+    
+    //specular comp
+    GLfloat specularComp[] = {0.1, 0.1, 0.0, 1.0};
+    
+    //Point light
+    glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, ambientComp);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseComp);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, specularComp);
+    
+    dfe->SetAmbLightColor(0.2, 0.2, 0.2);
+    dfe->SetDirLightColor(0.1, 0.1, 0.1);
+    dfe->SetDirLightDirection(camPos.x, camPos.y, camPos.z);
+    
+}
 
 /**
  * Set the characteristics of Rusko's torch light. 
@@ -209,7 +237,10 @@ void resetGameVariables(){
 	plights.clear();
 	setTorchLight(xpos, ypos, zpos, ruskoTorchRadius);
     
-    boxFrame = 0;
+    srand(time(NULL));
+    boxFrame1 = rand() % 10;
+    boxFrame2 = rand() % 10;
+    boxFrame3 = rand() % 10;
 }
 
 
@@ -499,7 +530,8 @@ void DisplayCallback()
 			}
 			//BUILD G-BUFFER
 			dfe->PreDrawScene(); //lighting ADT
-		
+            Lights();
+            
 			//DRAW OBJECTS AND EVIRONMENT
 			//GETS STORED IN G-BUFFER FOR RENDERING
 			renderWorld(); //transforms and draws the world as Rusko moves around
@@ -511,7 +543,7 @@ void DisplayCallback()
 			//-------------------------------//
 			// Render the scene with shaders //
 			//-------------------------------//
-			dfe->DrawDirectionalAndAmbient(windowWidth, windowHeight); //lighting ADT
+			dfe->DrawColors(windowWidth, windowHeight);
 			dfe->PreDrawPointLights(windowWidth, windowHeight, zNear, zFar);
 			DrawPointLights();
 			dfe->PostDrawPointLights();
@@ -544,7 +576,7 @@ void DisplayCallback()
 static void Timer(int value)
 {
     frame++;
-    boxFrame++;
+    boxFrame1++; boxFrame2++; boxFrame3++;
     glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION,2 + sinf(frame));
     if (gameState == GAME_RUNNING) {
         futurePos = STVector3(worldPos.x, worldPos.y, worldPos.z);

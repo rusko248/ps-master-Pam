@@ -53,12 +53,12 @@ void main()
 	float d = length(coord-lp);
 
 
-   if (d >= 0.4) {
+   if (d >= 0.8) {
       attenuation = 0.0;
    } else {
-      float attFactor = d/.4;
+      float attFactor = d/.8;
       attFactor = d / (1.0 - attFactor * attFactor);
-      attFactor = attFactor / 0.4 + 1.0;
+      attFactor = attFactor / 0.8 + 1.0;
       attenuation = 1.0 / (attFactor * attFactor);
       //attenuation = 1.0;	// for testing
    }
