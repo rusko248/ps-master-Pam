@@ -1,9 +1,7 @@
 // DEFERRED RENDERING
 // -----------------------------------
 //  stores G-Buffer values
-// -----------------------------------
-// author: A. Tamplin
-// date: 6/9/13
+
 
 uniform sampler2D texture;
 uniform int useTexture;
@@ -24,38 +22,28 @@ void main()
    gl_FragData[0] = vec4(packedNormal,1.0);
 
    if (useTexture == 1) {
-//      gl_FragData[1] = texture2D(texture, texPos);
-//      return;
       materialColor = texture2D(texture, texPos).xyz;
-      materialDiff  = texture2D(texture, texPos).xyz;
-      materialSpec  = texture2D(texture, texPos).xyz;
-   } else {			// added
-      materialColor = gl_FrontMaterial.ambient.xyz;
-      materialDiff  = gl_FrontMaterial.diffuse.xyz;
-      materialSpec  = gl_FrontMaterial.specular.xyz;
+   } else {
+      materialColor = vec3(1.0, 1.0, 1.0);
    }
 
 	// added Phong shading
 
    vec3 C = vec3(0.0, 0.0, 0.0); // camera position
 
-   vec3 ambientColor  = gl_LightSource[0].ambient.xyz;
-   vec3 diffuseColor  = gl_LightSource[0].diffuse.xyz;
-   vec3 specularColor = gl_LightSource[0].specular.xyz;
-
-//   vec3 materialColor = gl_FrontMaterial.ambient.xyz;
-//   vec3 materialDiff  = gl_FrontMaterial.diffuse.xyz;
-//   vec3 materialSpec  = gl_FrontMaterial.specular.xyz;
-   float shininess    = gl_FrontMaterial.shininess;
+   vec3 ambientColor  = gl_LightModel.ambient.rgb;
+   vec3 diffuseColor  = gl_LightSource[0].diffuse.rgb;
+   vec3 specularColor = gl_LightSource[0].specular.rgb;
 
    vec3 Nm = normalize(normal);
    vec3 Lm = normalize(lightSource - modelPos);
    vec3 Rm = normalize(reflect(-Lm, Nm));
-//   vec3 V  = normalize(C - modelPos);
-   vec3 V  = normalize(lightSource - modelPos);
-   vec3 Phong = ambientColor * materialColor;
-	Phong += diffuseColor * materialDiff * max(dot(Lm, Nm), 0.0);
-//	Phong += specularColor * materialSpec * pow(max(dot(Rm, V), 0.0), shininess);
-	Phong += specularColor * materialSpec * pow(max(dot(Rm, Nm), 0.0), shininess);
+   vec3 amb = ambientColor * gl_FrontMaterial.ambient.rgb;
+   vec3 diff = diffuseColor * gl_FrontMaterial.diffuse.rgb * max(dot(Lm, Nm), 0.0);
+   vec3 spec = specularColor * gl_FrontMaterial.specular.rgb * pow(max(dot(Rm, Nm), 0.0), gl_FrontMaterial.shininess);
+   vec3 Phong = amb;
+   Phong += diff + spec;
+//   if (useTexture == 1) Phong *= materialColor;
+   Phong *= materialColor;
    gl_FragData[1] = vec4(Phong, 1.0);
 }

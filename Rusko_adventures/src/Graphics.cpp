@@ -103,6 +103,9 @@ void Lights() {
     
     //specular comp
     GLfloat specularComp[] = {0.1, 0.1, 0.0, 1.0};
+
+	GLfloat globalAmbient[] = {0.3, 0.3, 0.3, 0.0};
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
     
     //Point light
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
