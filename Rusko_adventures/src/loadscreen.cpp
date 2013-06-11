@@ -86,7 +86,16 @@ void Loadscreen::drawIntroScreen(){
 }
 
 void Loadscreen::initScreen(){
-    font = new STFont("fonts/NanumScript.ttc", 32);
+    string fontName; 
+    
+    #ifdef __APPLE__
+    fontName = "fonts/NanumScript.ttc"; 
+    #else
+    fontName = "fonts/Gabriola.ttf.ttc";
+    #endif
+
+    font = new STFont(fontName, 32);
+    
     numTorches = 0;
 }
 
