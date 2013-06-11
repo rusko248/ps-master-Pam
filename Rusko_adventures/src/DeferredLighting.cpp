@@ -75,6 +75,8 @@ DeferredLighting::PostDrawScene()
 	gatherShader->detach();
 	glPopAttrib();			// Reset GL_VIEWPORT_BIT
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+    glBindTexture(GL_TEXTURE_2D, 0);
+	glDisable(GL_TEXTURE_2D);
 }
 
 void
@@ -116,25 +118,51 @@ DeferredLighting::DrawDirectionalAndAmbient(int screenWidth, int screenHeight)
 //	float lightDir[3] = {-2.0f, 2.0f, 6.0f};
 	float lightDir[3] = {2.0f, -2.0f, 6.0f};
 	loc = glGetUniformLocation(dirAmbLightShader->shaderProg, "lightDirection");
-	glUniform3fv(loc, 1, lightDir);
+//	glUniform3fv(loc, 1, lightDir);
+	glUniform3fv(loc, 1, dirLightDir);
 
-	float lightColor[3] = {0.0f, 0.0f, 0.0f};
-//	float lightColor[3] = {0.1f, 0.1f, 0.1f};
+//	float lightColor[3] = {0.0f, 0.0f, 0.0f};
+	float lightColor[3] = {0.1f, 0.1f, 0.1f};
 //	float lightColor[3] = {1.0f, 1.0f, 1.0f};
 	loc = glGetUniformLocation(dirAmbLightShader->shaderProg, "diffuseLightColor");
-	glUniform3fv(loc, 1, lightColor);
+//	glUniform3fv(loc, 1, lightColor);
+	glUniform3fv(loc, 1, dirLightColor);
 
-	float ambientColor[3] = {0.1, 0.1, 0.1};
-//	float ambientColor[3] = {0.01, 0.01, 0.01};
+	float ambientColor[3] = {0.3, 0.3, 0.3};
 //	float ambientColor[3] = {0.0, 0.0, 0.0};
 	loc = glGetUniformLocation(dirAmbLightShader->shaderProg, "ambientLightColor");
-	glUniform3fv(loc, 1, ambientColor);
+//	glUniform3fv(loc, 1, ambientColor);
+	glUniform3fv(loc, 1, ambLightColor);
 
 	// draw
 	DrawFullScreenQuad(screenWidth, screenHeight);
 
 	//breakdown
 	dirAmbLightShader->detach();
+}
+
+void
+DeferredLighting::SetAmbLightColor(float r, float g, float b)
+{
+	ambLightColor[0] = r;
+	ambLightColor[1] = g;
+	ambLightColor[2] = b;
+}
+
+void
+DeferredLighting::SetDirLightColor(float r, float g, float b)
+{
+	dirLightColor[0] = r;
+	dirLightColor[1] = g;
+	dirLightColor[2] = b;
+}
+
+void
+DeferredLighting::SetDirLightDirection(float x, float y, float z)
+{
+	dirLightDir[0] = x;
+	dirLightDir[1] = y;
+	dirLightDir[2] = z;
 }
 
 void
@@ -173,7 +201,7 @@ DeferredLighting::PreDrawPointLights(int screenWidth, int screenHeight, int zNea
 	glUniform1f(loc, 10.0f);
 
 	loc = glGetUniformLocation(pointLightShader->shaderProg, "diffuseLightColor");
-	glUniform3fv(loc, 1, lightColor);
+	glUniform3fv(loc, 1, pntLightColor);
 
 	// Setup required OpenGL state
 	glFrontFace(GL_CW);
@@ -185,11 +213,11 @@ DeferredLighting::PreDrawPointLights(int screenWidth, int screenHeight, int zNea
 void
 DeferredLighting::SetPointLightColor(float r, float g, float b)
 {
-	lightColor[0] = r;
-	lightColor[1] = g;
-	lightColor[2] = b;
+	pntLightColor[0] = r;
+	pntLightColor[1] = g;
+	pntLightColor[2] = b;
 	GLint loc = glGetUniformLocation(pointLightShader->shaderProg, "diffuseLightColor");
-	glUniform3fv(loc, 1, lightColor);
+	glUniform3fv(loc, 1, pntLightColor);
 //	float testlight[3];
 //	glGetUniformfv(pointLightShader->shaderProg, loc, testlight);
 //	printf("testlight = ( %f, %f, %f )\n", testlight[0], testlight[1], testlight[2]);
@@ -198,27 +226,29 @@ DeferredLighting::SetPointLightColor(float r, float g, float b)
 void
 DeferredLighting::SetPointLightPosition(float x, float y, float z)
 {
-	lightPosition[0] = x;
-	lightPosition[1] = y;
-	lightPosition[2] = z;
+	pntLightPos[0] = x;
+	pntLightPos[1] = y;
+	pntLightPos[2] = z;
 	GLint loc = glGetUniformLocation(pointLightShader->shaderProg, "LightPosition");
-	glUniform3fv(loc, 1, lightPosition);
+	glUniform3fv(loc, 1, pntLightPos);
 }
 
 void
 DeferredLighting::SetPointAttenuation(float constant, float linear, float quadratic)
 {
-	attVals[0] = constant;
-	attVals[1] = linear;
-	attVals[2] = quadratic;
+	pntAttVals[0] = constant;
+	pntAttVals[1] = linear;
+	pntAttVals[2] = quadratic;
 	GLint loc = glGetUniformLocation(pointLightShader->shaderProg, "LightAttenuation");
-	glUniform3fv(loc, 1, attVals);
+	glUniform3fv(loc, 1, pntAttVals);
 }
 
 void
-DeferredLighting::SetRadius(float r) {
-   GLint loc = glGetUniformLocation(pointLightShader->shaderProg, "radius");
-   glUniform1f(loc, r);
+DeferredLighting::SetRadius(float r)
+{
+	pntRadius = r;
+	GLint loc = glGetUniformLocation(pointLightShader->shaderProg, "radius");
+	glUniform1f(loc, pntRadius);
 }
 
 void
@@ -408,14 +438,12 @@ DeferredLighting::CheckExtensions()
 	printf("***DeferredLighting EXTENSION CHECK START***\n\n");
 
 	//Check for OpenGL 2.0 for shaders and stuff
-    /*
 	if (!glewIsSupported("GL_VERSION_2_0")) {
 		printf("\tERROR: OpenGL 2.0 not supported.\n");
 		printf("\t%s\n", (char*)glGetString( GL_VERSION ) );
 		exit(-1);
 	}
 	printf("\tOpenGL 2.0 supported.  OpenGL Version = %s  GLEW Version = %s\n", (char*)glGetString(GL_VERSION), glewGetString(GLEW_VERSION));
-     */
 
 	//Check for number of available buffers
 	GLint maxbuffers;

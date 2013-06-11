@@ -1,4 +1,5 @@
 #include "PointLight.h"
+#include <iostream>
 
 
 PointLight::PointLight(void)
@@ -63,9 +64,10 @@ PointLight::RenderPointLight(DeferredLighting *dfe)
 	dfe->SetPointLightPosition(lightPosition[0], lightPosition[1], lightPosition[2]);
 	dfe->SetPointLightColor(lightColor[0], lightColor[1], lightColor[2]);
 	dfe->SetPointAttenuation(attVals[0], attVals[1], attVals[2]);
+	dfe->SetRadius(radius);
 	glPushMatrix();
 	glTranslatef(lightPosition[0], lightPosition[1], lightPosition[2]);
-	glutSolidSphere(radius, grain, grain);
+	glutSolidSphere(radius, 128, 128);
 	glPopMatrix();
 }
 

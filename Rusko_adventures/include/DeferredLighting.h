@@ -2,6 +2,8 @@
 #define _DEFERREDLIGHTING_H
 
 #include "stglew.h"
+//#include <glew.h>
+//#include <glut.h>
 #include <string>
 #include "Shader.h"
 
@@ -35,6 +37,9 @@ public:
 	 * Draw the directional and ambient lighting.
 	 */
 	void DrawDirectionalAndAmbient(int screenWidth, int screenHeight);
+	void SetAmbLightColor(float r, float g, float b);
+	void SetDirLightColor(float r, float g, float b);
+	void SetDirLightDirection(float x, float y, float z);
 
 	/**
 	 * Draw the point lighting.
@@ -76,9 +81,13 @@ private:
 	//---------------------------------------------------------------------------
 	// VARIABLES
 	//---------------------------------------------------------------------------
-	float lightColor[3];
-	float lightPosition[3];
-	float attVals[3];							// Attenuation: 0 = constant, 1 = linear, 3 = quadratic
+	float ambLightColor[3];
+	float dirLightColor[3];
+	float dirLightDir[3];
+	float pntLightColor[3];
+	float pntLightPos[3];
+	float pntAttVals[3];						// Attenuation: 0 = constant, 1 = linear, 3 = quadratic
+	float pntRadius;
 	enum   MRT{NORMALS, COLORS, NUM_MRTS};		// NORMALS = 0 (texture for Normals); COLORS = 1 (texture for Color)
 	GLuint textures[NUM_MRTS];					// From above, NUM_MRTS = 2
 	GLuint fbo;

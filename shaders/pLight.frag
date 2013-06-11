@@ -13,6 +13,7 @@ varying vec4 pos;  // location of fragment in view space
 varying vec4 lightPos; // light position in view space
 varying vec3 ecPosition;  // Eye Coordinate Position
 varying vec3 viewVec;
+//varying float attenuation;
 
 //G-Buffer data
 uniform sampler2D normals;
@@ -29,49 +30,50 @@ uniform float far;
 uniform float radius;
 uniform vec3 diffuseLightColor;
 
-//Makes depth values linear (i.e. inverse of the perpective projection)
-float DepthToLinearZ(float dVal)
-{
-	return float(far*near) / (float(far)-(dVal*float(far-near)));
-}
 
 void main()
 {
+  
+
     //normalize coord
-//   Vec2 coord = (gl_FragCoord).xy;
     vec2 coord = (gl_FragCoord).xy;
-    coord.x = coord.x / float(screenWidth);
-    coord.y = coord.y / float(screenHeight);
+    coord.x = (2.0 * coord.x - float(screenWidth)) / float(screenWidth);
+    coord.y = (2.0 * coord.y - float (screenHeight)) / float(screenHeight);
 	
-    //Data lookups
-    vec4 color = texture2D(colors, coord);
-    vec3 normal = normalize(vec3((texture2D(normals, coord) * 2.0) - 1.0));
+ 	
 
-    // Compute vector from surface to light position
-    vec3 VP = vec3(LightPosition) - ecPosition;
 
-    // Compute distance between surface and light position
-    float d = length(VP);
+    float attenuation = 1.0;
 
-    // Normalize the vector from surface to light position
-    VP = normalize(VP);
 
-    vec3 halfVector = normalize(VP + viewVec);
+	vec2 torch=vec2(0.24, -0.02);
 
-    float nDotVP = max(0.0, dot(normal, VP));
-    float nDotHV = max(0.0, dot(normal, halfVector));
+	vec2 lp = vec2(lightPos.x/lightPos.w,lightPos.y/lightPos.w);
+	//float d = length(coord-torch);
+	float d = length(coord-lp);
 
-//    float attenuation = 1.0;
 
-    // Compute attenuation
-   float attenuation = 1.0 / (LightAttenuation[0] +
-                               LightAttenuation[1] * d +
-                               LightAttenuation[2] * d * d);
+   if (d >= 0.4) {
+      attenuation = 0.0;
+   } else {
+      float attFactor = d/.4;
+      attFactor = d / (1.0 - attFactor * attFactor);
+      attFactor = attFactor / 0.4 + 1.0;
+      attenuation = 1.0 / (attFactor * attFactor);
+      //attenuation = 1.0;	// for testing
+   }
 
-//float attenuation = (1.0 - (d / radius)) * (1.0 / (d * d));
+	//attenuation = 1.0;
 
-    vec4 diffuse = vec4(diffuseLightColor, 1.0) * nDotVP * attenuation;
+
+//    vec4 diffuse = vec4(diffuseLightColor, 1.0) * nDotVP * attenuation;
+    vec4 diffuse = vec4(diffuseLightColor * attenuation, 1.0);
+
+	//vec4 diffuse = vec4( attenuation, 0.0, 0.0, 1.0);
+
 	
    //Set the color
    gl_FragColor = diffuse;
+
+	//gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
 }

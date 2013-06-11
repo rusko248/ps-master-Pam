@@ -3,7 +3,7 @@
 //  renders a directional light source
 // -----------------------------------
 // author: A. Tamplin
-// date: 6/7/13
+// date: 6/9/13
 
 //G-Buffer data
 uniform sampler2D normals;
