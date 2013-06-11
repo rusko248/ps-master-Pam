@@ -17,6 +17,7 @@
 #include "Sound.h"
 #include "RuskoPhysics.h"
 
+
 extern ParticleManager *particles;
 extern RuskoPhysics *ruskoPhys;
 extern Sound *systemSound;
@@ -55,7 +56,7 @@ protected:
     
     int numTorches;
     int numTorchesLit;
-    
+    vector<int>* torchIndex;
 };
 
 #endif /* defined(__Rusko_adventures__RuskoCollisions__) */

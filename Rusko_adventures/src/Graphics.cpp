@@ -371,9 +371,6 @@ void gameLogic() {
             respawn();
         }
         collisions->checkForCollisions();
-        
-        
-        
 		renderList.push_back((Renderable *)&room);
         if (collisions->torchesAllLit) {
             gameLevel++;
@@ -582,7 +579,7 @@ void DisplayCallback()
 static void Timer(int value)
 {
     frame++;
-    boxFrame1++; boxFrame2++; boxFrame3++;
+//    boxFrame1++; boxFrame2++; boxFrame3++;
     glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION,2 + sinf(frame));
     if (gameState == GAME_RUNNING) {
         futurePos = STVector3(worldPos.x, worldPos.y, worldPos.z);
@@ -784,6 +781,8 @@ void KeySpecialUp(int key, int x, int y)
 
 void timer(int value)
 {
+    boxFrame1++; boxFrame2++; boxFrame3++;
+
 	glutPostRedisplay();
 	glutTimerFunc(1000/fps,timer,window_id);
 }

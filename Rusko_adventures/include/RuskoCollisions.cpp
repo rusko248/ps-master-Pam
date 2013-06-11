@@ -31,6 +31,8 @@ RuskoCollisions::RuskoCollisions(Room *room){
     ruskoPhys->setOnBox(false);
 
     printf("num of torches is %i \n", numTorches);
+    
+    torchIndex = new vector<int>(obsList.size());
 }
 
 RuskoCollisions::~RuskoCollisions(){
@@ -78,13 +80,14 @@ void RuskoCollisions::checkForCollisions(){
     }
     
     //if Rusko is in front of torch
-    if(room->isTorch() >= 0){
-        ObsBound* offendingObject = &obsList.at(room->isTorch());
-        cout << room->isTorch() << endl;
-        if(offendingObject->bcir.hit == false){
+    int isTorchIn = room->isTorch();
+    if(isTorchIn >= 0){
+        ObsBound* offendingObject = &obsList.at(isTorchIn);
+//        cout << room->isTorch() << endl;
+        if(offendingObject->bcir.hit == false && (torchIndex->at(isTorchIn) <= 0) ){
             cout << "Torch identified" << endl;
-            //vector3 torchPos = vector3(offendingObject->bcir.x, offendingObject->bcir.y + offendingObject->bcir.radius, offendingObject->bcir.z);
             if(torchOn){
+                torchIndex->at(isTorchIn) = 1;
                 numTorchesLit++; //one more torch has been lit
                 if (numTorchesLit == numTorches) torchesAllLit = true;
                 vector3 torchPos = vector3(offendingObject->bcir.x, offendingObject->bcir.y + .7, offendingObject->bcir.z);
@@ -121,7 +124,7 @@ void RuskoCollisions::checkForCollisions(){
     }
     if (!aroundBox) {
         ruskoPhys->setOnBox(false);
-        cout << "not colliding with box" << endl;
+       // cout << "not colliding with box" << endl;
     }
 
 	room->getObList(obsList);
