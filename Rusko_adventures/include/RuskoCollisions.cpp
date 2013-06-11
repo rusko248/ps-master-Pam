@@ -24,6 +24,8 @@ RuskoCollisions::RuskoCollisions(Room *room){
     room->getObList(obsList);
     numTorches = room->getNumTorches();
     numTorchesLit = 0;
+    torchesAllLit = false;
+
     printf("num of torches is %i \n", numTorches);
 }
 
