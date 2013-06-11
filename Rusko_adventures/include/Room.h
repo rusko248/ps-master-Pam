@@ -95,10 +95,10 @@ public:
 	STPoint3 getPlayerPosition();
 	bool isFree();
 	int isTorch();
+	bool isWalkToBox();
+	bool isJumpOnBox();
 	bool isPit();
 	bool isSpikes();
-    bool isWalkToBox();
-    
 	void render();
 
 	int dim[3];

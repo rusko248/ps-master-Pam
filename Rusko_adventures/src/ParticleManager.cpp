@@ -26,7 +26,7 @@ void ParticleManager::createParticleList(int max){
 }
 
 ParticleManager::~ParticleManager(){
-    pthread_mutex_init(&mutex, NULL);
+	pthread_mutex_init(&mutex, NULL);
     pthread_mutex_lock(&mutex);
     particle *curr = particlePool;
     while(curr){
@@ -63,6 +63,7 @@ void ParticleManager::reset(){
 }
 
 ParticleManager::ParticleManager(int max){
+	pthread_mutex_init(&mutex, NULL);
     createParticleList(max);
 }
 

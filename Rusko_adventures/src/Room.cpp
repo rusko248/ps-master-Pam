@@ -14,6 +14,7 @@ using namespace std;
 #define SPIKES '3'
 #define PIT '4'
 #define SMOKE '5'
+#define MOVABLEBOX '6'
 #define SAFE '9'
 
 float torchScale = 0.5f;
@@ -23,12 +24,36 @@ int pitSize = 3;
 
 Torch torch;
 Box box;
+std::vector<Box> mbox; // movable boxes
 Spikes spikes;
 
-// World position.  Rusko position rel to the room is negative this amount
-extern STVector3 worldPos;
-extern STVector3 futurePos;
+struct MovableBoxPos {
+	MovableBoxPos() {
+		wallpos = u = v;
+	}
 
+	int wallpos, u, v;
+};
+
+struct MovableBoxPosCompare {
+	bool operator() (const MovableBoxPos& a, const MovableBoxPos& b) {
+		if (a.wallpos < b.wallpos) return true;
+		else if (a.wallpos > b.wallpos) return false;
+		else {
+			if (a.u < b.u) return true;
+			else if (a.u > b.u) return false;
+			else return (a.v < b.v);
+		}
+	}
+};
+
+std::map<MovableBoxPos, int, MovableBoxPosCompare> mboxMap;
+extern int boxFrame;
+
+// World position. Rusko position rel to the room is negative this amount
+extern STVector3 worldPos;
+// Future position for detecting collision
+extern STVector3 futurePos;
 
 // Particles System
 extern ParticleManager *particles;
@@ -146,6 +171,7 @@ void Room::updateOB() {
 			obList.push_back(ob);
 			break;
 		case BOX:
+		case MOVABLEBOX:
 			if (u == 0 || u == floor->width-1 || v == 0 || v == floor->length-1) break;
 			ob.bcir.x = scale*((float)u+.5f);
 			ob.bcir.y = -box.bbox.miny;
@@ -203,6 +229,7 @@ void Room::updateOB() {
 				}
 				break;
 			case BOX:
+			case MOVABLEBOX:
 				if (j == 0) {
 					ob.bcir.x = scale*(float)floor->width-scale*((float)u+.5f);
 					ob.bcir.y = scale*((float)v+.5f)-scale/2.f-box.bbox.miny;
@@ -296,6 +323,42 @@ int Room::isTorch() {
 	return -1;
 }
 
+bool Room::isWalkToBox() {
+	int xRusko = (int)floorf(-futurePos.x/scale);
+	int yRusko = (int)floorf(-futurePos.y/scale);
+	int zRusko = (int)floorf(futurePos.z/scale);
+	int curxRusko = (int)floorf(-worldPos.x/scale);
+	int curyRusko = (int)floorf(-worldPos.y/scale);
+	int curzRusko = (int)floorf(worldPos.z/scale);
+
+	if (curzRusko == 1) {
+		if (walls[0]->objPos[walls[0]->getIndex(floor->width-1-xRusko, yRusko)] == BOX) {
+			return true;
+		}
+	}
+	if (curxRusko == 1) {
+		if (walls[1]->objPos[walls[1]->getIndex(zRusko, yRusko)] == BOX) {
+			return true;
+		}
+	}
+	if (curzRusko == floor->length-2) {
+		if (walls[2]->objPos[walls[2]->getIndex(xRusko, yRusko)] == BOX) {
+			return true;
+		}
+	}
+	if (curxRusko == floor->width-2) {
+		if (walls[3]->objPos[walls[3]->getIndex(floor->length-1-zRusko, yRusko)] == BOX) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool Room::isJumpOnBox() {
+
+}
+
 bool Room::isPit() {
 	int uRusko = (int)floorf(-worldPos.x/scale);
 	int vRusko = (int)floorf(worldPos.z/scale);
@@ -308,35 +371,6 @@ bool Room::isSpikes() {
 	int vRusko = (int)floorf(worldPos.z/scale);
 
 	return (floor->objPos[floor->getIndex(uRusko, vRusko)] == SPIKES && worldPos.y >= -1.f);
-}
-
-bool Room::isWalkToBox() {
-    int xRusko = (int)floorf(-futurePos.x/scale);
-    int yRusko = (int)floorf(-futurePos.y/scale);
-    int zRusko = (int)floorf(futurePos.z/scale);
-    
-    if (zRusko == 0) {
-        if (walls[0]->objPos[walls[0]->getIndex(floor->width-1-xRusko, yRusko)] == BOX) {
-            return true;
-        }
-    }
-    if (xRusko == 0) {
-        if (walls[1]->objPos[walls[1]->getIndex(zRusko, yRusko)] == BOX) {
-            return true;
-        }
-    }
-    if (zRusko == floor->length-1) {
-        if (walls[2]->objPos[walls[2]->getIndex(xRusko, yRusko)] == BOX) {
-            return true;
-        }
-    }
-    if (xRusko == floor->width-1) {
-        if (walls[3]->objPos[walls[3]->getIndex(floor->length-1-zRusko, yRusko)] == BOX) {
-            return true;
-        }
-    }
-    
-    return false;
 }
 
 void Room::render() {
@@ -357,7 +391,7 @@ void Room::renderLayout() {
 		// floor
 		for (int v = 0; v < floor->length; ++v) {
 			for (int u = 0; u < floor->width; ++u) {
-				if (floor->objPos[floor->getIndex(u, v)] == PIT || floor->objPos[floor->getIndex(u, v)] == SAFE) continue;
+				if (floor->objPos[floor->getIndex(u, v)] == PIT) continue;
 				glTexCoord2f(0,0);
 				glNormal3f(0,1,0);
 				glVertex3f(pos.x+scale*u,pos.y,pos.z-scale*v);
@@ -515,12 +549,22 @@ void Room::renderObjects() {
 				else if (j == 3) { glTranslatef(box.bbox.minz, -scale/2.f-box.bbox.miny, 0); glRotatef(270.0f, 0, 1, 0); }
 				box.render();
 				break;
+			case MOVABLEBOX:
+				{
+				if (j == 0) { glTranslatef(0, -scale/2.f-box.bbox.miny, box.bbox.minz); glRotatef(180.0f, 0, 1, 0); }
+				else if (j == 1) { glTranslatef(-box.bbox.minz, -scale/2.f-box.bbox.miny, 0); glRotatef(90.0f, 0, 1, 0); }
+				else if (j == 2) { glTranslatef(0, -scale/2.f-box.bbox.miny, -box.bbox.minz); }
+				else if (j == 3) { glTranslatef(box.bbox.minz, -scale/2.f-box.bbox.miny, 0); glRotatef(270.0f, 0, 1, 0); }
+				MovableBoxPos mbpos = MovableBoxPos();
+				mbpos.wallpos = j; mbpos.u = u; mbpos.v = v;
+				mbox[mboxMap[mbpos]].render(boxFrame);
+				}
+				break;
 			case SPIKES:
 				spikes.render();
 				break;
 			case PIT:
 				break;
-
 			case SMOKE:
 				{
 				vector3 pos = vector3(pos.x+scale*floor->width-scale*((float)u+.5f), pos.y+scale*((float)v+.5f), pos.z);
@@ -528,7 +572,6 @@ void Room::renderObjects() {
 				else if (j == 2) { pos = vector3(pos.x+scale*((float)u+.5f), pos.y+scale*((float)v+.5f), pos.z-scale*floor->length);}
 				else if (j == 3) { pos = vector3(pos.x+scale*floor->width, pos.y+scale*((float)v+.5f), pos.z-scale*floor->length+scale*((float)u+.5f));}
 				}
-
 			}
 
 			glPopMatrix();
@@ -699,19 +742,27 @@ void Room::generateObstacles() {
 			for (int j = 0; j < walls[prevwallpos]->height; ++j) {
 				if (walls[prevwallpos]->objPos[walls[prevwallpos]->getIndex(prevu, j)] == TORCH)
 					prevTorch = true;
-				if (walls[prevwallpos]->objPos[walls[prevwallpos]->getIndex(prevu, j)] == BOX)
+				if (walls[prevwallpos]->objPos[walls[prevwallpos]->getIndex(prevu, j)] == BOX || walls[prevwallpos]->objPos[walls[prevwallpos]->getIndex(prevu, j)] == MOVABLEBOX)
 					prevBox = true;
 				if (prevTorch && prevBox) break;
 			}
 			for (int j = 0; j < walls[nextwallpos]->height; ++j) {
 				if (walls[nextwallpos]->objPos[walls[nextwallpos]->getIndex(nextu, j)] == TORCH)
 					nextTorch = true;
-				if (walls[nextwallpos]->objPos[walls[nextwallpos]->getIndex(nextu, j)] == BOX)
+				if (walls[nextwallpos]->objPos[walls[nextwallpos]->getIndex(nextu, j)] == BOX || walls[nextwallpos]->objPos[walls[nextwallpos]->getIndex(nextu, j)] == MOVABLEBOX)
 					nextBox = true;
 				if (nextTorch && nextBox) break;
 			}
 
 			if (prevTorch && nextTorch) {
+				walls[wallpos]->objPos[i] = FREE;
+				walls[wallpos]->objPos[walls[wallpos]->getIndex(u, 0)] = MOVABLEBOX;
+				Box mb = Box(boxScale*scale);
+				mb.setMove(scale*(float)v);
+				mbox.push_back(mb);
+				MovableBoxPos mbpos = MovableBoxPos();
+				mbpos.wallpos = wallpos; mbpos.u = u; mbpos.v = 0;
+				mboxMap.insert(std::pair<MovableBoxPos, int>(mbpos, mbox.size()-1));
 				if (wallpos == 0) boxInd = floor->getIndex(floor->width-1-u, 0);
 				else if (wallpos == 1) boxInd = floor->getIndex(0, u);
 				else if (wallpos == 2) boxInd = floor->getIndex(u, floor->length-1);
@@ -722,7 +773,13 @@ void Room::generateObstacles() {
 			}
 			if (prevTorch && !nextTorch) {
 				int newheight = min(rand() % 5 + v - 3, walls[nextwallpos]->height-1);
-				walls[nextwallpos]->objPos[walls[nextwallpos]->getIndex(nextu, newheight)] = BOX;
+				walls[nextwallpos]->objPos[walls[nextwallpos]->getIndex(nextu, 0)] = MOVABLEBOX;
+				Box mb = Box(boxScale*scale);
+				mb.setMove(scale*(float)newheight);
+				mbox.push_back(mb);
+				MovableBoxPos mbpos = MovableBoxPos();
+				mbpos.wallpos = wallpos; mbpos.u = nextu; mbpos.v = 0;
+				mboxMap.insert(std::pair<MovableBoxPos, int>(mbpos, mbox.size()-1));
 				if (nextwallpos == 0) boxInd = floor->getIndex(floor->width-1-nextu, 0);
 				else if (nextwallpos == 1) boxInd = floor->getIndex(0, nextu);
 				else if (nextwallpos == 2) boxInd = floor->getIndex(nextu, floor->length-1);
@@ -733,7 +790,13 @@ void Room::generateObstacles() {
 			}
 			if (!prevTorch && nextTorch) {
 				int newheight = min(rand() % 5 + v - 3, walls[prevwallpos]->height-1);
-				walls[prevwallpos]->objPos[walls[prevwallpos]->getIndex(prevu, newheight)] = BOX;
+				walls[prevwallpos]->objPos[walls[prevwallpos]->getIndex(prevu, 0)] = MOVABLEBOX;
+				Box mb = Box(boxScale*scale);
+				mb.setMove(scale*(float)newheight);
+				mbox.push_back(mb);
+				MovableBoxPos mbpos = MovableBoxPos();
+				mbpos.wallpos = wallpos; mbpos.u = prevu; mbpos.v = 0;
+				mboxMap.insert(std::pair<MovableBoxPos, int>(mbpos, mbox.size()-1));
 				if (prevwallpos == 0) boxInd = floor->getIndex(floor->width-1-prevu, 0);
 				else if (prevwallpos == 1) boxInd = floor->getIndex(0, prevu);
 				else if (prevwallpos == 2) boxInd = floor->getIndex(prevu, floor->length-1);
@@ -749,7 +812,13 @@ void Room::generateObstacles() {
 				if (pickside == 0) { newwallpos = prevwallpos; newu = prevu; }
 				else { newwallpos = nextwallpos; newu = nextu; }
 				int newheight = min(rand() % 5 + v - 3, walls[prevwallpos]->height-1);
-				walls[newwallpos]->objPos[walls[newwallpos]->getIndex(newu, newheight)] = BOX;
+				walls[newwallpos]->objPos[walls[newwallpos]->getIndex(newu, 0)] = MOVABLEBOX;
+				Box mb = Box(boxScale*scale);
+				mb.setMove(scale*(float)newheight);
+				mbox.push_back(mb);
+				MovableBoxPos mbpos = MovableBoxPos();
+				mbpos.wallpos = wallpos; mbpos.u = newu; mbpos.v = 0;
+				mboxMap.insert(std::pair<MovableBoxPos, int>(mbpos, mbox.size()-1));
 				if (newwallpos == 0) boxInd = floor->getIndex(floor->width-1-newu, 0);
 				else if (newwallpos == 1) boxInd = floor->getIndex(0, newu);
 				else if (newwallpos == 2) boxInd = floor->getIndex(newu, floor->length-1);
@@ -764,18 +833,16 @@ void Room::generateObstacles() {
 	// create spikes along the rims
 	int numSpikes = 0;
 	for (int i = 0; i < floor->width; ++i) {
-		if (floor->objPos[floor->getIndex(i, 0)] == FREE) {
-			floor->objPos[floor->getIndex(i, 0)] = SPIKES;
-
-		}
+		if (floor->objPos[floor->getIndex(i, 0)] == FREE)
+			if (rand() % 2 == 1) floor->objPos[floor->getIndex(i, 0)] = SPIKES;
 		if (floor->objPos[floor->getIndex(i, floor->length-1)] == FREE)
-			floor->objPos[floor->getIndex(i, floor->length-1)] = SPIKES;
+			if (rand() % 2 == 1) floor->objPos[floor->getIndex(i, floor->length-1)] = SPIKES;
 	}
 	for (int j = 0; j < floor->length; ++j) {
 		if (floor->objPos[floor->getIndex(0, j)] == FREE)
-			floor->objPos[floor->getIndex(0, j)] = SPIKES;
+			if (rand() % 2 == 1) floor->objPos[floor->getIndex(0, j)] = SPIKES;
 		if (floor->objPos[floor->getIndex(floor->width-1, j)] == FREE)
-			floor->objPos[floor->getIndex(floor->width-1, j)] = SPIKES;
+			if (rand() % 2 == 1) floor->objPos[floor->getIndex(floor->width-1, j)] = SPIKES;
 	}
 
 	// find safe paths to ensure to game can be beaten
@@ -859,7 +926,6 @@ void Room::generateObstacles() {
 		while (walls[j]->objPos[walls[j]->getIndex(basepos, 1)] != FREE)
 			basepos = rand() % walls[j]->base;
 		walls[j]->objPos[walls[j]->getIndex(basepos, 1)] = SMOKE;
-		printf("%d\n", groundPos);
 		if (j == 0) { vector3 pos = vector3(playerStartPos.x+scale*floor->width-scale*((float)basepos+.5f), groundPos-.5f, playerStartPos.z); }
 		else if (j == 1) { vector3 pos = vector3(playerStartPos.x, groundPos-.5f, playerStartPos.z-scale*((float)basepos+.5f)); t1->resetPos(pos); }
 		else if (j == 2) { vector3 pos = vector3(playerStartPos.x+scale*((float)basepos+.5f), groundPos-.5f, playerStartPos.z-scale*floor->length); }
