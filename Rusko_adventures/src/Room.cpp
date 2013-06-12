@@ -767,8 +767,8 @@ void Room::generateObstacles() {
 			bool prevBox = false, nextBox = false;
 			int prevwallpos = (wallpos == 0) ? 3 : wallpos-1;
 			int nextwallpos = (wallpos == 3) ? 0 : wallpos+1;
-			int prevu = walls[prevwallpos]->base-1;
-			int nextu = 0;
+			int prevu = walls[prevwallpos]->base-2;
+			int nextu = 1;
 			if (u > 0) { prevwallpos = wallpos; prevu = u-1; }
 			if (u < walls[wallpos]->base-1) { nextwallpos = wallpos; nextu = u+1; }
 			for (int j = 0; j < walls[prevwallpos]->height; ++j) {
@@ -953,13 +953,22 @@ void Room::generateObstacles() {
 		}
 	}
 
+	int obsThreshold = (int)floorf((.2f + .03f*(float)level) * (floor->width*floor->length));
 	int numSafe = boxIndices.size() + safeIndices.size();
 	int numDanger = 9*countPits + numSpikes;
-	if (numDanger/(floor->width*floor->length) < 0.15 + .03*(float)level) {
-		for (unsigned int i = 0; i < floor->objPos.length(); ++i) {
-			if (floor->objPos[i] == FREE) {
-				if (rand() % 3 > 0) floor->objPos[i] = SPIKES;
-			}
+	int numAdd = (int)floorf(.03f*floor->width*floor->length);
+	std::vector<int> freeIndices;
+	for (unsigned int i = 0; i < floor->objPos.length(); ++i) {
+		if (floor->objPos[i] == FREE) freeIndices.push_back(i);
+	}
+	while (freeIndices.size() > 0 && numDanger < obsThreshold) {
+		for (int i = 0; i < numAdd; ++i) {
+			int ind = rand() % freeIndices.size();
+			floor->objPos[freeIndices[ind]] = SPIKES;
+			numSpikes++;
+			numDanger++;
+			freeIndices.erase(freeIndices.begin()+ind);
+			if (freeIndices.size() == 0) break;
 		}
 	}
 

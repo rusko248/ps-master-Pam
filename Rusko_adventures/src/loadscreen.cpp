@@ -6,6 +6,7 @@
 //
 //
 
+#include <sstream>
 #include "loadscreen.h"
 #define FONT_SMALL 0
 #define FONT_MEDIUM 1
@@ -55,11 +56,13 @@ void Loadscreen::render(int level, int numTorches){
 void Loadscreen::renderLevel(int level){
     
     string message = "Level ";
-    message += (level + '0');
+	std::stringstream convert;
+	convert << level;
+    message += convert.str();
 
     drawMessageAt(message, 0, 80, STColor4f(1, 1, 1, 1), FONT_LARGE);
     message = "Find ";
-    message += (numTorches+ '0');
+    message += convert.str();
     if (numTorches == 1) message += (" total torch");
     else message += (" total torches");
     
@@ -125,7 +128,7 @@ void Loadscreen::initScreen(){
     #ifdef __APPLE__
     fontName = "fonts/NanumScript.ttc"; 
     #else
-    fontName = "fonts/Gabriola.ttf.ttc";
+    fontName = "fonts/Gabriola.ttf";
     #endif
 
     fontLarge = new STFont(fontName, 64);
